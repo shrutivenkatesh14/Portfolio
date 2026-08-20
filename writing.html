@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects — [Your Name]</title>
+<title>Writing — [Your Name]</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="wash-projects">
+<body class="wash-writing">
 
 <div class="album">
   <nav class="rail" aria-label="Primary">
     <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
     <div class="rail-tabs">
       <a class="rail-tab t-lilac" href="about.html">About</a>
-      <a class="rail-tab t-sage" href="projects.html" aria-current="page">Projects</a>
-      <a class="rail-tab t-sky" href="writing.html">Writing</a>
+      <a class="rail-tab t-sage" href="projects.html">Projects</a>
+      <a class="rail-tab t-sky" href="writing.html" aria-current="page">Writing</a>
       <a class="rail-tab t-rose" href="contact.html">Contact</a>
     </div>
     <span class="rail-foot">Est. [Year]</span>
@@ -28,17 +28,18 @@
     <main>
       <section style="padding-bottom:20px;">
         <div class="wrap">
-          <p class="eyebrow">No.02 — The collection</p>
-          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">Projects</h1>
+          <p class="eyebrow">No.03 — Correspondence</p>
+          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">Writing</h1>
           <p class="max-w" style="font-size:17px; color:var(--ink);">
-            Six pieces, each catalogued with the problem, my role, and the outcome. Tap a stamp to open the full entry.
+            Notes and essays I've sent out into the world, franked and posted on Substack and Medium.
+            Tap a card to read the full piece where it lives.
           </p>
         </div>
       </section>
 
       <section style="padding-top:0;">
         <div class="wrap">
-          <div class="stamp-collection" id="stamp-grid" data-filter="all"></div>
+          <div class="postcard-rack" id="postcard-rack"></div>
         </div>
       </section>
     </main>
@@ -53,29 +54,6 @@
         </div>
       </div>
     </footer>
-  </div>
-</div>
-
-<div class="overlay" id="case-overlay">
-  <div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">
-    <button class="overlay-close" aria-label="Close">✕</button>
-    <div class="overlay-head">
-      <div class="overlay-stamp stamp-shape"></div>
-      <div>
-        <span class="overlay-tag"></span>
-        <h3 class="overlay-title"></h3>
-      </div>
-    </div>
-    <span class="overlay-denom"></span>
-    <div class="overlay-body">
-      <div><h4>The problem</h4><p class="o-problem"></p></div>
-      <div><h4>What I did</h4><ul class="o-approach"></ul></div>
-      <div><h4>The outcome</h4><p class="o-result"></p></div>
-    </div>
-    <div class="overlay-nav">
-      <button class="overlay-prev">← Previous</button>
-      <button class="overlay-next">Next →</button>
-    </div>
   </div>
 </div>
 

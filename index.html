@@ -12,123 +12,112 @@
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">A</span>
-      <span class="brand-text">The Collection<span>Portfolio of [Your Name]</span></span>
-    </a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="primary-nav">
-      <a href="about.html"><span class="no">No.01</span> About</a>
-      <a href="projects.html"><span class="no">No.02</span> Projects</a>
-      <a href="contact.html"><span class="no">No.03</span> Contact</a>
-      <a href="#" class="btn btn-quiet" style="margin-left:8px;">Résumé ↗</a>
-    </nav>
-  </div>
-</header>
+<div class="album">
+  <nav class="rail" aria-label="Primary">
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
+    <div class="rail-tabs">
+      <a class="rail-tab t-lilac" href="about.html">About</a>
+      <a class="rail-tab t-sage" href="projects.html">Projects</a>
+      <a class="rail-tab t-sky" href="writing.html">Writing</a>
+      <a class="rail-tab t-rose" href="contact.html">Contact</a>
+    </div>
+    <span class="rail-foot">Est. [Year]</span>
+  </nav>
+  <button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-<main>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="specimen stamp-shape" style="--stamp-fill:var(--ink);">
-        <div class="specimen-frame">
-          <span class="specimen-initials">Y.N.</span>
-          <span class="specimen-role">Business Analyst<br>Est. [Year]</span>
-          <span class="specimen-watermark">SPECIMEN</span>
+  <div class="page-content">
+    <main>
+      <section class="hero">
+        <div class="wrap">
+          <p class="eyebrow">First day of issue — [Year]</p>
+          <h1 class="hero-name">[Your Name]</h1>
+          <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
+          <p class="max-w">
+            I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
+            the case studies, models, and process work I'm proudest of — organised the way I organise everything
+            else I collect.
+          </p>
+          <div class="chip-row hero-actions">
+            <a href="projects.html" class="btn btn-primary">View the collection</a>
+            <a href="contact.html" class="btn btn-quiet">Get in touch</a>
+          </div>
+        </div>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span>DATA STORYTELLING</span><span>•</span><span>PROCESS IMPROVEMENT</span><span>•</span><span>STAKEHOLDER COMMS</span><span>•</span><span>FINANCIAL MODELLING</span><span>•</span><span>STAMP COLLECTOR</span><span>•</span>
+            <span>DATA STORYTELLING</span><span>•</span><span>PROCESS IMPROVEMENT</span><span>•</span><span>STAKEHOLDER COMMS</span><span>•</span><span>FINANCIAL MODELLING</span><span>•</span><span>STAMP COLLECTOR</span><span>•</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Featured in the album</p>
+              <h2 class="mt-0">Three worth a closer look</h2>
+            </div>
+            <a href="projects.html" class="btn btn-quiet">See the full collection →</a>
+          </div>
+          <div class="stamp-collection" id="stamp-grid" data-filter="featured"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <p class="eyebrow">Quick reference</p>
+          <h2 class="mt-0">Tools in the kit</h2>
+          <div class="chip-row">
+            <span class="chip">Excel / Google Sheets</span>
+            <span class="chip">SQL</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">Tableau</span>
+            <span class="chip">Python (pandas)</span>
+            <span class="chip">Financial Modelling</span>
+            <span class="chip">Process Mapping</span>
+            <span class="chip">Stakeholder Interviews</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
+        <div class="footer-links">
+          <a href="mailto:you@example.com">Email</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
         </div>
       </div>
+    </footer>
+  </div>
+</div>
+
+<div class="overlay" id="case-overlay">
+  <div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">
+    <button class="overlay-close" aria-label="Close">✕</button>
+    <div class="overlay-head">
+      <div class="overlay-stamp stamp-shape"></div>
       <div>
-        <p class="eyebrow">First day of issue — [Year]</p>
-        <h1>[Your Name]</h1>
-        <p style="font-family:var(--font-mono); font-size:14px; color:var(--ink); letter-spacing:0.02em; margin-bottom:20px;">
-          Business Analyst · Aspiring Management Consultant
-        </p>
-        <p class="max-w">
-          I turn messy data and vague problems into clear recommendations. This is a small, curated collection of the
-          case studies, models, and process work I'm proudest of — organised the way I organise everything else I collect.
-        </p>
-        <div class="chip-row" style="margin-bottom:28px;">
-          <a href="projects.html" class="btn btn-primary">View the collection</a>
-          <a href="contact.html" class="btn btn-quiet">Get in touch</a>
-        </div>
+        <span class="overlay-tag"></span>
+        <h3 class="overlay-title"></h3>
       </div>
     </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Featured in the album</p>
-          <h2 class="mt-0">Three worth a closer look</h2>
-        </div>
-        <a href="projects.html" class="btn btn-quiet">See the full collection →</a>
-      </div>
-
-      <div class="stamp-collection">
-        <a href="projects.html#churn-model" class="stamp-card stamp-shape c-red">
-          <div class="stamp-inner">
-            <span class="stamp-tag">Data Analysis</span>
-            <h3 class="stamp-title">Customer Churn Model</h3>
-            <p class="stamp-outcome">Cut projected churn 12% by flagging at-risk accounts 30 days earlier.</p>
-            <span class="stamp-denom">01¢</span>
-          </div>
-          <div class="postmark">Completed<br>[Month Year]</div>
-        </a>
-
-        <a href="projects.html#ops-automation" class="stamp-card stamp-shape c-green">
-          <div class="stamp-inner">
-            <span class="stamp-tag">Process Improvement</span>
-            <h3 class="stamp-title">Ops Reporting Automation</h3>
-            <p class="stamp-outcome">Replaced a 6-hour manual report with a 10-minute automated build.</p>
-            <span class="stamp-denom">02¢</span>
-          </div>
-          <div class="postmark">Completed<br>[Month Year]</div>
-        </a>
-
-        <a href="projects.html#market-entry" class="stamp-card stamp-shape c-brass">
-          <div class="stamp-inner">
-            <span class="stamp-tag">Strategy</span>
-            <h3 class="stamp-title">Market Entry Study</h3>
-            <p class="stamp-outcome">Sized a new regional market and mapped a 3-phase entry plan.</p>
-            <span class="stamp-denom">03¢</span>
-          </div>
-          <div class="postmark">Completed<br>[Month Year]</div>
-        </a>
-      </div>
+    <span class="overlay-denom"></span>
+    <div class="overlay-body">
+      <div><h4>The problem</h4><p class="o-problem"></p></div>
+      <div><h4>What I did</h4><ul class="o-approach"></ul></div>
+      <div><h4>The outcome</h4><p class="o-result"></p></div>
     </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <p class="eyebrow">Quick reference</p>
-      <h2 class="mt-0">Tools in the kit</h2>
-      <div class="chip-row">
-        <span class="chip">Excel / Google Sheets</span>
-        <span class="chip">SQL</span>
-        <span class="chip">Power BI</span>
-        <span class="chip">Tableau</span>
-        <span class="chip">Python (pandas)</span>
-        <span class="chip">Financial Modelling</span>
-        <span class="chip">Process Mapping</span>
-        <span class="chip">Stakeholder Interviews</span>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-row">
-    <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
-    <div class="footer-links">
-      <a href="mailto:you@example.com">Email</a>
-      <a href="#">LinkedIn</a>
-      <a href="#">GitHub</a>
+    <div class="overlay-nav">
+      <button class="overlay-prev">← Previous</button>
+      <button class="overlay-next">Next →</button>
     </div>
   </div>
-</footer>
+</div>
 
-<script src="script.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

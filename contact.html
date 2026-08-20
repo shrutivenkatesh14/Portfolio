@@ -9,93 +9,79 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="wash-contact">
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">A</span>
-      <span class="brand-text">The Collection<span>Portfolio of [Your Name]</span></span>
-    </a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="primary-nav">
-      <a href="about.html"><span class="no">No.01</span> About</a>
-      <a href="projects.html"><span class="no">No.02</span> Projects</a>
-      <a href="contact.html" aria-current="page"><span class="no">No.03</span> Contact</a>
-      <a href="#" class="btn btn-quiet" style="margin-left:8px;">Résumé ↗</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section style="padding-bottom:20px;">
-    <div class="wrap">
-      <p class="eyebrow">No.03 — Send a letter</p>
-      <h1>Contact</h1>
-      <p class="max-w" style="font-size:17px; color:var(--ink);">
-        Open to internships, analyst roles, and conversations about consulting. The fastest way to reach me is email —
-        click the stamp.
-      </p>
+<div class="album">
+  <nav class="rail" aria-label="Primary">
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
+    <div class="rail-tabs">
+      <a class="rail-tab t-lilac" href="about.html">About</a>
+      <a class="rail-tab t-sage" href="projects.html">Projects</a>
+      <a class="rail-tab t-sky" href="writing.html">Writing</a>
+      <a class="rail-tab t-rose" href="contact.html" aria-current="page">Contact</a>
     </div>
-  </section>
+    <span class="rail-foot">Est. [Year]</span>
+  </nav>
+  <button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-  <section style="padding-top:0;">
-    <div class="wrap">
-      <div class="envelope">
-        <div class="envelope-top">
-          <div class="address-block">
-            <div class="to-label">To</div>
-            [Your Name]<br>
-            c/o LinkedIn &amp; Email<br>
-            [City, Country]<br>
-            <br>
-            <div class="to-label">Re</div>
-            Analyst &amp; consulting opportunities
-          </div>
-
-          <a href="mailto:you@example.com?subject=Hello%20from%20your%20portfolio" class="mail-stamp stamp-shape">
-            <div class="stamp-inner-mini">
-              <div class="m-eyebrow">Air Mail</div>
-              <div class="m-title">Click to send</div>
-              <div class="m-sub">you@example.com</div>
-            </div>
-          </a>
+  <div class="page-content">
+    <main>
+      <section style="padding-bottom:16px;">
+        <div class="wrap">
+          <p class="eyebrow">No.04 — Send a letter</p>
+          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">Contact</h1>
+          <p class="max-w" style="font-size:17px; color:var(--ink);">
+            Open to internships, analyst roles, and conversations about consulting. The fastest way to reach me is
+            email — click the stamp.
+          </p>
         </div>
+      </section>
 
-        <div class="contact-methods">
-          <div class="contact-method">
-            <span class="label">Email</span>
-            <a href="mailto:you@example.com">you@example.com</a>
+      <section style="padding-top:0;">
+        <div class="wrap">
+          <div class="envelope">
+            <div class="envelope-top">
+              <div class="address-block">
+                <div class="to-label">To</div>
+                [Your Name]<br>
+                c/o LinkedIn &amp; Email<br>
+                [City, Country]<br><br>
+                <div class="to-label">Re</div>
+                Analyst &amp; consulting opportunities
+              </div>
+              <a href="mailto:you@example.com?subject=Hello%20from%20your%20portfolio" class="mail-stamp stamp-shape">
+                <div class="stamp-inner-mini">
+                  <div class="m-eyebrow">Air Mail</div>
+                  <div class="m-title">Click to send</div>
+                  <div class="m-sub">you@example.com</div>
+                </div>
+              </a>
+            </div>
+            <div class="contact-methods">
+              <div class="contact-method"><span class="label">Email</span><a href="mailto:you@example.com">you@example.com</a></div>
+              <div class="contact-method"><span class="label">LinkedIn</span><a href="#">linkedin.com/in/[you]</a></div>
+              <div class="contact-method"><span class="label">GitHub</span><a href="#">github.com/[you]</a></div>
+              <div class="contact-method"><span class="label">Phone</span><a href="tel:+10000000000">[Optional]</a></div>
+            </div>
           </div>
-          <div class="contact-method">
-            <span class="label">LinkedIn</span>
-            <a href="#">linkedin.com/in/[you]</a>
-          </div>
-          <div class="contact-method">
-            <span class="label">GitHub</span>
-            <a href="#">github.com/[you]</a>
-          </div>
-          <div class="contact-method">
-            <span class="label">Phone</span>
-            <a href="tel:+10000000000">[Optional]</a>
-          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
+        <div class="footer-links">
+          <a href="mailto:you@example.com">Email</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
         </div>
       </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-row">
-    <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
-    <div class="footer-links">
-      <a href="mailto:you@example.com">Email</a>
-      <a href="#">LinkedIn</a>
-      <a href="#">GitHub</a>
-    </div>
+    </footer>
   </div>
-</footer>
+</div>
 
-<script src="script.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
