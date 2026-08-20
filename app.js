@@ -90,9 +90,10 @@ function initStampGrid() {
   var filter = grid.getAttribute('data-filter') || 'all';
   var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
 
-  grid.innerHTML = items.map(function (p, i) {
+  grid.innerHTML = items.map(function (p) {
+    var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
     return '' +
-      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + (i % 2 === 0 ? '-1.2deg' : '1deg') + ';">' +
+      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
         '<span class="stamp-inner">' +
           '<span class="stamp-tag">' + p.tag + '</span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
@@ -176,9 +177,10 @@ function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  rack.innerHTML = POSTS.map(function (post, i) {
+  rack.innerHTML = POSTS.map(function (post) {
+    var tilt = (Math.random() * 4 - 2).toFixed(2) + 'deg';
     return '' +
-      '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + (i % 2 === 0 ? '-0.8deg' : '0.9deg') + ';">' +
+      '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +

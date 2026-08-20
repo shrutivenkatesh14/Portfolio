@@ -3,33 +3,35 @@
    ========================================================================== */
 
 :root {
-  --paper: #F7F2E7;
-  --paper-deep: #EFE7D6;
-  --ink: #2E2B38;
-  --ink-soft: #5B5768;
-  --line: #DCD2BE;
-  --accent-ink: #8C5A52;
-  --accent-ink-deep: #6E4038;
+  --paper: #EAE0C9;
+  --paper-deep: #DFD2B0;
+  --ink: #2B241E;
+  --ink-soft: #5C4F3E;
+  --line: #CBB98F;
+  --accent-ink: #8F3D2E;
+  --accent-ink-deep: #6F2F22;
 
-  --rose: #E7B8B0;
-  --sage: #B7C9AE;
-  --sky: #AFC9DC;
-  --mustard: #E9CD8B;
-  --lilac: #CDBEDE;
+  --rose: #D2846F;
+  --sage: #4A6B47;
+  --petrol: #3D6870;
+  --ochre: #C08A28;
+  --plum: #6B4D68;
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-hand: 'Caveat', cursive;
 
   --rail-w: 88px;
   --radius: 3px;
 }
 
-/* per-page paper wash — set via body class */
-body.wash-about   { --paper: #F7F0F2; }
-body.wash-projects{ --paper: #F1F4EE; }
-body.wash-writing { --paper: #EFF3F6; }
-body.wash-contact { --paper: #F8F0EC; }
+/* per-page paper wash — a slightly different tint of the same warm base,
+   so each page reads as a different leaf of the same album */
+body.wash-about   { --paper: #EBDFCB; }
+body.wash-projects{ --paper: #E6DFC4; }
+body.wash-writing { --paper: #E3DECB; }
+body.wash-contact { --paper: #ECDECA; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -51,8 +53,30 @@ body {
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 body.no-scroll { overflow: hidden; }
+
+/* faint paper grain — a handful of irregular radial specks, tiled, so the
+   page reads as textured stock rather than a flat digital fill */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(43,36,30,0.05) 0, transparent 1.4px),
+    radial-gradient(circle at 68% 8%, rgba(43,36,30,0.045) 0, transparent 1.2px),
+    radial-gradient(circle at 34% 61%, rgba(43,36,30,0.05) 0, transparent 1.5px),
+    radial-gradient(circle at 82% 47%, rgba(43,36,30,0.04) 0, transparent 1.3px),
+    radial-gradient(circle at 51% 88%, rgba(43,36,30,0.05) 0, transparent 1.4px),
+    radial-gradient(circle at 5% 76%, rgba(43,36,30,0.04) 0, transparent 1.2px),
+    radial-gradient(circle at 91% 91%, rgba(43,36,30,0.045) 0, transparent 1.3px);
+  background-size: 180px 180px;
+}
+.wrap, .album, .overlay, .rail, .rail-toggle { position: relative; z-index: 1; }
 
 a { color: var(--accent-ink); }
 a:focus-visible, button:focus-visible, summary:focus-visible {
@@ -70,6 +94,17 @@ button { font-family: inherit; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-ink);
+}
+
+/* a handwritten, slightly rotated margin note — used sparingly, never as a
+   structural label, just as a personal aside */
+.hand-note {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: var(--accent-ink-deep);
+  display: inline-block;
+  transform: rotate(-3deg);
+  line-height: 1;
 }
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; color: var(--ink); margin: 0 0 0.4em; }
@@ -177,10 +212,10 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   transition: transform 0.15s ease, padding 0.15s ease;
 }
 .rail-tab.t-rose { background: var(--rose); }
-.rail-tab.t-sage { background: var(--sage); }
-.rail-tab.t-sky { background: var(--sky); }
-.rail-tab.t-mustard { background: var(--mustard); }
-.rail-tab.t-lilac { background: var(--lilac); }
+.rail-tab.t-sage { background: var(--sage); color: var(--paper); border-color: transparent; }
+.rail-tab.t-petrol { background: var(--petrol); color: var(--paper); border-color: transparent; }
+.rail-tab.t-ochre { background: var(--ochre); }
+.rail-tab.t-plum { background: var(--plum); color: var(--paper); border-color: transparent; }
 .rail-tab:hover { transform: rotate(180deg) translateY(-2px); }
 .rail-tab[aria-current="page"] {
   padding: 24px 8px;
@@ -342,7 +377,8 @@ section + section { border-top: 1px solid var(--line); }
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-position: top left, bottom left, top left, top right;
   background-size: var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66), calc(var(--tile) * 0.66) var(--tile), calc(var(--tile) * 0.66) var(--tile);
-  box-shadow: 0 0 0 1px rgba(46,43,56,0.18);
+  box-shadow: 3px 4px 0 rgba(43,36,30,0.16);
+  border: 1.5px solid var(--ink);
 }
 
 .stamp-collection {
@@ -365,13 +401,16 @@ section + section { border-top: 1px solid var(--line); }
 }
 .stamp-card:hover, .stamp-card:focus-visible { transform: rotate(0deg) translateY(-3px); }
 .stamp-card.c-rose { --stamp-fill: var(--rose); }
-.stamp-card.c-sage { --stamp-fill: var(--sage); }
-.stamp-card.c-sky { --stamp-fill: var(--sky); }
-.stamp-card.c-mustard { --stamp-fill: var(--mustard); }
-.stamp-card.c-lilac { --stamp-fill: var(--lilac); }
+.stamp-card.c-sage { --stamp-fill: var(--sage); color: var(--paper); }
+.stamp-card.c-petrol { --stamp-fill: var(--petrol); color: var(--paper); }
+.stamp-card.c-ochre { --stamp-fill: var(--ochre); }
+.stamp-card.c-plum { --stamp-fill: var(--plum); color: var(--paper); }
+.stamp-card.c-sage .stamp-denom,
+.stamp-card.c-petrol .stamp-denom,
+.stamp-card.c-plum .stamp-denom { opacity: 0.75; }
 
 .stamp-inner {
-  border: 1px solid rgba(46,43,56,0.28);
+  border: 1px solid rgba(43,36,30,0.28);
   padding: 14px 12px 46px;
   min-height: 168px;
   position: relative;
@@ -379,7 +418,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .stamp-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; display: block; }
 .stamp-title { font-family: var(--font-display); font-size: 1.15rem; margin: 8px 0 6px; line-height: 1.25; display: block; }
-.stamp-outcome { font-size: 13px; color: var(--ink); opacity: 0.8; display: block; }
+.stamp-outcome { font-size: 13px; color: inherit; opacity: 0.8; display: block; }
 .stamp-denom { position: absolute; bottom: 12px; left: 12px; font-family: var(--font-mono); font-size: 11px; opacity: 0.65; }
 
 .postmark {
@@ -413,7 +452,7 @@ section + section { border-top: 1px solid var(--line); }
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(46,43,56,0.55);
+  background: rgba(43,36,30,0.55);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -456,7 +495,7 @@ section + section { border-top: 1px solid var(--line); }
 .overlay-stamp {
   width: 58px; height: 70px;
   flex: 0 0 auto;
-  border: 1px solid rgba(46,43,56,0.28);
+  border: 1px solid rgba(43,36,30,0.28);
 }
 .overlay-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); display: block; }
 .overlay-title { margin: 4px 0 0; }
@@ -492,6 +531,28 @@ section + section { border-top: 1px solid var(--line); }
 .ledger-row .grade { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); white-space: nowrap; }
 
 .stats-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 20px; margin-bottom: 8px; }
+
+.intro-grid { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+.passport-photo {
+  width: 148px; height: 184px;
+  flex: 0 0 auto;
+  border: 2px dashed var(--ink);
+  background: var(--paper-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px;
+  transform: rotate(-1.5deg);
+}
+.passport-photo span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
 .stat { border: 1px solid var(--line); padding: 18px 16px; background: var(--paper-deep); }
 .stat .num { font-family: var(--font-display); font-size: 2rem; display: block; line-height: 1; margin-bottom: 6px; }
 .stat .label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
@@ -515,12 +576,12 @@ section + section { border-top: 1px solid var(--line); }
 .address-block .to-label { font-size: 10.5px; letter-spacing: 0.1em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 6px; }
 
 .mail-stamp {
-  --stamp-fill: var(--mustard);
+  --stamp-fill: var(--ochre);
   width: 118px; padding: 12px 8px 10px; text-align: center; color: var(--ink);
   text-decoration: none; transform: rotate(2deg); transition: transform 0.15s ease; display: block;
 }
 .mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-.mail-stamp .stamp-inner-mini { border: 1px solid rgba(46,43,56,0.28); padding: 12px 6px; }
+.mail-stamp .stamp-inner-mini { border: 1px solid rgba(43,36,30,0.28); padding: 12px 6px; }
 .mail-stamp .m-eyebrow { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; }
 .mail-stamp .m-title { font-family: var(--font-display); font-size: 1rem; margin: 6px 0; }
 .mail-stamp .m-sub { font-family: var(--font-mono); font-size: 9px; opacity: 0.7; }
@@ -553,7 +614,7 @@ section + section { border-top: 1px solid var(--line); }
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
 }
-.postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(46,43,56,0.12); }
+.postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
 .postcard-frank {
   align-self: flex-start;
   font-family: var(--font-mono);

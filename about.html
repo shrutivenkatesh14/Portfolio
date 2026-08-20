@@ -6,7 +6,7 @@
 <title>About — [Your Name]</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="wash-about">
@@ -15,9 +15,9 @@
   <nav class="rail" aria-label="Primary">
     <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
     <div class="rail-tabs">
-      <a class="rail-tab t-lilac" href="about.html" aria-current="page">About</a>
+      <a class="rail-tab t-plum" href="about.html" aria-current="page">About</a>
       <a class="rail-tab t-sage" href="projects.html">Projects</a>
-      <a class="rail-tab t-sky" href="writing.html">Writing</a>
+      <a class="rail-tab t-petrol" href="writing.html">Writing</a>
       <a class="rail-tab t-rose" href="contact.html">Contact</a>
     </div>
     <span class="rail-foot">Est. [Year]</span>
@@ -28,21 +28,26 @@
     <main>
       <section style="padding-bottom:20px;">
         <div class="wrap">
-          <p class="eyebrow">No.01 — Provenance</p>
+          <p class="eyebrow">No.01</p>
           <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">About</h1>
-          <p class="max-w" style="font-size:17px; color:var(--ink);">
-            [One or two paragraphs here: who you are, what kind of problems you like solving, and what led you
-            toward business analysis and consulting. Keep it conversational — this is the "why", not a repeat of
-            your résumé. Mention the stamp-collecting hobby if you want the theme to feel personal rather than
-            decorative.]
-          </p>
+          <div class="intro-grid">
+            <p class="max-w" style="font-size:17px; color:var(--ink); flex:1; min-width:260px;">
+              [One or two paragraphs here: who you are, what kind of problems you like solving, and what led you
+              toward business analysis and consulting. Keep it conversational — this is the "why", not a repeat of
+              your résumé. Mention the stamp-collecting hobby if you want the theme to feel personal rather than
+              decorative.]
+            </p>
+            <div class="passport-photo">
+              <span>Portrait<br>goes here —<br>send it over<br>and I'll drop<br>it in</span>
+            </div>
+          </div>
         </div>
       </section>
 
       <section>
         <div class="wrap">
-          <p class="eyebrow">At a glance</p>
-          <h2 class="mt-0">The collection, by the numbers</h2>
+          <span class="hand-note">a few numbers, for the record</span>
+          <h2 class="mt-0" style="margin-top:8px;">The collection, by the numbers</h2>
           <div class="stats-strip">
             <div class="stat"><span class="num">06</span><span class="label">Case Studies</span></div>
             <div class="stat"><span class="num">[X]</span><span class="label">Years in Analytics</span></div>
@@ -91,8 +96,8 @@
 
       <section>
         <div class="wrap">
-          <p class="eyebrow">Condition report</p>
-          <h2 class="mt-0">Skills, graded</h2>
+          <span class="hand-note">how I'd grade myself, honestly</span>
+          <h2 class="mt-0" style="margin-top:8px;">Skills, graded</h2>
           <p class="max-w" style="margin-bottom:28px;">Philatelists grade a stamp's condition from Poor to Gem. Borrowing the scale for a quick, honest read on where I'm strongest.</p>
           <div class="ledger">
             <div class="ledger-row"><span class="name">Data analysis (Excel / SQL)</span><span class="grade">Superb</span></div>
