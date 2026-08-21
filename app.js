@@ -97,8 +97,7 @@ function initStampGrid() {
         '<span class="stamp-inner">' +
           '<span class="stamp-tag">' + p.tag + '</span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
-          '<span class="stamp-outcome">' + p.outcome + '</span>' +
-          '<span class="stamp-denom">' + p.denom + '</span>' +
+          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
         '</span>' +
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
       '</button>';
@@ -132,6 +131,7 @@ function initOverlay() {
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
     overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
+    overlay.querySelector('.overlay-outcome').textContent = p.outcome;
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
@@ -154,7 +154,11 @@ function initOverlay() {
     if (!card) return;
     var id = card.getAttribute('data-id');
     var index = items.findIndex(function (p) { return p.id === id; });
-    if (index > -1) open(index);
+    if (index > -1) {
+      card.classList.add('lifting');
+      setTimeout(function () { card.classList.remove('lifting'); }, 260);
+      open(index);
+    }
   });
 
   closeBtn.addEventListener('click', close);
