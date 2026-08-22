@@ -182,7 +182,7 @@ function initPostcards() {
   if (!rack || typeof POSTS === 'undefined') return;
 
   rack.innerHTML = POSTS.map(function (post) {
-    var tilt = (Math.random() * 4 - 2).toFixed(2) + 'deg';
+    var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
         '<span class="postcard-frank">' + post.platform + '</span>' +

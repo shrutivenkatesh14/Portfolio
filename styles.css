@@ -3,12 +3,12 @@
    ========================================================================== */
 
 :root {
-  --paper: #F7F5EF;
-  --paper-deep: #E2DED2;
-  --panel: #EEEBE1;
+  --paper: #F3F0E8;
+  --paper-deep: #DDD6C4;
+  --panel: #EAE5D8;
   --ink: #251F19;
   --ink-soft: #635B4E;
-  --line: #DEDACD;
+  --line: #D9D0BC;
   --accent-ink: #7A3325;
   --accent-ink-deep: #5E2619;
 
@@ -29,10 +29,10 @@
 
 /* per-page paper wash — a whisper of tint per section, kept neutral so it
    never competes with the pastel stamps */
-body.wash-about   { --paper: #F7F4EE; }
-body.wash-projects{ --paper: #F5F5EE; }
-body.wash-writing { --paper: #F4F5EF; }
-body.wash-contact { --paper: #F7F4EF; }
+body.wash-about   { --paper: #F3EFE5; }
+body.wash-projects{ --paper: #F1F0E4; }
+body.wash-writing { --paper: #F0F0E5; }
+body.wash-contact { --paper: #F3EEE6; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -260,12 +260,21 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail-tab.t-lavender .tab-dot { background: var(--lavender); }
 .rail-tab:hover { transform: translateY(-2px); margin-right: -18px; }
 .rail-tab[aria-current="page"] {
-  background: var(--ink);
-  color: var(--paper);
+  border-color: transparent;
   margin-right: -20px;
+  margin-left: -2px;
   font-weight: 700;
+  transform: translateY(-1px);
+  box-shadow: 3px 5px 10px rgba(37,31,25,0.22);
+  z-index: 6;
 }
-.rail-tab[aria-current="page"] .tab-dot { box-shadow: 0 0 0 1.5px var(--paper); }
+.rail-tab[aria-current="page"]::before { display: none; }
+.rail-tab.t-dusty-rose[aria-current="page"] { background: var(--dusty-rose); }
+.rail-tab.t-sage[aria-current="page"] { background: var(--sage); }
+.rail-tab.t-powder-blue[aria-current="page"] { background: var(--powder-blue); }
+.rail-tab.t-butter-yellow[aria-current="page"] { background: var(--butter-yellow); }
+.rail-tab.t-lavender[aria-current="page"] { background: var(--lavender); }
+.rail-tab[aria-current="page"] .tab-dot { box-shadow: 0 0 0 1.5px rgba(37,31,25,0.3); }
 
 .rail-toggle {
   display: none;
@@ -682,7 +691,7 @@ section + section { border-top: 1px solid var(--line); }
   gap: 8px;
   background: var(--panel);
   border: 1px solid var(--line);
-  padding: 22px 22px 20px;
+  padding: 30px 22px 20px;
   text-decoration: none;
   color: var(--ink);
   transform: rotate(var(--tilt, 0deg));
@@ -690,6 +699,29 @@ section + section { border-top: 1px solid var(--line); }
   position: relative;
 }
 .postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
+
+/* pushpin, slightly off-center */
+.postcard::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 46%;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #D68B7D 0%, var(--accent-ink) 62%, var(--accent-ink-deep) 100%);
+  box-shadow: 0 2px 3px rgba(37,31,25,0.35);
+  z-index: 2;
+}
+
+/* small stamp-corner mark, top right, like a spot reserved for postage */
+.postcard::after {
+  content: "";
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 24px; height: 28px;
+  border: 1px solid var(--line);
+}
+
 .postcard-frank {
   align-self: flex-start;
   font-family: var(--font-mono);
@@ -701,7 +733,16 @@ section + section { border-top: 1px solid var(--line); }
   border-radius: 20px;
   padding: 4px 10px;
 }
-.postcard-tag { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+.postcard-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 2px;
+}
 .postcard-title { font-family: var(--font-display); font-size: 1.2rem; line-height: 1.3; margin: 2px 0; }
 .postcard-teaser { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
 .postcard-cta { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
