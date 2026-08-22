@@ -176,15 +176,24 @@ function initOverlay() {
 
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
+   Each postcard is "taped" into the album — a small washi-tape strip
+   across the top edge, varied in colour, position, and tilt so the rack
+   doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  rack.innerHTML = POSTS.map(function (post) {
+  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+
+  rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
+    var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
+    var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
+    var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +

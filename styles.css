@@ -97,8 +97,9 @@ button { font-family: inherit; }
   color: var(--accent-ink);
 }
 
-/* a handwritten, slightly rotated margin note — used sparingly, never as a
-   structural label, just as a personal aside */
+/* a handwritten, slightly rotated margin note — THE one handwritten voice
+   used everywhere in the album, for personal annotations only. Never used
+   for structural/informational labels — those stay typewriter (.eyebrow). */
 .hand-note {
   font-family: var(--font-hand);
   font-size: 1.4rem;
@@ -347,6 +348,44 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   border-radius: 20px;
   color: var(--ink-soft);
   background: var(--panel);
+}
+
+/* ==========================================================================
+   Washi tape — a small "I taped this into my album" accent.
+   Rule: never on the stamp itself. Used sparingly on the things that feel
+   personally attached — a portrait, a note, a postcard. Muted, translucent,
+   a little imperfect; never a modern UI decoration.
+   ========================================================================== */
+
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  height: 22px;
+  width: 60px;
+  opacity: 0.78;
+  border-radius: 1px;
+  box-shadow: 0 2px 3px rgba(43,36,30,0.18);
+  background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.45) 0 2px, transparent 2px 7px);
+  background-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 3;
+}
+.washi-butter   { background-color: var(--butter-yellow); }
+.washi-sage     { background-color: var(--sage); }
+.washi-rose     { background-color: var(--dusty-rose); }
+.washi-blue     { background-color: var(--powder-blue); }
+.washi-lavender { background-color: var(--lavender); }
+
+/* wraps a .hand-note so a small strip of tape can hold it down */
+.album-note { position: relative; display: inline-block; }
+
+/* holds the illustrated portrait on the About page */
+.tape-portrait {
+  top: -12px;
+  left: 50%;
+  width: 92px;
+  transform: translateX(-50%) rotate(-4deg);
 }
 
 /* ==========================================================================
@@ -700,27 +739,9 @@ section + section { border-top: 1px solid var(--line); }
 }
 .postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
 
-/* pushpin, slightly off-center */
-.postcard::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  left: 46%;
-  width: 13px; height: 13px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #D68B7D 0%, var(--accent-ink) 62%, var(--accent-ink-deep) 100%);
-  box-shadow: 0 2px 3px rgba(37,31,25,0.35);
-  z-index: 2;
-}
-
-/* small stamp-corner mark, top right, like a spot reserved for postage */
-.postcard::after {
-  content: "";
-  position: absolute;
-  top: 16px; right: 16px;
-  width: 24px; height: 28px;
-  border: 1px solid var(--line);
-}
+/* every postcard is held to the page by a small strip of washi tape —
+   see .washi-tape above; colour + rotation + position are set per-card
+   in app.js so the rack doesn't look mechanically repeated */
 
 .postcard-frank {
   align-self: flex-start;
