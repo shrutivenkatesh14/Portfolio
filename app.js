@@ -18,18 +18,36 @@ function initRailToggle() {
   var rail = document.querySelector('.rail');
   if (!toggle || !rail) return;
 
+  var scrim = document.createElement('div');
+  scrim.className = 'rail-scrim';
+  document.body.appendChild(scrim);
+
+  function closeDrawer() {
+    rail.classList.remove('open');
+    scrim.classList.remove('visible');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '☰';
+  }
+
+  function openDrawer() {
+    rail.classList.add('open');
+    scrim.classList.add('visible');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.textContent = '✕';
+  }
+
   toggle.addEventListener('click', function () {
-    var isOpen = rail.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    toggle.textContent = isOpen ? '✕' : '☰';
+    if (rail.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+
+  scrim.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && rail.classList.contains('open')) closeDrawer();
   });
 
   rail.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', function () {
-      rail.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰';
-    });
+    link.addEventListener('click', closeDrawer);
   });
 }
 
@@ -121,7 +139,30 @@ function initOverlay() {
   var prevBtn = overlay.querySelector('.overlay-prev');
   var nextBtn = overlay.querySelector('.overlay-next');
   var body = overlay.querySelector('.overlay-body');
+  var sheet = overlay.querySelector('.overlay-sheet');
   var currentIndex = 0;
+  var triggerEl = null;
+
+  function focusableIn(container) {
+    return Array.prototype.slice.call(
+      container.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')
+    ).filter(function (el) { return el.offsetParent !== null; });
+  }
+
+  function trapTab(e) {
+    if (e.key !== 'Tab') return;
+    var focusable = focusableIn(sheet);
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 
   function render(index) {
     var p = items[index];
@@ -137,16 +178,21 @@ function initOverlay() {
     body.querySelector('.o-result').textContent = p.result;
   }
 
-  function open(index) {
+  function open(index, trigger) {
+    triggerEl = trigger || document.activeElement;
     render(index);
     overlay.classList.add('open');
     document.body.classList.add('no-scroll');
+    document.addEventListener('keydown', trapTab);
     closeBtn.focus();
   }
 
   function close() {
     overlay.classList.remove('open');
     document.body.classList.remove('no-scroll');
+    document.removeEventListener('keydown', trapTab);
+    if (triggerEl && typeof triggerEl.focus === 'function') triggerEl.focus();
+    triggerEl = null;
   }
 
   document.addEventListener('click', function (e) {
@@ -157,7 +203,7 @@ function initOverlay() {
     if (index > -1) {
       card.classList.add('lifting');
       setTimeout(function () { card.classList.remove('lifting'); }, 260);
-      open(index);
+      open(index, card);
     }
   });
 
@@ -176,15 +222,24 @@ function initOverlay() {
 
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
+   Each postcard is "taped" into the album — a small washi-tape strip
+   across the top edge, varied in colour, position, and tilt so the rack
+   doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  rack.innerHTML = POSTS.map(function (post) {
+  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+
+  rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
+    var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
+    var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
+    var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +

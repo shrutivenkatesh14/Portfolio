@@ -30,7 +30,7 @@
       <section style="padding-bottom:8px;">
         <div class="wrap">
           <p class="eyebrow">No.02</p>
-          <h1 class="page-title">Choose a destination.</h1>
+          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">Choose a destination.</h1>
           <p class="max-w" style="font-size:17px; color:var(--ink);">
             Six stops, each one a problem I got to dig into. Tap a stamp to open the full entry — the challenge,
             what I did, and how it turned out.
@@ -38,9 +38,12 @@
         </div>
       </section>
 
-      <section style="padding-top:0;">
+      <section style="padding-top:24px;">
         <div class="wrap">
-          <span class="hand-note" style="margin-bottom:18px; display:inline-block;">tap any stamp →</span>
+          <span class="album-note" style="margin-bottom:18px;">
+            <span class="washi-tape washi-sage" aria-hidden="true" style="width:118px; left:-8px; transform:rotate(3deg);"></span>
+            <span class="hand-note" style="display:inline-block;">tap any stamp →</span>
+          </span>
           <div class="stamp-collection" id="stamp-grid" data-filter="all"></div>
         </div>
       </section>
@@ -67,15 +70,15 @@
       <div class="overlay-stamp stamp-shape"></div>
       <div>
         <span class="overlay-tag"></span>
-        <h3 class="overlay-title"></h3>
+        <h2 class="overlay-title"></h2>
       </div>
     </div>
     <span class="overlay-denom"></span>
     <p class="overlay-outcome"></p>
     <div class="overlay-body">
-      <div><h4>The problem</h4><p class="o-problem"></p></div>
-      <div><h4>What I did</h4><ul class="o-approach"></ul></div>
-      <div><h4>The outcome</h4><p class="o-result"></p></div>
+      <div><h3>The problem</h3><p class="o-problem"></p></div>
+      <div><h3>What I did</h3><ul class="o-approach"></ul></div>
+      <div><h3>The outcome</h3><p class="o-result"></p></div>
     </div>
     <div class="overlay-nav">
       <button class="overlay-prev">← Previous</button>
