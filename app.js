@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initStampGrid();
   initOverlay();
   initPostcards();
+  initCopyButtons();
 });
 
 /* --------------------------------------------------------------------------
@@ -247,4 +248,35 @@ function initPostcards() {
         '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
       '</a>';
   }).join('');
+}
+
+/* --------------------------------------------------------------------------
+   Copy-to-clipboard on contact details — a small "stamping" confirmation.
+   Progressive enhancement: if the Clipboard API isn't available (older
+   browser, non-secure context), the button quietly does nothing extra and
+   the underlying mailto/link still works normally.
+   -------------------------------------------------------------------------- */
+function initCopyButtons() {
+  var buttons = document.querySelectorAll('.copy-btn');
+  if (!buttons.length || !navigator.clipboard) return;
+
+  var announcer = document.getElementById('copy-announcer');
+
+  buttons.forEach(function (btn) {
+    var timer = null;
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy-text');
+      var what = btn.getAttribute('data-copy-what') || 'Text';
+      navigator.clipboard.writeText(text).then(function () {
+        btn.classList.add('copied');
+        if (announcer) announcer.textContent = what + ' copied to clipboard.';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+        }, 1600);
+      }).catch(function () {
+        /* clipboard write failed silently — link beside it still works */
+      });
+    });
+  });
 }

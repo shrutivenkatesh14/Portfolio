@@ -87,6 +87,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 img { max-width: 100%; display: block; }
 button { font-family: inherit; }
 
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
 
 .eyebrow {
@@ -736,6 +746,47 @@ section + section { border-top: 1px solid var(--line); }
 .contact-method a { color: var(--ink); text-decoration: none; font-weight: 400; }
 .contact-method a:hover { color: var(--accent-ink); }
 
+/* Copy-to-clipboard — a small "stamping" confirmation, reusing the same
+   stamp-down curve as .postmark since it's the same physical idea: press,
+   and get a mark back that it took. */
+.copy-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.copy-btn {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink-soft);
+  border-radius: 20px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.copy-btn:hover, .copy-btn:focus-visible { border-color: var(--accent-ink); color: var(--accent-ink); }
+.copy-btn-label { transition: opacity 0.15s ease; }
+.copy-stamp {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 16px; height: 16px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--accent-ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--accent-ink);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%,-50%) rotate(-10deg) scale(0.5);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.3,1.6,0.4,1);
+}
+.copy-btn.copied .copy-btn-label { opacity: 0; }
+.copy-btn.copied .copy-stamp { opacity: 1; transform: translate(-50%,-50%) rotate(-10deg) scale(1); }
+
 /* ==========================================================================
    Postcards (Writing page)
    ========================================================================== */
@@ -796,8 +847,56 @@ section + section { border-top: 1px solid var(--line); }
 .postcard-cta { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
 
 /* ==========================================================================
-   Footer
+   404 — Dead Letter Office
    ========================================================================== */
+
+.notfound-section { padding: 72px 0; }
+.notfound-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+
+.notfound-stamp {
+  --stamp-fill: var(--dusty-rose);
+  width: 152px; height: 190px;
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-3deg);
+}
+.notfound-stamp-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: var(--ink);
+  line-height: 1;
+}
+.notfound-ink-mark {
+  position: absolute;
+  top: 68%; left: 50%;
+  width: 132px;
+  transform: translate(-50%,-50%) rotate(-11deg);
+  border: 2px solid var(--accent-ink);
+  border-radius: 3px;
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1;
+  padding: 6px 4px;
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 640px) {
+  .notfound-wrap { align-items: center; text-align: center; }
+  .notfound-wrap .chip-row { justify-content: center; }
+}
+
+
 
 footer.site-footer { border-top: 1px solid var(--line); padding: 32px 0 48px; }
 .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-soft); }

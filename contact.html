@@ -60,11 +60,39 @@
               </a>
             </div>
             <div class="contact-methods">
-              <div class="contact-method"><span class="label">Email</span><a href="mailto:you@example.com">you@example.com</a></div>
-              <div class="contact-method"><span class="label">LinkedIn</span><a href="#">linkedin.com/in/[you]</a></div>
-              <div class="contact-method"><span class="label">GitHub</span><a href="#">github.com/[you]</a></div>
+              <div class="contact-method">
+                <span class="label">Email</span>
+                <span class="copy-row">
+                  <a href="mailto:you@example.com">you@example.com</a>
+                  <button type="button" class="copy-btn" data-copy-text="you@example.com" data-copy-what="Email address" aria-label="Copy email address">
+                    <span class="copy-btn-label">Copy</span>
+                    <span class="copy-stamp" aria-hidden="true">✓</span>
+                  </button>
+                </span>
+              </div>
+              <div class="contact-method">
+                <span class="label">LinkedIn</span>
+                <span class="copy-row">
+                  <a href="#">linkedin.com/in/[you]</a>
+                  <button type="button" class="copy-btn" data-copy-text="linkedin.com/in/[you]" data-copy-what="LinkedIn URL" aria-label="Copy LinkedIn URL">
+                    <span class="copy-btn-label">Copy</span>
+                    <span class="copy-stamp" aria-hidden="true">✓</span>
+                  </button>
+                </span>
+              </div>
+              <div class="contact-method">
+                <span class="label">GitHub</span>
+                <span class="copy-row">
+                  <a href="#">github.com/[you]</a>
+                  <button type="button" class="copy-btn" data-copy-text="github.com/[you]" data-copy-what="GitHub URL" aria-label="Copy GitHub URL">
+                    <span class="copy-btn-label">Copy</span>
+                    <span class="copy-stamp" aria-hidden="true">✓</span>
+                  </button>
+                </span>
+              </div>
               <div class="contact-method"><span class="label">Phone</span><a href="tel:+10000000000">[Optional]</a></div>
             </div>
+            <div aria-live="polite" class="sr-only" id="copy-announcer"></div>
           </div>
         </div>
       </section>
