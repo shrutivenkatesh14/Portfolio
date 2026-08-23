@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initStampGrid();
   initOverlay();
   initPostcards();
-  initScrollReveal();
 });
 
 /* --------------------------------------------------------------------------
@@ -128,34 +127,14 @@ function initOverlay() {
     var p = items[index];
     if (!p) return;
     currentIndex = index;
-
-    // reset + retrigger the rubber-stamp "thunk" on every entry, including
-    // prev/next navigation within an already-open case file
-    var stampEl = overlay.querySelector('.overlay-stamp');
-    stampEl.className = 'overlay-stamp stamp-shape c-' + p.color;
-    void stampEl.offsetWidth; // force reflow so the animation replays
-    stampEl.classList.add('stamp-pop');
-
+    overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
     overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
     overlay.querySelector('.overlay-outcome').textContent = p.outcome;
     body.querySelector('.o-problem').textContent = p.problem;
-
-    var approachList = body.querySelector('.o-approach');
-    approachList.innerHTML = p.approach.map(function (a, i) {
-      return '<li style="--reveal-delay:' + (i * 70) + 'ms;">' + a + '</li>';
-    }).join('');
+    body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
-
-    // let the browser paint the hidden state first, then reveal each line
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        approachList.querySelectorAll('li').forEach(function (li) {
-          li.classList.add('is-visible');
-        });
-      });
-    });
   }
 
   function open(index) {
@@ -197,24 +176,15 @@ function initOverlay() {
 
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
-   Each postcard is "taped" into the album — a small washi-tape strip
-   across the top edge, varied in colour, position, and tilt so the rack
-   doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
-
-  rack.innerHTML = POSTS.map(function (post, i) {
+  rack.innerHTML = POSTS.map(function (post) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
-    var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
-    var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
-    var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
-        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
@@ -222,43 +192,4 @@ function initPostcards() {
         '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
       '</a>';
   }).join('');
-}
-
-/* --------------------------------------------------------------------------
-   Reveal-on-scroll for repeatable content — stamps, postcards, ledger rows,
-   skill groups, stats, route stops. Each item settles in with a small
-   stagger based on its position within its own container.
-
-   The hidden state (.reveal, opacity: 0) is only ever applied here, so if
-   this script fails to run, content simply stays visible — no flash of
-   invisible content. Skipped entirely for prefers-reduced-motion.
-   -------------------------------------------------------------------------- */
-function initScrollReveal() {
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced || !('IntersectionObserver' in window)) return;
-
-  var items = Array.prototype.slice.call(
-    document.querySelectorAll('.stamp-card, .postcard, .ledger-row, .skill-group, .stat, .route-stop')
-  );
-  if (!items.length) return;
-
-  var counters = new WeakMap();
-  items.forEach(function (el) {
-    var parent = el.parentElement;
-    var count = counters.get(parent) || 0;
-    counters.set(parent, count + 1);
-    el.classList.add('reveal');
-    el.style.setProperty('--reveal-delay', Math.min(count, 8) * 60 + 'ms');
-  });
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-  items.forEach(function (el) { observer.observe(el); });
 }
