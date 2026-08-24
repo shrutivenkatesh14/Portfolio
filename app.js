@@ -23,11 +23,29 @@ function initRailToggle() {
   scrim.className = 'rail-scrim';
   document.body.appendChild(scrim);
 
-  function closeDrawer() {
+  // Below this width the rail is an off-canvas drawer, not a static sidebar —
+  // its links must not be keyboard/AT-reachable while visually off-screen.
+  var railMedia = window.matchMedia('(max-width: 880px)');
+
+  function syncRailA11y() {
+    var shouldHide = railMedia.matches && !rail.classList.contains('open');
+    if (shouldHide) {
+      rail.setAttribute('inert', '');
+      rail.setAttribute('aria-hidden', 'true');
+    } else {
+      rail.removeAttribute('inert');
+      rail.removeAttribute('aria-hidden');
+    }
+  }
+
+  function closeDrawer(opts) {
+    var wasOpen = rail.classList.contains('open');
     rail.classList.remove('open');
     scrim.classList.remove('visible');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.textContent = '☰';
+    syncRailA11y();
+    if (wasOpen && !(opts && opts.skipFocusReturn)) toggle.focus();
   }
 
   function openDrawer() {
@@ -35,6 +53,9 @@ function initRailToggle() {
     scrim.classList.add('visible');
     toggle.setAttribute('aria-expanded', 'true');
     toggle.textContent = '✕';
+    syncRailA11y();
+    var firstLink = rail.querySelector('a');
+    if (firstLink) firstLink.focus();
   }
 
   toggle.addEventListener('click', function () {
@@ -50,6 +71,14 @@ function initRailToggle() {
   rail.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', closeDrawer);
   });
+
+  if (railMedia.addEventListener) {
+    railMedia.addEventListener('change', syncRailA11y);
+  } else if (railMedia.addListener) {
+    railMedia.addListener(syncRailA11y); // Safari <14 fallback
+  }
+
+  syncRailA11y();
 }
 
 /* --------------------------------------------------------------------------
