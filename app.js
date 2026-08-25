@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
 /* --------------------------------------------------------------------------
    Shared motion helpers
    -------------------------------------------------------------------------- */
+/* Removes any animations still attached to an element (including ones
+   holding a 'forwards' fill) before a new one starts on it — otherwise a
+   stale filled effect from a cancelled or superseded animation can outlive
+   the animation that's supposed to replace it. */
+function cancelAnims(el) {
+  if (!el || !el.getAnimations) return;
+  el.getAnimations().forEach(function (a) { a.cancel(); });
+}
+
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -271,6 +280,7 @@ function initOverlay() {
     var p = items[index];
     if (!p) return;
     currentIndex = index;
+    contentEls.forEach(cancelAnims);
 
     if (!direction || prefersReducedMotion() || !sheet.animate) {
       fillContent(p);
@@ -290,12 +300,16 @@ function initOverlay() {
       fillContent(p);
       contentEls.forEach(function (el) {
         if (!el) return;
+        cancelAnims(el); // drop the exit animation's forwards-fill before the entrance plays
         el.animate(
           [{ opacity: 0, transform: 'translateX(' + (dx * -1) + 'px)' }, { opacity: 1, transform: 'translateX(0)' }],
           { duration: 200, easing: 'cubic-bezier(0.16,1,0.3,1)' }
         );
       });
-    }).catch(function () { fillContent(p); });
+    }).catch(function () {
+      contentEls.forEach(cancelAnims);
+      fillContent(p);
+    });
   }
 
   function open(index, trigger) {
