@@ -7,6 +7,7 @@
   --paper-deep: #DDD6C4;
   --panel: #EAE5D8;
   --ink: #251F19;
+  --ink-rgb: 43, 36, 30;
   --ink-soft: #635B4E;
   --line: #D9D0BC;
   --accent-ink: #7A3325;
@@ -68,13 +69,13 @@ body::before {
   z-index: 0;
   opacity: 0.5;
   background-image:
-    radial-gradient(circle at 12% 22%, rgba(43,36,30,0.05) 0, transparent 1.4px),
-    radial-gradient(circle at 68% 8%, rgba(43,36,30,0.045) 0, transparent 1.2px),
-    radial-gradient(circle at 34% 61%, rgba(43,36,30,0.05) 0, transparent 1.5px),
-    radial-gradient(circle at 82% 47%, rgba(43,36,30,0.04) 0, transparent 1.3px),
-    radial-gradient(circle at 51% 88%, rgba(43,36,30,0.05) 0, transparent 1.4px),
-    radial-gradient(circle at 5% 76%, rgba(43,36,30,0.04) 0, transparent 1.2px),
-    radial-gradient(circle at 91% 91%, rgba(43,36,30,0.045) 0, transparent 1.3px);
+    radial-gradient(circle at 12% 22%, rgba(var(--ink-rgb), 0.05) 0, transparent 1.4px),
+    radial-gradient(circle at 68% 8%, rgba(var(--ink-rgb), 0.045) 0, transparent 1.2px),
+    radial-gradient(circle at 34% 61%, rgba(var(--ink-rgb), 0.05) 0, transparent 1.5px),
+    radial-gradient(circle at 82% 47%, rgba(var(--ink-rgb), 0.04) 0, transparent 1.3px),
+    radial-gradient(circle at 51% 88%, rgba(var(--ink-rgb), 0.05) 0, transparent 1.4px),
+    radial-gradient(circle at 5% 76%, rgba(var(--ink-rgb), 0.04) 0, transparent 1.2px),
+    radial-gradient(circle at 91% 91%, rgba(var(--ink-rgb), 0.045) 0, transparent 1.3px);
   background-size: 180px 180px;
 }
 .wrap, .album, .overlay, .rail, .rail-toggle { position: relative; z-index: 1; }
@@ -245,7 +246,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   position: relative;
   z-index: 5;
   box-shadow: 2px 3px 0 rgba(37,31,25,0.16);
-  transition: transform 0.15s cubic-bezier(0.16,1,0.3,1);
+  transition: transform 0.15s ease;
 }
 .rail-tab::before {
   content: "";
@@ -267,7 +268,6 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail-tab.t-dusty-rose .tab-dot { background: var(--dusty-rose); }
 .rail-tab.t-sage .tab-dot { background: var(--sage); }
 .rail-tab.t-powder-blue .tab-dot { background: var(--powder-blue); }
-.rail-tab.t-butter-yellow .tab-dot { background: var(--butter-yellow); }
 .rail-tab.t-lavender .tab-dot { background: var(--lavender); }
 .rail-tab:hover { transform: translateY(-2px) translateX(-2px); }
 .rail-tab[aria-current="page"] {
@@ -283,7 +283,6 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail-tab.t-dusty-rose[aria-current="page"] { background: var(--dusty-rose); }
 .rail-tab.t-sage[aria-current="page"] { background: var(--sage); }
 .rail-tab.t-powder-blue[aria-current="page"] { background: var(--powder-blue); }
-.rail-tab.t-butter-yellow[aria-current="page"] { background: var(--butter-yellow); }
 .rail-tab.t-lavender[aria-current="page"] { background: var(--lavender); }
 .rail-tab[aria-current="page"] .tab-dot { box-shadow: 0 0 0 1.5px rgba(37,31,25,0.3); }
 
@@ -291,7 +290,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(43,36,30,0.4);
+  background: rgba(var(--ink-rgb), 0.4);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -325,7 +324,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
     max-height: none;
     align-items: stretch;
     padding: 70px 18px 24px;
-    transition: left 0.28s cubic-bezier(0.16,1,0.3,1);
+    transition: left 0.25s ease;
   }
   .rail.open { left: 0; }
   .rail-brand { margin-bottom: 4px; }
@@ -355,7 +354,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   color: var(--ink);
   background: transparent;
   cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), background 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 .btn:hover { transform: translateY(-1px); }
 .btn-primary { background: var(--accent-ink); border-color: var(--accent-ink); color: var(--paper); }
@@ -388,7 +387,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   width: 60px;
   opacity: 0.78;
   border-radius: 1px;
-  box-shadow: 0 2px 3px rgba(43,36,30,0.18);
+  box-shadow: 0 2px 3px rgba(var(--ink-rgb), 0.18);
   background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.45) 0 2px, transparent 2px 7px);
   background-blend-mode: overlay;
   pointer-events: none;
@@ -456,7 +455,7 @@ section + section { border-top: 1px solid var(--line); }
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-position: top left, bottom left, top left, top right;
   background-size: var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66), calc(var(--tile) * 0.66) var(--tile), calc(var(--tile) * 0.66) var(--tile);
-  box-shadow: 3px 4px 0 rgba(43,36,30,0.16);
+  box-shadow: 3px 4px 0 rgba(var(--ink-rgb), 0.16);
   border: 1.5px solid var(--ink);
 }
 
@@ -464,16 +463,6 @@ section + section { border-top: 1px solid var(--line); }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px 24px;
-}
-
-/* Entrance: stamps settle into the album from a slightly over-rotated,
-   lifted state down to their resting tilt — as if just being placed in.
-   Shared with .postcard below so both "list" surfaces speak the same
-   material language. Delay is capped per-item in app.js so a full grid
-   never takes longer than ~300ms to finish settling. */
-@keyframes album-item-enter {
-  from { opacity: 0; transform: translateY(14px) rotate(calc(var(--tilt, -1deg) * 2.6)); }
-  to { opacity: 1; transform: translateY(0) rotate(var(--tilt, -1deg)); }
 }
 
 .stamp-card {
@@ -485,15 +474,13 @@ section + section { border-top: 1px solid var(--line); }
   text-align: left;
   border: none;
   transform: rotate(var(--tilt, -1deg));
-  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s ease;
-  animation: album-item-enter 0.48s cubic-bezier(0.16,1,0.3,1) both;
-  animation-delay: var(--enter-delay, 0ms);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   font: inherit;
 }
 .stamp-card:hover, .stamp-card:focus-visible { transform: rotate(0deg) translateY(-3px); }
 .stamp-card.lifting {
   transform: rotate(0deg) translateY(-10px) scale(1.04);
-  box-shadow: 5px 8px 0 rgba(43,36,30,0.22);
+  box-shadow: 5px 8px 0 rgba(var(--ink-rgb), 0.22);
   transition: transform 0.18s cubic-bezier(0.3,1.3,0.4,1), box-shadow 0.18s ease;
 }
 .stamp-card.c-dusty-rose { --stamp-fill: var(--dusty-rose); }
@@ -574,7 +561,7 @@ section + section { border-top: 1px solid var(--line); }
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(43,36,30,0.55);
+  background: rgba(var(--ink-rgb), 0.55);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -600,15 +587,11 @@ section + section { border-top: 1px solid var(--line); }
   transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1);
 }
 .overlay.open .overlay-sheet { transform: translateY(0) scale(1); }
-/* When the flying stamp is carrying the arrival motion, the sheet should
-   just be there waiting rather than moving too — one thing in flight at
-   a time keeps the moment legible instead of two motions competing. */
-.overlay-sheet.no-entrance-motion { transition: none; }
 
 .overlay-close {
   position: absolute;
-  top: 16px; right: 16px;
-  width: 36px; height: 36px;
+  top: 12px; right: 12px;
+  width: 44px; height: 44px;
   border: 1.5px solid var(--ink);
   background: var(--paper);
   border-radius: 50%;
@@ -617,32 +600,11 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
 }
 
-/* The travelling stamp — a plain .stamp-shape clone that flies from a grid
-   card's on-screen position to the overlay's stamp icon (and back on
-   close). Sits above the overlay backdrop so the flight reads as one
-   continuous piece, then hands off to .overlay-stamp underneath. */
-.stamp-flight {
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 210;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-/* The same stamp-down curve used by .postmark and .copy-stamp elsewhere —
-   one consistent "pressed and it took" gesture across the site. */
-@keyframes stamp-settle {
-  0% { transform: scale(1.16) rotate(-6deg); }
-  55% { transform: scale(0.95) rotate(2deg); }
-  100% { transform: scale(1) rotate(0deg); }
-}
-.overlay-stamp.stamped-in { animation: stamp-settle 0.38s cubic-bezier(0.3,1.6,0.4,1); }
-
 .overlay-head { display: flex; align-items: center; gap: 20px; margin-bottom: 8px; flex-wrap: wrap; }
 .overlay-stamp {
   width: 58px; height: 70px;
   flex: 0 0 auto;
-  border: 1px solid rgba(43,36,30,0.28);
+  border: 1px solid rgba(var(--ink-rgb), 0.28);
 }
 .overlay-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); display: block; }
 .overlay-title { margin: 4px 0 0; font-size: 1.2rem; }
@@ -670,7 +632,7 @@ section + section { border-top: 1px solid var(--line); }
   background: none;
   border: 1.5px solid var(--ink);
   border-radius: var(--radius);
-  padding: 9px 16px;
+  padding: 14px 16px;
   color: var(--ink);
   cursor: pointer;
 }
@@ -726,7 +688,7 @@ section + section { border-top: 1px solid var(--line); }
   background: var(--panel);
   padding: 8px 8px 26px;
   transform: rotate(-1.5deg);
-  box-shadow: 3px 4px 0 rgba(43,36,30,0.14);
+  box-shadow: 3px 4px 0 rgba(var(--ink-rgb), 0.14);
   position: relative;
 }
 .passport-photo img {
@@ -769,10 +731,10 @@ section + section { border-top: 1px solid var(--line); }
 .mail-stamp {
   --stamp-fill: var(--butter-yellow);
   width: 140px; padding: 12px 8px 10px; text-align: center; color: var(--ink);
-  text-decoration: none; transform: rotate(2deg); transition: transform 0.15s cubic-bezier(0.16,1,0.3,1); display: block;
+  text-decoration: none; transform: rotate(2deg); transition: transform 0.15s ease; display: block;
 }
 .mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-.mail-stamp .stamp-inner-mini { border: 1px solid rgba(43,36,30,0.28); padding: 12px 6px; }
+.mail-stamp .stamp-inner-mini { border: 1px solid rgba(var(--ink-rgb), 0.28); padding: 12px 6px; }
 .mail-stamp .m-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
 .mail-stamp .m-title { font-family: var(--font-display); font-size: 1rem; margin: 6px 0; }
 .mail-stamp .m-sub { font-family: var(--font-mono); font-size: 11px; opacity: 0.7; word-break: break-word; }
@@ -800,6 +762,13 @@ section + section { border-top: 1px solid var(--line); }
   padding: 4px 12px;
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease;
+}
+/* invisible hit-slop — keeps the compact chip look while meeting the
+   44px touch-target minimum; purely a hit area, never painted */
+.copy-btn::after {
+  content: "";
+  position: absolute;
+  inset: -11px -6px;
 }
 .copy-btn:hover, .copy-btn:focus-visible { border-color: var(--accent-ink); color: var(--accent-ink); }
 .copy-btn-label { transition: opacity 0.15s ease; }
@@ -843,12 +812,10 @@ section + section { border-top: 1px solid var(--line); }
   text-decoration: none;
   color: var(--ink);
   transform: rotate(var(--tilt, 0deg));
-  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s ease;
-  animation: album-item-enter 0.48s cubic-bezier(0.16,1,0.3,1) both;
-  animation-delay: var(--enter-delay, 0ms);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
 }
-.postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
+.postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(var(--ink-rgb), 0.12); }
 
 /* every postcard is held to the page by a small strip of washi tape —
    see .washi-tape above; colour + rotation + position are set per-card
@@ -902,12 +869,6 @@ section + section { border-top: 1px solid var(--line); }
   align-items: center;
   justify-content: center;
   transform: rotate(-3deg);
-  animation: notfound-stamp-in 0.5s cubic-bezier(0.3,1.6,0.4,1) both;
-}
-@keyframes notfound-stamp-in {
-  0% { opacity: 0; transform: rotate(9deg) scale(1.2); }
-  60% { opacity: 1; transform: rotate(-6deg) scale(0.96); }
-  100% { opacity: 1; transform: rotate(-3deg) scale(1); }
 }
 .notfound-stamp-num {
   font-family: var(--font-display);
