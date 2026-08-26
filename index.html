@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // Applied before first paint so navigating between pages never flashes
+  // back to the day palette while styles.css loads.
+  (function () {
+    try {
+      if (localStorage.getItem('collection-theme') === 'evening') {
+        document.documentElement.setAttribute('data-theme', 'evening');
+      }
+    } catch (e) {}
+  })();
+</script>
 <title>[Your Name] — Business Analyst &amp; Aspiring Consultant</title>
 <meta name="description" content="A small collection of analytics and consulting work, catalogued like a stamp album.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +27,16 @@
 <div class="album">
   <nav class="rail" aria-label="Primary">
     <a class="rail-brand" href="index.html" aria-label="Home" aria-current="page">Y.N</a>
+    <button type="button" class="lamp-toggle" aria-pressed="false" aria-label="Turn on the lamp">
+      <svg class="lamp-glyph" viewBox="0 0 28 30" aria-hidden="true">
+        <path class="lamp-shade" d="M8 4 H20 L24 15 H4 Z"></path>
+        <circle class="lamp-bulb" cx="14" cy="19.5" r="4.5"></circle>
+      </svg>
+      <span class="lamp-cord-swing">
+        <span class="lamp-cord"></span>
+        <span class="lamp-bead"></span>
+      </span>
+    </button>
     <span class="reg-mark" aria-hidden="true"></span>
     <div class="rail-tabs">
       <a class="rail-tab t-lavender" href="about.html"><span class="tab-dot"></span>About</a>
@@ -30,28 +51,17 @@
   <div class="page-content">
     <main>
       <section class="hero">
-        <div class="wrap hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">No.00</p>
-            <h1 class="hero-name">[Your Name]</h1>
-            <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
-            <p class="max-w">
-              I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
-              the case studies, models, and process work I'm proudest of — organised the way I organise everything
-              else I collect.
-            </p>
-            <div class="chip-row hero-actions">
-              <a href="projects.html" class="btn btn-primary">View the collection</a>
-              <a href="contact.html" class="btn btn-quiet">Get in touch</a>
-            </div>
-          </div>
-          <div class="hero-stamp" aria-hidden="true">
-            <span class="hero-stamp-inner">
-              <span class="hero-stamp-tag">Collector's copy</span>
-              <span class="hero-stamp-initials">Y.N</span>
-              <span class="hero-stamp-denom"><span class="hero-stamp-denom-num">00</span></span>
-            </span>
-            <span class="hero-postmark">Leaf<br>00</span>
+        <div class="wrap">
+          <h1 class="hero-name">[Your Name]</h1>
+          <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
+          <p class="max-w">
+            I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
+            the case studies, models, and process work I'm proudest of — organised the way I organise everything
+            else I collect.
+          </p>
+          <div class="chip-row hero-actions">
+            <a href="projects.html" class="btn btn-primary">View the collection</a>
+            <a href="contact.html" class="btn btn-quiet">Get in touch</a>
           </div>
         </div>
       </section>

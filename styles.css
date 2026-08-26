@@ -34,6 +34,19 @@ body.wash-projects{ --paper: #F1F0E4; }
 body.wash-writing { --paper: #F0F0E5; }
 body.wash-contact { --paper: #F3EEE6; }
 
+/* The wash-* rules above set --paper directly on body, so an element's
+   own value always beats one merely inherited from <html> — targeting
+   html[data-theme="evening"] alone would silently lose on every page
+   except index.html. Re-declaring it here, scoped to each wash class,
+   is what makes the evening override actually win everywhere. */
+html[data-theme="evening"] body,
+html[data-theme="evening"] body.wash-about,
+html[data-theme="evening"] body.wash-projects,
+html[data-theme="evening"] body.wash-writing,
+html[data-theme="evening"] body.wash-contact {
+  --paper: #2E2115;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -213,14 +226,14 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   display: block;
   text-decoration: none;
   width: 38px; height: 44px;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--accent-ink);
   border-radius: 1px;
   position: relative;
   display: grid;
   place-items: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--ink);
+  color: var(--accent-ink);
   background: var(--paper);
   box-shadow: 2px 3px 0 rgba(37,31,25,0.16);
   transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s cubic-bezier(0.16,1,0.3,1);
@@ -229,7 +242,26 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   transform: translateY(-2px) rotate(-2deg);
   box-shadow: 3px 5px 0 rgba(37,31,25,0.2);
 }
-.rail-brand::after { content: ""; position: absolute; inset: 3px; border: 1px solid var(--ink); }
+.rail-brand::after { content: ""; position: absolute; inset: 3px; border: 1px solid var(--accent-ink); opacity: 0.7; }
+
+/* A small captioned cue — same convention as the "PORTRAIT" label under
+   the About-page photo — so the mark reads as "this way home," not just
+   a decorative monogram. Sits outside the flex flow so it never disturbs
+   the rail's spacing. Suppressed on the homepage itself (see below), since
+   there's nothing to point to once you're already there. */
+.rail-brand::before {
+  content: "home";
+  position: absolute;
+  top: 100%; left: 50%;
+  margin-top: 6px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
 
 /* On the homepage itself, the monogram reads as franked — the postmark
    motif used everywhere else a stamp has been "cancelled" for use —
@@ -241,8 +273,118 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   transform: rotate(-2deg);
 }
 .rail-brand[aria-current="page"]::after { border-color: var(--paper); opacity: 0.55; }
+.rail-brand[aria-current="page"]::before { content: ""; }
 .rail-brand[aria-current="page"]:hover, .rail-brand[aria-current="page"]:focus-visible {
   transform: translateY(-2px) rotate(-2deg);
+}
+
+/* ==========================================================================
+   Evening lamp toggle — a pendant lamp with a pull-cord, mounted at the
+   top of the album spine next to the nameplate. Pulling the cord swaps
+   the whole site into the "evening" palette below (still to be tuned —
+   see the placeholder token block at the bottom of this section).
+   No literal switch, no sun/moon icon: the object itself is the control.
+   ========================================================================== */
+
+.lamp-toggle {
+  position: absolute;
+  top: 2px; right: 10px;
+  width: 44px; height: 66px;
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 6;
+}
+.lamp-glyph {
+  width: 28px; height: 30px;
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+}
+.lamp-shade {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+.lamp-bulb {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+.lamp-cord-swing {
+  display: block;
+  width: 2px;
+  margin: 0 auto;
+  transform-origin: top center;
+}
+.lamp-cord {
+  display: block;
+  width: 1.4px;
+  height: 16px;
+  margin: 0 auto;
+  background: var(--ink-soft);
+}
+.lamp-bead {
+  display: block;
+  width: 6px; height: 6px;
+  margin: -1px auto 0;
+  border-radius: 50%;
+  border: 1.2px solid var(--ink-soft);
+  background: var(--paper);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.lamp-toggle:hover .lamp-bead,
+.lamp-toggle:focus-visible .lamp-bead {
+  border-color: var(--accent-ink);
+}
+.lamp-toggle:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Lit state — driven by the button's own aria-pressed, so the glow
+   always matches what's announced to assistive tech. */
+.lamp-toggle[aria-pressed="true"] .lamp-shade {
+  fill: var(--lamp-glow, #E3A960);
+  stroke: var(--lamp-glow-deep, #B97A3C);
+}
+.lamp-toggle[aria-pressed="true"] .lamp-bulb {
+  fill: var(--lamp-glow, #E3A960);
+  stroke: var(--lamp-glow-deep, #B97A3C);
+}
+.lamp-toggle[aria-pressed="true"] .lamp-bead {
+  background: var(--lamp-glow-deep, #B97A3C);
+  border-color: var(--lamp-glow-deep, #B97A3C);
+}
+
+@media (max-width: 880px) {
+  .lamp-toggle { top: 2px; right: 4px; }
+}
+
+/* --------------------------------------------------------------------------
+   Placeholder evening palette
+   Swaps paper/ink/panel/line for a lamplit read rather than a literal
+   invert — deep warm umber instead of near-black, cream ink instead of
+   near-white. These are starting values, not final art direction; the
+   stamp pastel variables (--dusty-rose etc.) are deliberately left alone
+   here so you can retune them separately once the base tone is right.
+   -------------------------------------------------------------------------- */
+html[data-theme="evening"] {
+  /* --paper is handled separately above, scoped per wash-* class */
+  --paper-deep: #251A11;
+  --panel: #3A2A1B;
+  --ink: #F0E6D2;
+  --ink-soft: #C7B79A;
+  --line: #4A3826;
+  --lamp-glow: #E3A960;
+  --lamp-glow-deep: #B97A3C;
 }
 
 .rail-tabs { display: flex; flex-direction: column; gap: 12px; align-items: stretch; width: 100%; }
@@ -436,13 +578,6 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
    ========================================================================== */
 
 .hero { padding: 56px 0 0; }
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 40px;
-}
-.hero-copy { min-width: 0; }
 .hero-name {
   font-size: clamp(2.6rem, 9vw, 6.5rem);
   line-height: 1.02;
@@ -458,80 +593,6 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   margin-bottom: 22px;
 }
 .hero-actions { margin-bottom: 48px; }
-
-/* the specimen cover stamp — same perforation, postmark and denom-badge
-   vocabulary as the project stamps and the 404 stamp, given the run of
-   the page. It is the album's own front cover, not a new device. */
-.hero-stamp {
-  --stamp-fill: var(--sage);
-  width: clamp(148px, 20vw, 196px);
-  height: clamp(184px, 25vw, 244px);
-  flex: 0 0 auto;
-  position: relative;
-  transform: rotate(-3deg);
-  margin-top: 10px;
-  animation: notfound-stamp-in 0.6s cubic-bezier(0.3,1.6,0.4,1) both;
-}
-.hero-stamp-inner {
-  border: 1px solid rgba(43,36,30,0.28);
-  margin: 6px;
-  height: calc(100% - 12px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-  text-align: center;
-  color: var(--ink);
-}
-.hero-stamp-tag {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.75;
-}
-.hero-stamp-initials {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2rem, 4vw, 2.6rem);
-  line-height: 1;
-}
-.hero-stamp-denom {
-  width: 34px; height: 34px;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hero-stamp-denom-num { font-family: var(--font-mono); font-size: 12px; }
-.hero-postmark {
-  position: absolute;
-  top: -16px; right: -20px;
-  width: 88px; height: 88px;
-  border: 1.5px solid var(--accent-ink);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: var(--accent-ink);
-  background: rgba(247,242,231,0.9);
-  mix-blend-mode: multiply;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-align: center;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  transform: rotate(11deg);
-}
-.hero-postmark::before { content: ""; position: absolute; inset: 7px; border: 1px solid var(--accent-ink); border-radius: 50%; }
-
-@media (max-width: 760px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
-  .hero-stamp { margin: 0 auto; }
-}
 
 /* ==========================================================================
    Sections

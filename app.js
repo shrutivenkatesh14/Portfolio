@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initOverlay();
   initPostcards();
   initCopyButtons();
+  initEveningToggle();
 });
 
 /* --------------------------------------------------------------------------
@@ -144,6 +145,51 @@ function initRailToggle() {
   }
 
   syncRailA11y();
+}
+
+/* --------------------------------------------------------------------------
+   Evening lamp toggle — pull the cord to swap the whole site into the
+   evening palette. Applied via a data-theme attribute on <html> so any
+   CSS can key off it; persisted to localStorage and re-applied by a
+   small inline script in each page's <head> (before this file even
+   loads) so navigating between pages never flashes back to day mode.
+   -------------------------------------------------------------------------- */
+function initEveningToggle() {
+  var STORAGE_KEY = 'collection-theme';
+  var toggle = document.querySelector('.lamp-toggle');
+  if (!toggle) return;
+
+  var root = document.documentElement;
+  var cord = toggle.querySelector('.lamp-cord-swing');
+
+  function isEvening() {
+    return root.getAttribute('data-theme') === 'evening';
+  }
+
+  function syncA11y(evening) {
+    toggle.setAttribute('aria-pressed', evening ? 'true' : 'false');
+    toggle.setAttribute('aria-label', evening ? 'Turn off the lamp' : 'Turn on the lamp');
+  }
+
+  // The inline head script already set data-theme before paint if needed —
+  // this just brings the button's own a11y state in line with it.
+  syncA11y(isEvening());
+
+  toggle.addEventListener('click', function () {
+    var next = !isEvening();
+    root.setAttribute('data-theme', next ? 'evening' : 'day');
+    syncA11y(next);
+
+    try { localStorage.setItem(STORAGE_KEY, next ? 'evening' : 'day'); } catch (e) {}
+
+    if (!cord || prefersReducedMotion() || !cord.animate) return;
+    cancelAnims(cord);
+    cord.animate([
+      { transform: 'rotate(0deg)' },
+      { transform: 'rotate(' + (next ? 11 : -11) + 'deg)' },
+      { transform: 'rotate(0deg)' }
+    ], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' });
+  });
 }
 
 /* --------------------------------------------------------------------------
