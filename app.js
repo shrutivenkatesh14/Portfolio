@@ -161,11 +161,32 @@ function initCursor() {
 
   var x = window.innerWidth / 2, y = window.innerHeight / 2;
   var cx = x, cy = y;
+  var running = false;
+
+  function tick() {
+    cx += (x - cx) * 0.18;
+    cy += (y - cy) * 0.18;
+    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+    // Stop once the lerp has effectively caught up — no point re-painting
+    // an unchanging position 60 times a second while the pointer is still.
+    if (Math.abs(x - cx) > 0.4 || Math.abs(y - cy) > 0.4) {
+      requestAnimationFrame(tick);
+    } else {
+      running = false;
+    }
+  }
+  function wake() {
+    if (!running) {
+      running = true;
+      requestAnimationFrame(tick);
+    }
+  }
 
   window.addEventListener('mousemove', function (e) {
     x = e.clientX;
     y = e.clientY;
     loupe.style.opacity = '1';
+    wake();
   });
 
   document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
@@ -182,13 +203,7 @@ function initCursor() {
     }
   });
 
-  function tick() {
-    cx += (x - cx) * 0.18;
-    cy += (y - cy) * 0.18;
-    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  wake();
 }
 
 /* --------------------------------------------------------------------------
