@@ -103,7 +103,11 @@ function initRailToggle() {
     scrim.classList.remove('visible');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.textContent = '☰';
-    syncRailA11y();
+    // Deferred: setting inert/aria-hidden on the rail while a click inside
+    // it (e.g. a nav link) is still being dispatched can make WebKit cancel
+    // that click's own default action — the link never navigates. Pushing
+    // this to the next tick lets the click finish first.
+    setTimeout(syncRailA11y, 0);
     if (wasOpen && !(opts && opts.skipFocusReturn)) toggle.focus();
   }
 
@@ -128,7 +132,9 @@ function initRailToggle() {
   });
 
   rail.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', closeDrawer);
+    // Navigating away makes focus-return moot — and forcing it here is
+    // exactly the kind of same-tick DOM mutation that can cancel the click.
+    link.addEventListener('click', function () { closeDrawer({ skipFocusReturn: true }); });
   });
 
   if (railMedia.addEventListener) {
