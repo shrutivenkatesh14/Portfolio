@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
    there is no flash; this wires up the switch and keeps it in sync.
    -------------------------------------------------------------------------- */
 function initTheme() {
-  var toggle = document.querySelector('.theme-toggle');
+  var toggle = document.querySelector('.lamp-toggle');
   if (!toggle) return;
 
   var root = document.documentElement;
@@ -25,7 +25,9 @@ function initTheme() {
   function isDark() { return root.getAttribute('data-theme') === 'dark'; }
 
   function reflect() {
-    toggle.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+    var dark = isDark();
+    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    toggle.setAttribute('aria-label', dark ? 'Turn off the lamp (light mode)' : 'Turn on the lamp (dark mode)');
   }
 
   reflect();

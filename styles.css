@@ -667,7 +667,6 @@ section + section { border-top: 1px solid var(--line); }
   border: 2px solid var(--ink);
   background: var(--panel);
   padding: 8px 8px 26px;
-  transform: rotate(-1.5deg);
   box-shadow: 3px 4px 0 rgba(43,36,30,0.14);
   position: relative;
 }
@@ -675,6 +674,26 @@ section + section { border-top: 1px solid var(--line); }
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+}
+.passport-placeholder {
+  width: 100%; height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ink-soft);
+}
+.passport-placeholder svg {
+  width: 34px; height: 34px;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.4;
+  opacity: 0.6;
+}
+.passport-placeholder span {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
 }
 .passport-photo::after {
   content: "PORTRAIT";
@@ -811,9 +830,6 @@ html[data-theme="dark"] {
   --butter-yellow: #A97C3B;
   --lavender: #5C4463;
   --antique-cream: #EAE0C8;
-
-  --lamp-glow: rgba(232, 182, 112, 0.32);
-  --lamp-glow-soft: rgba(232, 182, 112, 0.14);
 }
 
 /* paper grain reads as warm dust motes in lamplight rather than ink specks */
@@ -862,85 +878,64 @@ html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
   box-shadow: 0 0 0 1.5px rgba(20,17,14,0.35);
 }
 
-/* ---- theme toggle switch, styled as a small brass rocker ---- */
-.theme-toggle {
+/* ---- the lamp toggle: a small vintage flower lamp standing at the top
+   of the rail. It IS the dark-mode control — off/unlit in light mode,
+   lit with a warm pool of light once switched on. One SVG, two states,
+   driven by these tokens so the shapes never change, only the light. ---- */
+:root {
+  --lamp-metal-hi: #C6BCA9;
+  --lamp-metal-lo: #948A76;
+  --lamp-stroke: #6B6153;
+  --lamp-petal: #E7E1D2;
+  --lamp-center: #BDB29C;
+  --lamp-glow: transparent;
+}
+html[data-theme="dark"] {
+  --lamp-metal-hi: #F0D28A;
+  --lamp-metal-lo: #B9822E;
+  --lamp-stroke: #6B4A1E;
+  --lamp-petal: #F3D9A6;
+  --lamp-center: #E8B65B;
+  --lamp-glow: rgba(232,182,112,0.4);
+}
+
+.lamp-toggle {
   position: relative;
-  width: 46px; height: 24px;
+  width: 74px;
+  height: 96px;
   padding: 0;
+  margin-bottom: 4px;
   border: none;
   background: none;
   cursor: pointer;
   flex: 0 0 auto;
+  overflow: visible;
 }
-.theme-toggle-track {
+.lamp-toggle-glow {
   position: absolute;
-  inset: 0;
-  border: 1.5px solid var(--ink);
-  border-radius: 14px;
-  background: var(--panel);
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-.theme-toggle-thumb {
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 17px; height: 17px;
+  top: -34px; left: 50%;
+  width: 220px; height: 220px;
+  transform: translateX(-50%);
   border-radius: 50%;
-  background: var(--paper);
-  border: 1.5px solid var(--ink);
-  transition: transform 0.25s cubic-bezier(0.3,1.4,0.4,1), background 0.2s ease, border-color 0.2s ease;
-}
-html[data-theme="dark"] .theme-toggle-thumb { transform: translateX(21px); }
-.theme-icon {
-  position: absolute;
-  top: 5px;
-  width: 13px; height: 13px;
-  stroke: none;
-  fill: var(--ink-soft);
-  opacity: 0.5;
+  background: radial-gradient(circle, var(--lamp-glow) 0%, transparent 70%);
+  filter: blur(3px);
   pointer-events: none;
-  transition: opacity 0.2s ease, fill 0.2s ease;
+  transition: background 0.6s ease;
 }
-.theme-icon-sun { left: 4px; }
-.theme-icon-moon { right: 4px; }
-html:not([data-theme="dark"]) .theme-icon-sun { fill: var(--accent-ink); opacity: 1; }
-html[data-theme="dark"] .theme-icon-moon { fill: var(--accent-ink); opacity: 1; }
-.theme-toggle:focus-visible .theme-toggle-track { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
-
-/* ---- the lamp: fixed at the top corner of the album, present in the DOM
-   on every page, only visible once dark mode is on (fades in with it) ---- */
-/* mounted at the rail's edge, arm swinging out over the top of the page
-   content — the mount sits under the rail panel by design (z-index below
-   the rail), like the fixture is bolted to the spine, not floating loose */
-.desk-lamp {
-  position: absolute;
-  top: -6px;
-  left: calc(var(--rail-w) - 34px);
-  width: 118px;
-  pointer-events: none;
-  z-index: 45;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-html[data-theme="dark"] .desk-lamp {
-  opacity: 1;
-  transform: translateY(0);
-}
-.desk-lamp-glow {
-  position: absolute;
-  top: 58px; left: -20px;
-  width: 250px; height: 250px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--lamp-glow) 0%, var(--lamp-glow-soft) 42%, transparent 72%);
-  filter: blur(2px);
-  pointer-events: none;
-}
-.desk-lamp-svg { position: relative; display: block; width: 100%; height: auto; }
+.lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
+.lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-petal { fill: var(--lamp-petal); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle:hover .lamp-toggle-svg { filter: brightness(1.08); }
+.lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
+html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 @media (max-width: 880px) {
-  .desk-lamp { width: 92px; top: -4px; left: 10px; }
-  .desk-lamp-glow { width: 190px; height: 190px; top: 48px; left: -30px; }
+  .lamp-toggle { width: 60px; height: 78px; }
+  .lamp-toggle-glow { width: 170px; height: 170px; top: -26px; }
 }
+
 
 /* ---- Contact page: the mail stamp becomes a proper vintage airmail
    collectible in dark mode — cream stock, ink-dark type, chevron border,
