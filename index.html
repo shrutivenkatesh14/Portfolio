@@ -22,31 +22,25 @@
 <body>
 
 <div class="album">
-    <nav class="rail" aria-label="Primary">
+  <nav class="rail" aria-label="Primary">
     <button class="lamp-toggle" type="button" aria-label="Turn on the lamp (dark mode)" aria-pressed="false">
-    <span class="lamp-toggle-glow" aria-hidden="true"></span>
-    <svg class="lamp-toggle-svg" viewBox="0 0 74 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <path id="lampPetal" d="M0,0 C-7,-8 -7,-21 0,-28 C7,-21 7,-8 0,0 Z"/>
-      </defs>
-      <ellipse class="lamp-metal-lo" cx="37" cy="90" rx="17" ry="4.5"/>
-      <ellipse class="lamp-metal" cx="37" cy="88" rx="11" ry="2.6"/>
-      <rect class="lamp-metal" x="34" y="42" width="6" height="46" rx="3"/>
-      <rect class="lamp-metal-lo" x="30" y="60" width="14" height="4.5" rx="2.25"/>
-      <rect class="lamp-metal" x="31.5" y="39" width="11" height="4.5" rx="2.25"/>
-      <g transform="translate(37,26)">
-        <use href="#lampPetal" class="lamp-petal"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(51)"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(102)"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(153)"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(204)"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(255)"/>
-        <use href="#lampPetal" class="lamp-petal" transform="rotate(306)"/>
-        <circle class="lamp-center" r="6.5"/>
-      </g>
-    </svg>
-  </button>
-  <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
+      <span class="lamp-toggle-glow" aria-hidden="true"></span>
+      <svg class="lamp-toggle-svg" viewBox="0 0 74 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><path id="lampPetal" d="M0,0 C-7,-8 -7,-21 0,-28 C7,-21 7,-8 0,0 Z"/></defs>
+        <ellipse class="lamp-metal-lo" cx="37" cy="90" rx="17" ry="4.5"/>
+        <ellipse class="lamp-metal" cx="37" cy="88" rx="11" ry="2.6"/>
+        <rect class="lamp-metal" x="34" y="42" width="6" height="46" rx="3"/>
+        <rect class="lamp-metal-lo" x="30" y="60" width="14" height="4.5" rx="2.25"/>
+        <rect class="lamp-metal" x="31.5" y="39" width="11" height="4.5" rx="2.25"/>
+        <g transform="translate(37,26)">
+          <use href="#lampPetal" class="lamp-petal"/><use href="#lampPetal" class="lamp-petal" transform="rotate(51)"/>
+          <use href="#lampPetal" class="lamp-petal" transform="rotate(102)"/><use href="#lampPetal" class="lamp-petal" transform="rotate(153)"/>
+          <use href="#lampPetal" class="lamp-petal" transform="rotate(204)"/><use href="#lampPetal" class="lamp-petal" transform="rotate(255)"/>
+          <use href="#lampPetal" class="lamp-petal" transform="rotate(306)"/><circle class="lamp-center" r="6.5"/>
+        </g>
+      </svg>
+    </button>
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
     <span class="reg-mark" aria-hidden="true"></span>
     <div class="rail-tabs">
       <a class="rail-tab t-lavender" href="about.html"><span class="tab-dot"></span>About</a>
@@ -61,18 +55,41 @@
   <div class="page-content">
     <main>
       <section class="hero">
-        <div class="wrap">
-          <h1 class="hero-name">[Your Name]</h1>
-          <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
-          <p class="max-w">
-            I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
-            the case studies, models, and process work I'm proudest of — organised the way I organise everything
-            else I collect.
-          </p>
-          <div class="chip-row hero-actions">
-            <a href="projects.html" class="btn btn-primary">View the collection</a>
-            <a href="contact.html" class="btn btn-quiet">Get in touch</a>
+        <div class="wrap hero-layout">
+          <div class="hero-copy">
+            <span class="eyebrow">Collection · 2026</span>
+            <h1 class="hero-name">[Your Name]</h1>
+            <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
+            <p class="max-w">
+              I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
+              the case studies, models, and process work I'm proudest of — organised the way I organise everything
+              else I collect.
+            </p>
+            <div class="chip-row hero-actions">
+              <a href="projects.html" class="btn btn-primary">View the collection</a>
+              <a href="contact.html" class="btn btn-quiet">Get in touch</a>
+            </div>
           </div>
+
+          <aside class="hero-album" aria-label="A page from the collection">
+            <div class="hero-card-top">
+              <span class="eyebrow">Leaf 01 / 04</span>
+              <span class="hero-card-id">Y.N · ARCHIVE</span>
+            </div>
+            <div class="hero-photo-wrap">
+              <img src="portrait.png" alt="Portrait" class="hero-photo">
+              <span class="washi-tape washi-butter hero-tape" aria-hidden="true"></span>
+            </div>
+            <div class="hero-card-copy">
+              <span class="hand-note">a little about me →</span>
+              <p>Curious by nature, analytical by choice. I like finding the useful story hiding inside the numbers.</p>
+            </div>
+            <div class="hero-mini-stamps" aria-hidden="true">
+              <span class="mini-stamp mini-sage">01</span>
+              <span class="mini-stamp mini-blue">02</span>
+              <span class="mini-stamp mini-rose">03</span>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -93,9 +110,11 @@
       </section>
 
       <section>
-        <div class="wrap">
-          <span class="hand-note">the tools I reach for</span>
-          <h2 class="mt-0" style="margin-top:8px;">Tools in the kit</h2>
+        <div class="wrap tools-section">
+          <div>
+            <span class="hand-note">the tools I reach for</span>
+            <h2 class="mt-0" style="margin-top:8px;">Tools in the kit</h2>
+          </div>
           <div class="chip-row">
             <span class="chip">Excel / Google Sheets</span>
             <span class="chip">SQL</span>
@@ -129,10 +148,7 @@
     <button class="overlay-close" aria-label="Close">✕</button>
     <div class="overlay-head">
       <div class="overlay-stamp stamp-shape"></div>
-      <div>
-        <span class="overlay-tag"></span>
-        <h3 class="overlay-title"></h3>
-      </div>
+      <div><span class="overlay-tag"></span><h3 class="overlay-title"></h3></div>
     </div>
     <span class="overlay-denom"></span>
     <p class="overlay-outcome"></p>
