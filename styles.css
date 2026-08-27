@@ -887,6 +887,8 @@ html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
   --lamp-metal-lo: #948A76;
   --lamp-stroke: #6B6153;
   --lamp-petal: #E7E1D2;
+  --lamp-petal-lo: #D6CFBC;
+  --lamp-leaf: #ADB39C;
   --lamp-center: #BDB29C;
   --lamp-glow: transparent;
 }
@@ -894,7 +896,9 @@ html[data-theme="dark"] {
   --lamp-metal-hi: #F0D28A;
   --lamp-metal-lo: #B9822E;
   --lamp-stroke: #6B4A1E;
-  --lamp-petal: #F3D9A6;
+  --lamp-petal: #F6E4C2;
+  --lamp-petal-lo: #ECC98B;
+  --lamp-leaf: #5C7350;
   --lamp-center: #E8B65B;
   --lamp-glow: rgba(232,182,112,0.4);
 }
@@ -925,8 +929,12 @@ html[data-theme="dark"] {
 .lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
 .lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
 .lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-stem { fill: none; stroke: var(--lamp-metal-hi); stroke-width: 3; stroke-linecap: round; transition: stroke 0.4s ease; }
 .lamp-toggle-svg .lamp-petal { fill: var(--lamp-petal); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-petal-lo { fill: var(--lamp-petal-lo); stroke: none; transition: fill 0.4s ease; }
+.lamp-toggle-svg .lamp-leaf { fill: var(--lamp-leaf); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
+.lamp-toggle-svg .lamp-vein { fill: none; stroke: var(--lamp-stroke); stroke-width: 0.6; opacity: 0.5; }
 .lamp-toggle:hover .lamp-toggle-svg { filter: brightness(1.08); }
 .lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
 html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }

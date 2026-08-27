@@ -1,9 +1,8 @@
-/* ============================================================================
+/* ==========================================================================
    THE COLLECTION — app behavior
-   ============================================================================ */
+   ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
-  loadRefinementStyles();
   initTheme();
   initRailToggle();
   initCursor();
@@ -12,35 +11,31 @@ document.addEventListener('DOMContentLoaded', function () {
   initPostcards();
 });
 
-/* Shared visual refinement is loaded here so older inner leaves stay in sync
-   with the homepage without duplicating stylesheet tags in every document. */
-function loadRefinementStyles() {
-  if (document.querySelector('link[data-collection-refinement]')) return;
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'refinement.css';
-  link.dataset.collectionRefinement = 'true';
-  document.head.appendChild(link);
-}
-
 /* --------------------------------------------------------------------------
    Dark mode — same album, night, brass desk lamp.
+   Preference is read before paint (see the inline snippet in <head>) so
+   there is no flash; this wires up the switch and keeps it in sync.
    -------------------------------------------------------------------------- */
 function initTheme() {
   var toggle = document.querySelector('.lamp-toggle');
   if (!toggle) return;
+
   var root = document.documentElement;
+
   function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+
   function reflect() {
     var dark = isDark();
     toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
     toggle.setAttribute('aria-label', dark ? 'Turn off the lamp (light mode)' : 'Turn on the lamp (dark mode)');
   }
+
   reflect();
+
   toggle.addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
+    try { localStorage.setItem('theme', next); } catch (e) { /* private mode etc. */ }
     reflect();
   });
 }
@@ -52,11 +47,13 @@ function initRailToggle() {
   var toggle = document.querySelector('.rail-toggle');
   var rail = document.querySelector('.rail');
   if (!toggle || !rail) return;
+
   toggle.addEventListener('click', function () {
     var isOpen = rail.classList.toggle('open');
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     toggle.textContent = isOpen ? '✕' : '☰';
   });
+
   rail.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', function () {
       rail.classList.remove('open');
@@ -73,30 +70,56 @@ function initCursor() {
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!canHover || reduced) return;
+
   var loupe = document.createElement('div');
   loupe.className = 'loupe-cursor';
   loupe.innerHTML = '<span class="loupe-glass"></span><span class="loupe-handle"></span>';
   document.body.appendChild(loupe);
   document.body.classList.add('has-loupe-cursor');
+
   var x = window.innerWidth / 2, y = window.innerHeight / 2;
   var cx = x, cy = y;
-  window.addEventListener('mousemove', function (e) { x = e.clientX; y = e.clientY; loupe.style.opacity = '1'; });
+
+  window.addEventListener('mousemove', function (e) {
+    x = e.clientX;
+    y = e.clientY;
+    loupe.style.opacity = '1';
+  });
+
   document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
+
   var interactive = 'a, button, summary, .stamp-card, [role="button"]';
-  document.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest(interactive)) loupe.classList.add('is-active'); });
-  document.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest(interactive)) loupe.classList.remove('is-active'); });
-  function tick() { cx += (x - cx) * 0.18; cy += (y - cy) * 0.18; loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'; requestAnimationFrame(tick); }
+  document.addEventListener('mouseover', function (e) {
+    if (e.target.closest && e.target.closest(interactive)) {
+      loupe.classList.add('is-active');
+    }
+  });
+  document.addEventListener('mouseout', function (e) {
+    if (e.target.closest && e.target.closest(interactive)) {
+      loupe.classList.remove('is-active');
+    }
+  });
+
+  function tick() {
+    cx += (x - cx) * 0.18;
+    cy += (y - cy) * 0.18;
+    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+    requestAnimationFrame(tick);
+  }
   requestAnimationFrame(tick);
 }
 
 /* --------------------------------------------------------------------------
    Render the stamp grid (project cards) from PROJECTS data
+   Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
 function initStampGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
+
   var filter = grid.getAttribute('data-filter') || 'all';
   var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
+
   grid.innerHTML = items.map(function (p) {
     var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
     return '' +
@@ -109,25 +132,31 @@ function initStampGrid() {
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
       '</button>';
   }).join('');
+
   grid.dataset.rendered = 'true';
 }
 
 /* --------------------------------------------------------------------------
-   Case-file overlay
+   Case-file overlay — opens when a stamp card is clicked
    -------------------------------------------------------------------------- */
 function initOverlay() {
   var overlay = document.getElementById('case-overlay');
   if (!overlay || typeof PROJECTS === 'undefined') return;
+
   var grid = document.getElementById('stamp-grid');
   var filter = grid ? (grid.getAttribute('data-filter') || 'all') : 'all';
   var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
+
   var closeBtn = overlay.querySelector('.overlay-close');
   var prevBtn = overlay.querySelector('.overlay-prev');
   var nextBtn = overlay.querySelector('.overlay-next');
   var body = overlay.querySelector('.overlay-body');
   var currentIndex = 0;
+
   function render(index) {
-    var p = items[index]; if (!p) return; currentIndex = index;
+    var p = items[index];
+    if (!p) return;
+    currentIndex = index;
     overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
@@ -137,17 +166,36 @@ function initOverlay() {
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
   }
-  function open(index) { render(index); overlay.classList.add('open'); document.body.classList.add('no-scroll'); closeBtn.focus(); }
-  function close() { overlay.classList.remove('open'); document.body.classList.remove('no-scroll'); }
+
+  function open(index) {
+    render(index);
+    overlay.classList.add('open');
+    document.body.classList.add('no-scroll');
+    closeBtn.focus();
+  }
+
+  function close() {
+    overlay.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+
   document.addEventListener('click', function (e) {
-    var card = e.target.closest ? e.target.closest('.stamp-card') : null; if (!card) return;
-    var id = card.getAttribute('data-id'); var index = items.findIndex(function (p) { return p.id === id; });
-    if (index > -1) { card.classList.add('lifting'); setTimeout(function () { card.classList.remove('lifting'); }, 260); open(index); }
+    var card = e.target.closest ? e.target.closest('.stamp-card') : null;
+    if (!card) return;
+    var id = card.getAttribute('data-id');
+    var index = items.findIndex(function (p) { return p.id === id; });
+    if (index > -1) {
+      card.classList.add('lifting');
+      setTimeout(function () { card.classList.remove('lifting'); }, 260);
+      open(index);
+    }
   });
+
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
   prevBtn.addEventListener('click', function () { render((currentIndex - 1 + items.length) % items.length); });
   nextBtn.addEventListener('click', function () { render((currentIndex + 1) % items.length); });
+
   document.addEventListener('keydown', function (e) {
     if (!overlay.classList.contains('open')) return;
     if (e.key === 'Escape') close();
@@ -158,11 +206,16 @@ function initOverlay() {
 
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
+   Each postcard is "taped" into the album — a small washi-tape strip
+   across the top edge, varied in colour, position, and tilt so the rack
+   doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
+
   var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+
   rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
     var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
