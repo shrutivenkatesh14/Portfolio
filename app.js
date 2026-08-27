@@ -1,18 +1,9 @@
-/* ========================================================================== 
+/* ============================================================================
    THE COLLECTION — app behavior
-   ========================================================================== */
-
-/* Load the visual refinement layer on every leaf. This keeps the shared
-   navigation/behavior untouched while making the album treatment consistent
-   across home, about, projects, writing, and contact. */
-(function loadCollectionRefresh() {
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'redesign.css';
-  document.head.appendChild(link);
-})();
+   ============================================================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
+  loadRefinementStyles();
   initTheme();
   initRailToggle();
   initCursor();
@@ -21,10 +12,19 @@ document.addEventListener('DOMContentLoaded', function () {
   initPostcards();
 });
 
+/* Shared visual refinement is loaded here so older inner leaves stay in sync
+   with the homepage without duplicating stylesheet tags in every document. */
+function loadRefinementStyles() {
+  if (document.querySelector('link[data-collection-refinement]')) return;
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'refinement.css';
+  link.dataset.collectionRefinement = 'true';
+  document.head.appendChild(link);
+}
+
 /* --------------------------------------------------------------------------
    Dark mode — same album, night, brass desk lamp.
-   Preference is read before paint (see the inline snippet in <head>) so
-   there is no flash; this wires up the switch and keeps it in sync.
    -------------------------------------------------------------------------- */
 function initTheme() {
   var toggle = document.querySelector('.lamp-toggle');
@@ -45,6 +45,9 @@ function initTheme() {
   });
 }
 
+/* --------------------------------------------------------------------------
+   Mobile rail drawer
+   -------------------------------------------------------------------------- */
 function initRailToggle() {
   var toggle = document.querySelector('.rail-toggle');
   var rail = document.querySelector('.rail');
@@ -63,6 +66,9 @@ function initRailToggle() {
   });
 }
 
+/* --------------------------------------------------------------------------
+   Custom magnifying-glass cursor (desktop / fine-pointer only)
+   -------------------------------------------------------------------------- */
 function initCursor() {
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -72,16 +78,20 @@ function initCursor() {
   loupe.innerHTML = '<span class="loupe-glass"></span><span class="loupe-handle"></span>';
   document.body.appendChild(loupe);
   document.body.classList.add('has-loupe-cursor');
-  var x = window.innerWidth / 2, y = window.innerHeight / 2, cx = x, cy = y;
+  var x = window.innerWidth / 2, y = window.innerHeight / 2;
+  var cx = x, cy = y;
   window.addEventListener('mousemove', function (e) { x = e.clientX; y = e.clientY; loupe.style.opacity = '1'; });
   document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
   var interactive = 'a, button, summary, .stamp-card, [role="button"]';
   document.addEventListener('mouseover', function (e) { if (e.target.closest && e.target.closest(interactive)) loupe.classList.add('is-active'); });
   document.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest(interactive)) loupe.classList.remove('is-active'); });
-  function tick() { cx += (x - cx) * .18; cy += (y - cy) * .18; loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'; requestAnimationFrame(tick); }
+  function tick() { cx += (x - cx) * 0.18; cy += (y - cy) * 0.18; loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'; requestAnimationFrame(tick); }
   requestAnimationFrame(tick);
 }
 
+/* --------------------------------------------------------------------------
+   Render the stamp grid (project cards) from PROJECTS data
+   -------------------------------------------------------------------------- */
 function initStampGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
@@ -89,20 +99,32 @@ function initStampGrid() {
   var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
   grid.innerHTML = items.map(function (p) {
     var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
-    return '' + '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
-      '<span class="stamp-inner"><span class="stamp-tag">' + p.tag + '</span><span class="stamp-title">' + p.title + '</span><span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span></span>' +
-      '<span class="postmark">Completed<br>' + p.date + '</span></button>';
+    return '' +
+      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
+        '<span class="stamp-inner">' +
+          '<span class="stamp-tag">' + p.tag + '</span>' +
+          '<span class="stamp-title">' + p.title + '</span>' +
+          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
+        '</span>' +
+        '<span class="postmark">Completed<br>' + p.date + '</span>' +
+      '</button>';
   }).join('');
   grid.dataset.rendered = 'true';
 }
 
+/* --------------------------------------------------------------------------
+   Case-file overlay
+   -------------------------------------------------------------------------- */
 function initOverlay() {
   var overlay = document.getElementById('case-overlay');
   if (!overlay || typeof PROJECTS === 'undefined') return;
   var grid = document.getElementById('stamp-grid');
   var filter = grid ? (grid.getAttribute('data-filter') || 'all') : 'all';
   var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
-  var closeBtn = overlay.querySelector('.overlay-close'), prevBtn = overlay.querySelector('.overlay-prev'), nextBtn = overlay.querySelector('.overlay-next'), body = overlay.querySelector('.overlay-body');
+  var closeBtn = overlay.querySelector('.overlay-close');
+  var prevBtn = overlay.querySelector('.overlay-prev');
+  var nextBtn = overlay.querySelector('.overlay-next');
+  var body = overlay.querySelector('.overlay-body');
   var currentIndex = 0;
   function render(index) {
     var p = items[index]; if (!p) return; currentIndex = index;
@@ -134,6 +156,9 @@ function initOverlay() {
   });
 }
 
+/* --------------------------------------------------------------------------
+   Render postcards (writing page) from POSTS data
+   -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
@@ -143,10 +168,14 @@ function initPostcards() {
     var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
     var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
     var tapeColor = tapeColors[i % tapeColors.length];
-    return '' + '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
-      '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
-      '<span class="postcard-frank">' + post.platform + '</span><span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
-      '<span class="postcard-title">' + post.title + '</span><span class="postcard-teaser">' + post.teaser + '</span>' +
-      '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span></a>';
+    return '' +
+      '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
+        '<span class="postcard-frank">' + post.platform + '</span>' +
+        '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
+        '<span class="postcard-title">' + post.title + '</span>' +
+        '<span class="postcard-teaser">' + post.teaser + '</span>' +
+        '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
+      '</a>';
   }).join('');
 }
