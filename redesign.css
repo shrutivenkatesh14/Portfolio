@@ -1,0 +1,145 @@
+/* ========================================================================== 
+   COLLECTION REFRESH — quiet, personal, stamp-album portfolio
+   Loaded after styles.css on the home page. The goal is not more decoration;
+   it is stronger hierarchy, a clearer album metaphor, and more breathing room.
+   ========================================================================== */
+
+.hero { padding: 64px 0 54px; }
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(290px, 0.75fr);
+  gap: clamp(42px, 7vw, 92px);
+  align-items: center;
+}
+.hero-copy { padding: 18px 0 10px; }
+.hero-copy .eyebrow { display: inline-block; margin-bottom: 12px; }
+.hero-name {
+  max-width: 760px;
+  font-size: clamp(3.2rem, 8vw, 6.6rem);
+  line-height: .94;
+  letter-spacing: -.045em;
+  margin: 0 0 20px;
+}
+.hero-role {
+  display: inline-block;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+.hero-copy .max-w { font-size: 16px; line-height: 1.7; }
+.hero-actions { margin-top: 30px; margin-bottom: 0; }
+
+/* A restrained “mounted page” beside the introduction. */
+.hero-album {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--ink);
+  padding: 18px;
+  transform: rotate(1.2deg);
+  box-shadow: 5px 6px 0 rgba(43,36,30,.12);
+}
+.hero-album::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.hero-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px 14px;
+  position: relative;
+}
+.hero-card-id {
+  font: 10px/1.2 var(--font-mono);
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+}
+.hero-photo-wrap {
+  position: relative;
+  margin: 0 12px;
+  padding: 8px 8px 26px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transform: rotate(-2deg);
+  box-shadow: 2px 3px 0 rgba(43,36,30,.10);
+}
+.hero-photo { width: 100%; aspect-ratio: 4/3; object-fit: cover; filter: saturate(.78) sepia(.08); }
+.hero-tape { left: 50%; top: -10px; width: 76px; transform: translateX(-50%) rotate(2deg); }
+.hero-card-copy { padding: 22px 10px 8px; }
+.hero-card-copy .hand-note { margin-bottom: 7px; }
+.hero-card-copy p { font-size: 13px; line-height: 1.55; margin: 0; }
+.hero-mini-stamps { display: flex; gap: 8px; margin: 4px 10px 0; }
+.mini-stamp {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 46px;
+  border: 1px solid var(--ink);
+  font: 10px var(--font-mono);
+  box-shadow: 2px 2px 0 rgba(43,36,30,.10);
+}
+.mini-sage { background: var(--sage); }
+.mini-blue { background: var(--powder-blue); }
+.mini-rose { background: var(--dusty-rose); }
+
+section { padding: 62px 0; }
+section + section { border-top: 1px solid var(--line); }
+.section-head { margin-bottom: 34px; }
+.section-head h2 { font-size: clamp(1.75rem, 3vw, 2.35rem); }
+.section-head > .btn { margin-top: 8px; }
+
+/* Give the collection more space than a standard card grid. */
+.stamp-collection {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px 28px;
+  padding: 6px 2px 14px;
+}
+.stamp-card { min-width: 0; }
+.stamp-card:nth-child(2) { --tilt: 1.1deg; }
+.stamp-card:nth-child(3) { --tilt: -.5deg; }
+.stamp-inner {
+  min-height: 188px;
+  padding: 15px 14px 13px;
+  background: color-mix(in srgb, var(--stamp-fill) 88%, white);
+}
+.stamp-title { font-size: 1.24rem; }
+.stamp-card:hover, .stamp-card:focus-visible { transform: rotate(0) translateY(-5px); }
+.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: .72; }
+
+.tools-section {
+  display: grid;
+  grid-template-columns: minmax(180px, .45fr) minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+}
+.tools-section .chip-row { padding-top: 5px; }
+.chip {
+  border-radius: 2px;
+  background: transparent;
+  border-color: var(--line);
+  padding: 8px 11px;
+}
+
+.site-footer { margin-top: 0; }
+
+@media (max-width: 900px) {
+  .hero-layout { grid-template-columns: 1fr; max-width: 760px; }
+  .hero-album { max-width: 440px; width: 100%; margin: 0 auto; }
+  .stamp-collection { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tools-section { grid-template-columns: 1fr; gap: 18px; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding-top: 42px; }
+  .hero-name { font-size: clamp(2.8rem, 15vw, 4.6rem); }
+  .stamp-collection { grid-template-columns: 1fr; max-width: 360px; }
+  .stamp-card:nth-child(2), .stamp-card:nth-child(3) { --tilt: 0deg; }
+  .hero-album { transform: rotate(.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-album, .hero-photo-wrap { transform: none; }
+}
