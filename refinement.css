@@ -1,0 +1,138 @@
+/* =====================================================================
+   COLLECTION REFINEMENT — quiet vintage stamp album
+   Portfolio first. Collector personality second.
+   ===================================================================== */
+
+/* --- Square stamps ---------------------------------------------------- */
+.stamp-collection {
+  grid-template-columns: repeat(3, minmax(150px, 190px));
+  justify-content: start;
+  gap: 34px 32px;
+  padding: 12px 4px 18px;
+}
+.stamp-card {
+  width: 190px;
+  height: 190px;
+  aspect-ratio: 1 / 1;
+  justify-self: start;
+}
+.stamp-inner {
+  min-height: 0;
+  height: calc(100% - 10px);
+  padding: 14px 13px 12px;
+}
+.stamp-title { font-size: 1.08rem; }
+.stamp-denom-badge { width: 30px; height: 30px; }
+
+/* --- Home: one photograph, one personal collector note ---------------- */
+.hero-mini-stamps { display: none !important; }
+.hero-album { max-width: 430px; }
+.hero-photo { aspect-ratio: 4 / 3; }
+.collector-card {
+  margin-top: 28px;
+  max-width: 760px;
+  padding: 22px 24px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 3px 4px 0 rgba(43,36,30,.08);
+  position: relative;
+}
+.collector-card::before {
+  content: "";
+  position: absolute;
+  left: 22px; right: 22px; top: 8px;
+  border-top: 1px dashed var(--line);
+}
+.collector-title {
+  font: 700 13px var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+.collector-copy { max-width: 650px; margin: 0; }
+.collector-list {
+  display: flex; flex-wrap: wrap; gap: 7px 18px;
+  margin: 13px 0 0; padding: 0; list-style: none;
+  font-size: 12px; color: var(--ink-soft);
+}
+.collector-list li::before { content: "· "; color: var(--accent-ink); }
+.collection-numbers {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  max-width: 760px; margin-top: 28px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.collection-number { padding: 17px 18px 15px; border-right: 1px solid var(--line); }
+.collection-number:last-child { border-right: 0; }
+.collection-number .num { display:block; font:700 25px/1 var(--font-mono); }
+.collection-number .label { display:block; margin-top:7px; font:10px/1.3 var(--font-mono); letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); }
+
+/* --- About: no duplicate portrait; let the collector story lead -------- */
+body.wash-about .intro-grid { grid-template-columns: 1fr; max-width: 820px; }
+body.wash-about .passport-photo { display:none; }
+body.wash-about .stats-strip { display:none; }
+body.wash-about .collector-card { margin-top:30px; }
+body.wash-about .skill-groups { gap:14px; }
+body.wash-about .skill-group { background:transparent; }
+
+/* --- Quiet album navigation ------------------------------------------- */
+.rail { gap: 28px; }
+.rail-tab { box-shadow: 1px 2px 0 rgba(37,31,25,.12); }
+.rail-tab[aria-current="page"] { box-shadow: 2px 3px 6px rgba(37,31,25,.14); }
+
+/* --- Writing remains postcards, not stamps ---------------------------- */
+body.wash-writing .postcard { border-radius:1px; }
+
+/* --- Vintage brass desk lamp ------------------------------------------ */
+.lamp-toggle {
+  width:82px; height:94px; margin-left:-3px;
+}
+.lamp-toggle-svg { display:none !important; }
+.lamp-toggle::before {
+  content:"";
+  position:absolute; left:23px; top:9px;
+  width:38px; height:25px;
+  background:linear-gradient(180deg,#d7c18c,#9a7540);
+  border:1px solid #6d522f;
+  border-radius:19px 19px 5px 5px;
+  transform:rotate(-7deg);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.22),2px 3px 0 rgba(43,36,30,.14);
+  z-index:2;
+}
+.lamp-toggle::after {
+  content:"";
+  position:absolute; left:43px; top:30px;
+  width:5px; height:43px;
+  background:#8b6738;
+  border:1px solid #614723;
+  border-radius:4px;
+  transform:rotate(6deg);
+  box-shadow:7px 40px 0 1px #77582f,2px 42px 0 5px #9b7640;
+  z-index:1;
+}
+.lamp-toggle-glow {
+  width:145px; height:145px; top:-28px;
+  background:radial-gradient(circle,rgba(235,192,111,.26),transparent 68%);
+  opacity:.5;
+}
+html[data-theme="dark"] .lamp-toggle::before {
+  background:linear-gradient(180deg,#e3cc8f,#a87939);
+  box-shadow:0 0 14px rgba(235,192,111,.34),inset 0 2px 2px rgba(255,255,255,.24);
+}
+html[data-theme="dark"] .lamp-toggle-glow { opacity:.95; }
+
+/* --- Small screens ----------------------------------------------------- */
+@media (max-width:900px) {
+  .stamp-collection { grid-template-columns:repeat(2,minmax(150px,190px)); }
+  .stamp-card { width:190px; height:190px; }
+}
+@media (max-width:600px) {
+  .stamp-collection { grid-template-columns:1fr 1fr; gap:24px 14px; }
+  .stamp-card { width:min(42vw,170px); height:min(42vw,170px); }
+  .stamp-inner { padding:11px 10px 10px; }
+  .stamp-title { font-size:.92rem; }
+  .stamp-tag { font-size:8px; }
+  .stamp-denom-badge { width:26px; height:26px; }
+  .collection-numbers { grid-template-columns:1fr; }
+  .collection-number { border-right:0; border-bottom:1px solid var(--line); }
+  .collection-number:last-child { border-bottom:0; }
+}
