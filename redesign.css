@@ -1,145 +1,146 @@
 /* ========================================================================== 
    COLLECTION REFRESH — quiet, personal, stamp-album portfolio
-   Loaded after styles.css on the home page. The goal is not more decoration;
-   it is stronger hierarchy, a clearer album metaphor, and more breathing room.
    ========================================================================== */
 
 .hero { padding: 64px 0 54px; }
-.hero-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(290px, 0.75fr);
-  gap: clamp(42px, 7vw, 92px);
-  align-items: center;
-}
-.hero-copy { padding: 18px 0 10px; }
-.hero-copy .eyebrow { display: inline-block; margin-bottom: 12px; }
-.hero-name {
-  max-width: 760px;
-  font-size: clamp(3.2rem, 8vw, 6.6rem);
-  line-height: .94;
-  letter-spacing: -.045em;
-  margin: 0 0 20px;
-}
-.hero-role {
-  display: inline-block;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-  margin-bottom: 22px;
-}
-.hero-copy .max-w { font-size: 16px; line-height: 1.7; }
-.hero-actions { margin-top: 30px; margin-bottom: 0; }
+.hero-layout { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(290px,.75fr); gap:clamp(42px,7vw,92px); align-items:center; }
+.hero-copy { padding:18px 0 10px; }
+.hero-copy .eyebrow { display:inline-block; margin-bottom:12px; }
+.hero-name { max-width:760px; font-size:clamp(3.2rem,8vw,6.6rem); line-height:.94; letter-spacing:-.045em; margin:0 0 20px; }
+.hero-role { display:inline-block; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:14px; margin-bottom:22px; }
+.hero-copy .max-w { font-size:16px; line-height:1.7; }
+.hero-actions { margin-top:30px; margin-bottom:0; }
+.hero-album { position:relative; background:var(--panel); border:1px solid var(--ink); padding:18px; transform:rotate(1.2deg); box-shadow:5px 6px 0 rgba(43,36,30,.12); }
+.hero-album::before { content:""; position:absolute; inset:6px; border:1px solid var(--line); pointer-events:none; }
+.hero-card-top { display:flex; justify-content:space-between; gap:12px; padding:0 4px 14px; position:relative; }
+.hero-card-id { font:10px/1.2 var(--font-mono); letter-spacing:.1em; color:var(--ink-soft); }
+.hero-photo-wrap { position:relative; margin:0 12px; padding:8px 8px 26px; background:var(--paper); border:1px solid var(--line); transform:rotate(-2deg); box-shadow:2px 3px 0 rgba(43,36,30,.10); }
+.hero-photo { width:100%; aspect-ratio:4/3; object-fit:cover; filter:saturate(.78) sepia(.08); }
+.hero-tape { left:50%; top:-10px; width:76px; transform:translateX(-50%) rotate(2deg); }
+.hero-card-copy { padding:22px 10px 8px; }
+.hero-card-copy .hand-note { margin-bottom:7px; }
+.hero-card-copy p { font-size:13px; line-height:1.55; margin:0; }
+.hero-mini-stamps { display:flex; gap:8px; margin:4px 10px 0; }
+.mini-stamp { display:grid; place-items:center; width:38px; height:46px; border:1px solid var(--ink); font:10px var(--font-mono); box-shadow:2px 2px 0 rgba(43,36,30,.10); }
+.mini-sage { background:var(--sage); } .mini-blue { background:var(--powder-blue); } .mini-rose { background:var(--dusty-rose); }
 
-/* A restrained “mounted page” beside the introduction. */
-.hero-album {
-  position: relative;
-  background: var(--panel);
-  border: 1px solid var(--ink);
-  padding: 18px;
-  transform: rotate(1.2deg);
-  box-shadow: 5px 6px 0 rgba(43,36,30,.12);
-}
-.hero-album::before {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border: 1px solid var(--line);
-  pointer-events: none;
-}
-.hero-card-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 4px 14px;
-  position: relative;
-}
-.hero-card-id {
-  font: 10px/1.2 var(--font-mono);
-  letter-spacing: .1em;
-  color: var(--ink-soft);
-}
-.hero-photo-wrap {
-  position: relative;
-  margin: 0 12px;
-  padding: 8px 8px 26px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  transform: rotate(-2deg);
-  box-shadow: 2px 3px 0 rgba(43,36,30,.10);
-}
-.hero-photo { width: 100%; aspect-ratio: 4/3; object-fit: cover; filter: saturate(.78) sepia(.08); }
-.hero-tape { left: 50%; top: -10px; width: 76px; transform: translateX(-50%) rotate(2deg); }
-.hero-card-copy { padding: 22px 10px 8px; }
-.hero-card-copy .hand-note { margin-bottom: 7px; }
-.hero-card-copy p { font-size: 13px; line-height: 1.55; margin: 0; }
-.hero-mini-stamps { display: flex; gap: 8px; margin: 4px 10px 0; }
-.mini-stamp {
-  display: grid;
-  place-items: center;
-  width: 38px; height: 46px;
-  border: 1px solid var(--ink);
-  font: 10px var(--font-mono);
-  box-shadow: 2px 2px 0 rgba(43,36,30,.10);
-}
-.mini-sage { background: var(--sage); }
-.mini-blue { background: var(--powder-blue); }
-.mini-rose { background: var(--dusty-rose); }
+section { padding:62px 0; }
+section + section { border-top:1px solid var(--line); }
+.section-head { margin-bottom:34px; }
+.section-head h2 { font-size:clamp(1.75rem,3vw,2.35rem); }
+.section-head > .btn { margin-top:8px; }
+.stamp-collection { grid-template-columns:repeat(3,minmax(0,1fr)); gap:34px 28px; padding:6px 2px 14px; }
+.stamp-card { min-width:0; }
+.stamp-card:nth-child(2) { --tilt:1.1deg; } .stamp-card:nth-child(3) { --tilt:-.5deg; }
+.stamp-inner { min-height:188px; padding:15px 14px 13px; background:color-mix(in srgb,var(--stamp-fill) 88%,white); }
+.stamp-title { font-size:1.24rem; }
+.stamp-card:hover,.stamp-card:focus-visible { transform:rotate(0) translateY(-5px); }
+.stamp-card:hover .postmark,.stamp-card:focus-visible .postmark { opacity:.72; }
+.tools-section { display:grid; grid-template-columns:minmax(180px,.45fr) minmax(0,1fr); gap:34px; align-items:start; }
+.tools-section .chip-row { padding-top:5px; }
+.chip { border-radius:2px; background:transparent; border-color:var(--line); padding:8px 11px; }
+.site-footer { margin-top:0; }
 
-section { padding: 62px 0; }
-section + section { border-top: 1px solid var(--line); }
-.section-head { margin-bottom: 34px; }
-.section-head h2 { font-size: clamp(1.75rem, 3vw, 2.35rem); }
-.section-head > .btn { margin-top: 8px; }
+/* --------------------------------------------------------------------------
+   Inner leaves: the same album language, used quietly across the portfolio.
+   -------------------------------------------------------------------------- */
+body.wash-about .page-content section:first-child,
+body.wash-projects .page-content section:first-child,
+body.wash-writing .page-content section:first-child,
+body.wash-contact .page-content section:first-child { padding-top:70px; }
+body.wash-about .page-content section:first-child h1,
+body.wash-projects .page-content section:first-child h1,
+body.wash-writing .page-content section:first-child h1,
+body.wash-contact .page-content section:first-child h1 { font-size:clamp(2.8rem,6vw,4.7rem) !important; line-height:1; letter-spacing:-.04em; margin-bottom:18px; }
+body.wash-about .page-content section:first-child .eyebrow::after,
+body.wash-projects .page-content section:first-child .eyebrow::after,
+body.wash-writing .page-content section:first-child .eyebrow::after,
+body.wash-contact .page-content section:first-child .eyebrow::after { content:"  /  COLLECTION LEAF"; color:var(--ink-soft); }
+body.wash-about .page-content section:first-child > .wrap,
+body.wash-projects .page-content section:first-child > .wrap,
+body.wash-writing .page-content section:first-child > .wrap,
+body.wash-contact .page-content section:first-child > .wrap { position:relative; }
+body.wash-about .page-content section:first-child > .wrap::after,
+body.wash-projects .page-content section:first-child > .wrap::after,
+body.wash-writing .page-content section:first-child > .wrap::after,
+body.wash-contact .page-content section:first-child > .wrap::after { content:"ARCHIVE COPY"; position:absolute; right:clamp(20px,4vw,40px); top:8px; font:10px var(--font-mono); letter-spacing:.14em; color:var(--ink-soft); transform:rotate(90deg); transform-origin:top right; opacity:.65; }
 
-/* Give the collection more space than a standard card grid. */
-.stamp-collection {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 34px 28px;
-  padding: 6px 2px 14px;
-}
-.stamp-card { min-width: 0; }
-.stamp-card:nth-child(2) { --tilt: 1.1deg; }
-.stamp-card:nth-child(3) { --tilt: -.5deg; }
-.stamp-inner {
-  min-height: 188px;
-  padding: 15px 14px 13px;
-  background: color-mix(in srgb, var(--stamp-fill) 88%, white);
-}
-.stamp-title { font-size: 1.24rem; }
-.stamp-card:hover, .stamp-card:focus-visible { transform: rotate(0) translateY(-5px); }
-.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: .72; }
+/* About: a clean catalogue sheet rather than a résumé dump. */
+body.wash-about .intro-grid { align-items:center; gap:clamp(32px,6vw,76px); }
+body.wash-about .intro-grid > p { line-height:1.75; }
+body.wash-about .passport-photo { transform:rotate(1.5deg); box-shadow:4px 5px 0 rgba(43,36,30,.10); }
+body.wash-about .stats-strip { margin-top:28px; border:1px solid var(--line); background:var(--panel); }
+body.wash-about .stat { padding:22px 18px; border-right:1px solid var(--line); }
+body.wash-about .stat:last-child { border-right:0; }
+body.wash-about .stat .num { font-size:2rem; }
+body.wash-about .ledger { margin-top:22px; background:rgba(255,255,255,.16); }
+body.wash-about .ledger-row { padding:16px 0; border-top:1px dashed var(--line); }
+body.wash-about .ledger-row:first-child { border-top:1px solid var(--line); }
+body.wash-about .route { position:relative; margin-top:24px; padding-left:28px; }
+body.wash-about .route::before { content:""; position:absolute; left:7px; top:8px; bottom:8px; border-left:1px dashed var(--line); }
+body.wash-about .route-stop { position:relative; padding:0 0 34px 20px; }
+body.wash-about .route-stop::before { content:""; position:absolute; left:-25px; top:7px; width:10px; height:10px; border:1px solid var(--ink); background:var(--paper); border-radius:50%; }
+body.wash-about .skill-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin-top:24px; }
+body.wash-about .skill-group { padding:18px; border:1px solid var(--line); background:var(--panel); }
+body.wash-about .skill-label { font:11px var(--font-mono); text-transform:uppercase; letter-spacing:.12em; color:var(--accent-ink); }
+body.wash-about .skill-list { margin:8px 0 0; }
 
-.tools-section {
-  display: grid;
-  grid-template-columns: minmax(180px, .45fr) minmax(0, 1fr);
-  gap: 34px;
-  align-items: start;
-}
-.tools-section .chip-row { padding-top: 5px; }
-.chip {
-  border-radius: 2px;
-  background: transparent;
-  border-color: var(--line);
-  padding: 8px 11px;
-}
+/* Projects: make the page read like an actual album leaf. */
+body.wash-projects .page-content main > section:nth-child(2) { padding-top:30px; }
+body.wash-projects .stamp-collection { padding-top:20px; }
+body.wash-projects .stamp-card:nth-child(4) { --tilt:-1deg; }
+body.wash-projects .stamp-card:nth-child(5) { --tilt:.8deg; }
+body.wash-projects .stamp-card:nth-child(6) { --tilt:-.4deg; }
+body.wash-projects .stamp-card { transition:transform .18s ease, filter .18s ease; }
+body.wash-projects .stamp-card:hover { filter:brightness(1.02); }
 
-.site-footer { margin-top: 0; }
+/* Writing: postcards become the second collection type. */
+body.wash-writing .postcard-rack { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:30px; padding:10px 2px 18px; }
+body.wash-writing .postcard { min-height:270px; background:var(--panel); border:1px solid var(--ink); box-shadow:4px 5px 0 rgba(43,36,30,.10); padding:26px 22px 20px; text-decoration:none; color:var(--ink); position:relative; overflow:visible; transition:transform .18s ease, box-shadow .18s ease; }
+body.wash-writing .postcard:nth-child(2) { transform:rotate(1deg); } body.wash-writing .postcard:nth-child(3) { transform:rotate(-.7deg); }
+body.wash-writing .postcard:hover { transform:translateY(-5px) rotate(0); box-shadow:6px 8px 0 rgba(43,36,30,.12); }
+body.wash-writing .postcard-frank { display:block; font:10px var(--font-mono); text-transform:uppercase; letter-spacing:.12em; color:var(--accent-ink); border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:22px; }
+body.wash-writing .postcard-tag { display:block; font:10px var(--font-mono); letter-spacing:.08em; color:var(--ink-soft); margin-bottom:12px; }
+body.wash-writing .postcard-title { display:block; font:700 1.25rem/1.2 var(--font-display); margin-bottom:12px; }
+body.wash-writing .postcard-teaser { display:block; font-size:13px; line-height:1.6; color:var(--ink-soft); }
+body.wash-writing .postcard-cta { position:absolute; left:22px; bottom:18px; font:11px var(--font-mono); color:var(--accent-ink); }
 
-@media (max-width: 900px) {
-  .hero-layout { grid-template-columns: 1fr; max-width: 760px; }
-  .hero-album { max-width: 440px; width: 100%; margin: 0 auto; }
-  .stamp-collection { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tools-section { grid-template-columns: 1fr; gap: 18px; }
-}
+/* Contact: one strong piece of correspondence, not a form-heavy page. */
+body.wash-contact .envelope { margin-top:10px; background:var(--panel); border:1px solid var(--ink); box-shadow:5px 6px 0 rgba(43,36,30,.10); }
+body.wash-contact .envelope-top { padding:clamp(24px,5vw,52px); min-height:310px; }
+body.wash-contact .address-block { font-size:14px; line-height:1.8; }
+body.wash-contact .mail-stamp { transform:rotate(2deg); box-shadow:3px 4px 0 rgba(43,36,30,.12); }
+body.wash-contact .contact-methods { background:var(--paper); border-top:1px solid var(--line); }
+body.wash-contact .contact-method { padding:17px 20px; border-bottom:1px dashed var(--line); }
+body.wash-contact .contact-method:last-child { border-bottom:0; }
+body.wash-contact .contact-method .label { text-transform:uppercase; letter-spacing:.1em; }
 
-@media (max-width: 600px) {
-  .hero { padding-top: 42px; }
-  .hero-name { font-size: clamp(2.8rem, 15vw, 4.6rem); }
-  .stamp-collection { grid-template-columns: 1fr; max-width: 360px; }
-  .stamp-card:nth-child(2), .stamp-card:nth-child(3) { --tilt: 0deg; }
-  .hero-album { transform: rotate(.5deg); }
+@media (max-width:900px) {
+  .hero-layout { grid-template-columns:1fr; max-width:760px; }
+  .hero-album { max-width:440px; width:100%; margin:0 auto; }
+  .stamp-collection { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .tools-section { grid-template-columns:1fr; gap:18px; }
+  body.wash-writing .postcard-rack { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-album, .hero-photo-wrap { transform: none; }
+@media (max-width:700px) {
+  body.wash-about .skill-groups { grid-template-columns:1fr; }
+  body.wash-about .stats-strip { grid-template-columns:repeat(2,1fr); }
+  body.wash-about .stat { border-bottom:1px solid var(--line); }
+  body.wash-about .stat:nth-child(2) { border-right:0; }
+  body.wash-writing .postcard-rack { grid-template-columns:1fr; max-width:420px; }
+  body.wash-writing .postcard:nth-child(2),body.wash-writing .postcard:nth-child(3) { transform:none; }
 }
+@media (max-width:600px) {
+  .hero { padding-top:42px; }
+  .hero-name { font-size:clamp(2.8rem,15vw,4.6rem); }
+  .stamp-collection { grid-template-columns:1fr; max-width:360px; }
+  .stamp-card:nth-child(2),.stamp-card:nth-child(3) { --tilt:0deg; }
+  .hero-album { transform:rotate(.5deg); }
+  body.wash-about .stats-strip { grid-template-columns:1fr; }
+  body.wash-about .stat,.body.wash-about .stat:nth-child(2) { border-right:0; }
+  body.wash-about .page-content section:first-child > .wrap::after,
+  body.wash-projects .page-content section:first-child > .wrap::after,
+  body.wash-writing .page-content section:first-child > .wrap::after,
+  body.wash-contact .page-content section:first-child > .wrap::after { display:none; }
+}
+@media (prefers-reduced-motion:reduce) { .hero-album,.hero-photo-wrap { transform:none; } }
