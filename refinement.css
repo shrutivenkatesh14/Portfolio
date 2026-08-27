@@ -163,47 +163,46 @@ body.wash-about .passport-photo img {
 }
 body.wash-about .passport-placeholder { min-height: 280px; }
 
-/* Use the supplied lamp artwork instead of the old CSS-drawn lamp. */
+/* The lamp is a standalone illustrated object, not a button/bubble/card. */
 .lamp-toggle {
-  width: 112px;
-  height: 126px;
-  margin-left: -12px;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 132px;
+  height: 164px;
+  flex: 0 0 164px;
+  margin: -6px 0 -4px -8px;
   padding: 0;
   border: 0;
-  background: transparent;
+  outline: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
   position: relative;
+  display: block;
+  cursor: pointer;
+  overflow: visible;
 }
 .lamp-toggle-svg { display: none !important; }
 .lamp-toggle::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("assets/lamp.png") center / contain no-repeat;
-  filter: drop-shadow(2px 3px 2px rgba(43,36,30,.18));
+  background: url("assets/lamp-standalone.webp") center / contain no-repeat;
+  filter: drop-shadow(2px 4px 3px rgba(43,36,30,.18));
   transition: transform .18s ease, filter .18s ease;
 }
 .lamp-toggle:hover::before {
-  transform: translateY(-2px) rotate(-1deg);
-  filter: drop-shadow(2px 4px 3px rgba(43,36,30,.22));
+  transform: translateY(-3px) rotate(-1deg);
+  filter: drop-shadow(3px 6px 4px rgba(43,36,30,.22));
 }
-.lamp-toggle::after { display: none; }
-.lamp-toggle-glow {
-  width: 150px;
-  height: 150px;
-  left: -20px;
-  top: -12px;
-  background: radial-gradient(circle, rgba(235,192,111,.24), transparent 68%);
-  opacity: 0;
-  transition: opacity .2s ease;
-  pointer-events: none;
-}
-html[data-theme="dark"] .lamp-toggle-glow { opacity: 1; }
+.lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 4px; }
+.lamp-toggle-glow { display: none !important; }
 html[data-theme="dark"] .lamp-toggle::before {
-  filter: drop-shadow(0 0 7px rgba(235,192,111,.35)) drop-shadow(2px 3px 2px rgba(0,0,0,.25));
+  filter: drop-shadow(0 0 8px rgba(235,192,111,.28)) drop-shadow(2px 4px 3px rgba(0,0,0,.25));
 }
 
 @media (max-width: 880px) {
-  .lamp-toggle { width: 96px; height: 108px; margin-left: -6px; }
+  .lamp-toggle { width: 104px; height: 132px; flex-basis: 132px; margin: -2px 0 2px -2px; }
   body.wash-about .intro-grid { grid-template-columns: 1fr; }
   body.wash-about .passport-photo { max-width: 280px; }
 }
