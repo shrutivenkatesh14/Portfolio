@@ -225,6 +225,18 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 }
 .rail-brand::after { content: ""; position: absolute; inset: 3px; border: 1px solid var(--ink); }
 
+.rail-brand[aria-current="page"] {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+  color: var(--paper);
+  box-shadow: 3px 5px 10px rgba(37,31,25,0.22);
+  transform: translateY(-1px);
+}
+.rail-brand[aria-current="page"]::after { border-color: var(--paper); opacity: 0.55; }
+html[data-theme="dark"] .rail-brand[aria-current="page"] {
+  box-shadow: 0 5px 16px rgba(217,165,102,0.28), 0 3px 6px rgba(0,0,0,0.45);
+}
+
 .rail-tabs { display: flex; flex-direction: column; gap: 12px; align-items: stretch; width: 100%; }
 
 .rail-tab {
