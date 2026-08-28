@@ -113,6 +113,25 @@ function initCursor() {
    Render the stamp grid (project cards) from PROJECTS data
    Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Stamp category icons — one small monoline glyph per project tag, so each
+   stamp reads at a glance instead of relying on color + text alone.
+   -------------------------------------------------------------------------- */
+var STAMP_ICONS = {
+  "Data Analysis": '<path d="M4 16V10M10 16V4M16 16V12"/>',
+  "Process Improvement": '<circle cx="10" cy="10" r="3.4"/><path d="M10 2.5v2.4M10 15.1v2.4M17.5 10h-2.4M4.9 10H2.5M15.6 4.4l-1.7 1.7M6.1 13.9l-1.7 1.7M15.6 15.6l-1.7-1.7M6.1 6.1L4.4 4.4"/>',
+  "Strategy": '<circle cx="10" cy="10" r="7.2"/><path d="M10 5.2l1.5 3.3 3.3 1.5-3.3 1.5-1.5 3.3-1.5-3.3-3.3-1.5 3.3-1.5z"/>',
+  "Financial Modelling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
+  "Data Visualisation": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
+  "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>'
+};
+var STAMP_ICON_FALLBACK = '<path d="M10 2.2l1.9 4.7 5.1.4-3.9 3.3 1.2 5-4.3-2.8-4.3 2.8 1.2-5-3.9-3.3 5.1-.4z"/>';
+
+function stampIconSvg(tag) {
+  var inner = STAMP_ICONS[tag] || STAMP_ICON_FALLBACK;
+  return '<svg class="stamp-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+}
+
 function initStampGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
@@ -125,7 +144,7 @@ function initStampGrid() {
     return '' +
       '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
         '<span class="stamp-inner">' +
-          '<span class="stamp-tag">' + p.tag + '</span>' +
+          '<span class="stamp-tag-row">' + stampIconSvg(p.tag) + '<span class="stamp-tag">' + p.tag + '</span></span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
           '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
         '</span>' +
