@@ -878,35 +878,19 @@ html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
   box-shadow: 0 0 0 1.5px rgba(20,17,14,0.35);
 }
 
-/* ---- the lamp toggle: a small vintage flower lamp standing at the top
-   of the rail. It IS the dark-mode control — off/unlit in light mode,
-   lit with a warm pool of light once switched on. One SVG, two states,
-   driven by these tokens so the shapes never change, only the light. ---- */
+/* ---- the lamp toggle: the real vintage rose lamp photo, standing at the
+   top of the rail. It IS the dark-mode control — unlit/desaturated in
+   light mode, full colour with a warm pool of light once switched on. ---- */
 :root {
-  --lamp-metal-hi: #C6BCA9;
-  --lamp-metal-lo: #948A76;
-  --lamp-stroke: #6B6153;
-  --lamp-petal: #E7E1D2;
-  --lamp-petal-lo: #D6CFBC;
-  --lamp-leaf: #ADB39C;
-  --lamp-center: #BDB29C;
   --lamp-glow: transparent;
 }
 html[data-theme="dark"] {
-  --lamp-metal-hi: #F0D28A;
-  --lamp-metal-lo: #B9822E;
-  --lamp-stroke: #6B4A1E;
-  --lamp-petal: #F6E4C2;
-  --lamp-petal-lo: #ECC98B;
-  --lamp-leaf: #5C7350;
-  --lamp-center: #E8B65B;
   --lamp-glow: rgba(232,182,112,0.4);
 }
 
 .lamp-toggle {
   position: relative;
-  width: 74px;
-  height: 96px;
+  width: 66px;
   padding: 0;
   margin-bottom: 4px;
   border: none;
@@ -917,7 +901,7 @@ html[data-theme="dark"] {
 }
 .lamp-toggle-glow {
   position: absolute;
-  top: -34px; left: 50%;
+  top: -22px; left: 50%;
   width: 220px; height: 220px;
   transform: translateX(-50%);
   border-radius: 50%;
@@ -926,22 +910,29 @@ html[data-theme="dark"] {
   pointer-events: none;
   transition: background 0.6s ease;
 }
-.lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
-.lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-stem { fill: none; stroke: var(--lamp-metal-hi); stroke-width: 3; stroke-linecap: round; transition: stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-petal { fill: var(--lamp-petal); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-petal-lo { fill: var(--lamp-petal-lo); stroke: none; transition: fill 0.4s ease; }
-.lamp-toggle-svg .lamp-leaf { fill: var(--lamp-leaf); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-vein { fill: none; stroke: var(--lamp-stroke); stroke-width: 0.6; opacity: 0.5; }
-.lamp-toggle:hover .lamp-toggle-svg { filter: brightness(1.08); }
+.lamp-toggle-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(0.85) brightness(0.88);
+  opacity: 0.62;
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+html[data-theme="dark"] .lamp-toggle-img {
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+  opacity: 1;
+}
+.lamp-toggle:hover .lamp-toggle-img { opacity: 0.8; }
+html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img {
+  opacity: 1;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)) brightness(1.06);
+}
 .lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
-html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 @media (max-width: 880px) {
-  .lamp-toggle { width: 60px; height: 78px; }
-  .lamp-toggle-glow { width: 170px; height: 170px; top: -26px; }
+  .lamp-toggle { width: 56px; }
+  .lamp-toggle-glow { width: 170px; height: 170px; top: -16px; }
 }
 
 
