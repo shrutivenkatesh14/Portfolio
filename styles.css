@@ -17,6 +17,7 @@
   --powder-blue: #AFC3D2;
   --butter-yellow: #E3D19C;
   --lavender: #C9BDD1;
+  --antique-cream: #F2E9D2;
 
   --font-display: 'Courier Prime', 'Courier New', monospace;
   --font-body: 'Courier Prime', 'Courier New', monospace;
@@ -361,15 +362,23 @@ html[data-theme="dark"] .rail-brand[aria-current="page"] {
 .btn-primary:hover { background: var(--accent-ink-deep); border-color: var(--accent-ink-deep); }
 .btn-quiet:hover { background: var(--panel); }
 
-.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
+  --hole: 3px;
+  --tile: 10px;
   font-family: var(--font-mono);
   font-size: 11.5px;
   border: 1px solid var(--line);
-  padding: 7px 12px;
-  border-radius: 20px;
+  padding: 9px 13px 8px;
+  border-radius: 2px;
   color: var(--ink-soft);
-  background: var(--panel);
+  background-color: var(--panel);
+  background-image:
+    radial-gradient(circle var(--hole) at calc(var(--tile)/2) 0, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
+    radial-gradient(circle var(--hole) at calc(var(--tile)/2) 100%, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole));
+  background-repeat: repeat-x, repeat-x;
+  background-position: top left, bottom left;
+  background-size: var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66);
 }
 
 /* ==========================================================================
@@ -415,6 +424,17 @@ html[data-theme="dark"] .rail-brand[aria-current="page"] {
    ========================================================================== */
 
 .hero { padding: 56px 0 0; }
+.hero .wrap { position: relative; }
+.hero-stamp {
+  position: absolute;
+  top: -8px;
+  right: clamp(0px, 2vw, 24px);
+  width: 130px;
+  transform: rotate(-6deg);
+  z-index: 2;
+}
+.hero-stamp .stamp-inner { min-height: 150px; }
+.hero-stamp .postmark { opacity: 0.88; }
 .hero-name {
   font-size: clamp(2.6rem, 9vw, 6.5rem);
   line-height: 1.02;
@@ -430,6 +450,10 @@ html[data-theme="dark"] .rail-brand[aria-current="page"] {
   margin-bottom: 22px;
 }
 .hero-actions { margin-bottom: 48px; }
+
+@media (max-width: 720px) {
+  .hero-stamp { display: none; }
+}
 
 /* ==========================================================================
    Sections
@@ -740,15 +764,13 @@ section + section { border-top: 1px solid var(--line); }
 .address-block .to-label { font-size: 10.5px; letter-spacing: 0.1em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 6px; }
 
 .mail-stamp {
-  --stamp-fill: var(--butter-yellow);
-  width: 118px; padding: 12px 8px 10px; text-align: center; color: var(--ink);
-  text-decoration: none; transform: rotate(2deg); transition: transform 0.15s ease; display: block;
+  width: 118px; padding: 12px 8px 10px; text-align: center;
+  text-decoration: none; transition: transform 0.15s ease; display: block;
 }
-.mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-.mail-stamp .stamp-inner-mini { border: 1px solid rgba(43,36,30,0.28); padding: 12px 6px; }
-.mail-stamp .m-eyebrow { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; }
+.mail-stamp .stamp-inner-mini { padding: 12px 6px; }
+.mail-stamp .m-eyebrow { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; }
 .mail-stamp .m-title { font-family: var(--font-display); font-size: 1rem; margin: 6px 0; }
-.mail-stamp .m-sub { font-family: var(--font-mono); font-size: 9px; opacity: 0.7; }
+.mail-stamp .m-sub { font-family: var(--font-mono); font-size: 9px; }
 
 .contact-methods { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
 .contact-method { border-top: 1px solid var(--line); padding-top: 14px; }
@@ -948,22 +970,22 @@ html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img {
 }
 
 
-/* ---- Contact page: the mail stamp becomes a proper vintage airmail
-   collectible in dark mode — cream stock, ink-dark type, chevron border,
-   a drawn airplane mark, a little print imperfection. Redesigned, not
-   recolored: light mode's version is untouched. ---- */
-html[data-theme="dark"] .mail-stamp {
+/* ---- Contact page: the mail stamp is a proper vintage airmail
+   collectible — cream stock, ink-dark type, chevron border, a drawn
+   airplane mark, a little print imperfection. Same in both themes;
+   --antique-cream and the palette tokens carry the theme swap. ---- */
+.mail-stamp {
   --stamp-fill: var(--antique-cream);
   color: #2E2015;
   transform: rotate(1.5deg);
 }
-html[data-theme="dark"] .mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini {
+.mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
+.mail-stamp .stamp-inner-mini {
   border: 1.5px solid #2E2015;
   position: relative;
   background: var(--antique-cream);
 }
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini::before {
+.mail-stamp .stamp-inner-mini::before {
   content: "";
   position: absolute;
   inset: -3px;
@@ -977,7 +999,7 @@ html[data-theme="dark"] .mail-stamp .stamp-inner-mini::before {
     var(--antique-cream) 15px 20px
   );
 }
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini::after {
+.mail-stamp .stamp-inner-mini::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -992,8 +1014,7 @@ html[data-theme="dark"] .mail-stamp .stamp-inner-mini::after {
   background-size: 46px 46px;
   mix-blend-mode: multiply;
 }
-.mail-stamp .m-eyebrow svg { display: none; }
-html[data-theme="dark"] .mail-stamp .m-eyebrow {
+.mail-stamp .m-eyebrow {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1001,17 +1022,17 @@ html[data-theme="dark"] .mail-stamp .m-eyebrow {
   opacity: 0.85;
   letter-spacing: 0.16em;
 }
-html[data-theme="dark"] .mail-stamp .m-eyebrow svg {
+.mail-stamp .m-eyebrow svg {
   display: inline-block;
   width: 10px; height: 10px;
   fill: #2E2015;
   flex: 0 0 auto;
 }
-html[data-theme="dark"] .mail-stamp .m-title {
+.mail-stamp .m-title {
   font-weight: 700;
   color: #2E2015;
 }
-html[data-theme="dark"] .mail-stamp .m-sub {
+.mail-stamp .m-sub {
   color: #4A3623;
   opacity: 0.85;
 }
