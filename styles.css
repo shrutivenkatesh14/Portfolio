@@ -28,21 +28,11 @@
 }
 
 /* per-page paper wash — a whisper of tint per section, kept neutral so it
-   never competes with the pastel stamps. Light mode only: these hard-set
-   --paper on <body>, which would otherwise shadow the dark theme's value
-   (set on <html>) for every descendant, so each is undone in dark mode
-   directly below rather than left to lose the cascade. */
+   never competes with the pastel stamps */
 body.wash-about   { --paper: #F3EFE5; }
 body.wash-projects{ --paper: #F1F0E4; }
 body.wash-writing { --paper: #F0F0E5; }
 body.wash-contact { --paper: #F3EEE6; }
-
-html[data-theme="dark"] body.wash-about,
-html[data-theme="dark"] body.wash-projects,
-html[data-theme="dark"] body.wash-writing,
-html[data-theme="dark"] body.wash-contact {
-  --paper: #302C27;
-}
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -107,9 +97,8 @@ button { font-family: inherit; }
   color: var(--accent-ink);
 }
 
-/* a handwritten, slightly rotated margin note — THE one handwritten voice
-   used everywhere in the album, for personal annotations only. Never used
-   for structural/informational labels — those stay typewriter (.eyebrow). */
+/* a handwritten, slightly rotated margin note — used sparingly, never as a
+   structural label, just as a personal aside */
 .hand-note {
   font-family: var(--font-hand);
   font-size: 1.4rem;
@@ -128,46 +117,25 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .max-w { max-width: 620px; }
 
 /* ==========================================================================
-   Custom loupe cursor
+   Custom loupe cursor — native cursor:url() image, no DOM element, no JS,
+   no per-frame position write. The OS compositor renders it at the exact
+   pointer position every time, so it is physically incapable of lagging.
+   Hover state is a second image swapped by :hover — an instant, native
+   state change, not an animated tween.
    ========================================================================== */
 
-.has-loupe-cursor, .has-loupe-cursor a, .has-loupe-cursor button, .has-loupe-cursor summary {
-  cursor: none;
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='16' cy='16' r='13' fill='rgba(247,242,231,0.25)' stroke='%23251F19' stroke-width='2.5'/%3E%3Cline x1='25' y1='25' x2='34' y2='34' stroke='%23251F19' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 16 16, auto;
+  }
+  body a,
+  body button,
+  body summary,
+  body .stamp-card,
+  body [role="button"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Ccircle cx='18' cy='18' r='16' fill='rgba(140,90,82,0.18)' stroke='%237A3325' stroke-width='2.5'/%3E%3Cline x1='28' y1='28' x2='38' y2='38' stroke='%237A3325' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 18 18, pointer;
+  }
 }
-.loupe-cursor {
-  position: fixed;
-  top: 0; left: 0;
-  width: 34px; height: 34px;
-  margin: -17px 0 0 -17px;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  will-change: transform;
-}
-.loupe-glass {
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: rgba(247, 242, 231, 0.15);
-  transition: transform 0.2s cubic-bezier(0.3,1.4,0.4,1), border-color 0.2s ease, background 0.2s ease;
-}
-.loupe-handle {
-  position: absolute;
-  width: 12px; height: 2px;
-  background: var(--ink);
-  bottom: -2px; right: -6px;
-  transform: rotate(45deg);
-  transform-origin: left center;
-  transition: background 0.2s ease;
-}
-.loupe-cursor.is-active .loupe-glass {
-  transform: scale(1.5);
-  border-color: var(--accent-ink);
-  background: rgba(140, 90, 82, 0.12);
-}
-.loupe-cursor.is-active .loupe-handle { background: var(--accent-ink); }
 
 /* ==========================================================================
    Layout shell — the album spine
@@ -182,15 +150,6 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   box-shadow: 0 3px 16px rgba(37,31,25,0.28);
   position: relative;
 }
-.album::after {
-  content: "";
-  position: absolute;
-  top: 18px; bottom: 18px; right: -3px;
-  width: 3px;
-  background: rgba(37,31,25,0.14);
-  box-shadow: 3px 0 0 rgba(37,31,25,0.09), 6px 0 0 rgba(37,31,25,0.05);
-  pointer-events: none;
-}
 
 .reg-mark {
   width: 11px; height: 11px;
@@ -204,15 +163,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail {
   flex: 0 0 var(--rail-w);
   width: var(--rail-w);
-  background-color: var(--paper-deep);
-  background-image:
-    radial-gradient(circle at 18% 14%, rgba(43,36,30,0.06) 0, transparent 1.4px),
-    radial-gradient(circle at 66% 32%, rgba(43,36,30,0.05) 0, transparent 1.2px),
-    radial-gradient(circle at 38% 58%, rgba(43,36,30,0.06) 0, transparent 1.5px),
-    radial-gradient(circle at 82% 70%, rgba(43,36,30,0.045) 0, transparent 1.3px),
-    radial-gradient(circle at 24% 86%, rgba(43,36,30,0.05) 0, transparent 1.4px);
-  background-size: 130px 130px;
-  box-shadow: inset -10px 0 18px -12px rgba(37,31,25,0.4);
+  background: var(--paper-deep);
   border-right: 1px solid var(--line);
   position: sticky;
   top: 0;
@@ -225,51 +176,22 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   padding: 22px 0 18px 20px;
   z-index: 80;
 }
-.rail::after {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0; right: -4px;
-  width: 8px;
-  background-image: radial-gradient(circle 3px at 50% 4px, var(--paper) 2.6px, transparent 3px);
-  background-repeat: repeat-y;
-  background-size: 8px 17px;
-  z-index: 1;
-  pointer-events: none;
-}
 
 .rail-brand {
   display: block;
   text-decoration: none;
-  width: 46px; height: 54px;
+  width: 38px; height: 44px;
   border: 1.5px solid var(--ink);
   border-radius: 1px;
   position: relative;
   display: grid;
   place-items: center;
   font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10px;
   color: var(--ink);
   background: var(--paper);
-  box-shadow: 2px 3px 0 rgba(37,31,25,0.16);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .rail-brand::after { content: ""; position: absolute; inset: 3px; border: 1px solid var(--ink); }
-.rail-brand:hover, .rail-brand:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 3px 6px 0 rgba(37,31,25,0.24);
-}
-.rail-brand[aria-current="page"] {
-  background: var(--accent-ink);
-  border-color: var(--accent-ink);
-  color: var(--paper);
-  box-shadow: 3px 5px 10px rgba(37,31,25,0.22);
-}
-.rail-brand[aria-current="page"]::after { border-color: rgba(243,238,227,0.45); }
-html[data-theme="dark"] .rail-brand:hover,
-html[data-theme="dark"] .rail-brand:focus-visible {
-  box-shadow: 3px 6px 10px rgba(0,0,0,0.4);
-}
 
 .rail-tabs { display: flex; flex-direction: column; gap: 12px; align-items: stretch; width: 100%; }
 
@@ -347,15 +269,10 @@ html[data-theme="dark"] .rail-brand:focus-visible {
   cursor: pointer;
 }
 
-.page-content {
-  flex: 1;
-  min-width: 0;
-  box-shadow: inset 10px 0 18px -12px rgba(37,31,25,0.28);
-}
+.page-content { flex: 1; min-width: 0; }
 
 @media (max-width: 880px) {
   .album { margin: 6px; min-height: calc(100vh - 12px); }
-  .page-content { box-shadow: none; }
   .rail {
     position: fixed;
     top: 0; left: -260px;
@@ -412,44 +329,6 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 }
 
 /* ==========================================================================
-   Washi tape — a small "I taped this into my album" accent.
-   Rule: never on the stamp itself. Used sparingly on the things that feel
-   personally attached — a portrait, a note, a postcard. Muted, translucent,
-   a little imperfect; never a modern UI decoration.
-   ========================================================================== */
-
-.washi-tape {
-  position: absolute;
-  top: -10px;
-  left: 0;
-  height: 22px;
-  width: 60px;
-  opacity: 0.78;
-  border-radius: 1px;
-  box-shadow: 0 2px 3px rgba(43,36,30,0.18);
-  background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.45) 0 2px, transparent 2px 7px);
-  background-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 3;
-}
-.washi-butter   { background-color: var(--butter-yellow); }
-.washi-sage     { background-color: var(--sage); }
-.washi-rose     { background-color: var(--dusty-rose); }
-.washi-blue     { background-color: var(--powder-blue); }
-.washi-lavender { background-color: var(--lavender); }
-
-/* wraps a .hand-note so a small strip of tape can hold it down */
-.album-note { position: relative; display: inline-block; }
-
-/* holds the illustrated portrait on the About page */
-.tape-portrait {
-  top: -12px;
-  left: 50%;
-  width: 92px;
-  transform: translateX(-50%) rotate(-4deg);
-}
-
-/* ==========================================================================
    Hero
    ========================================================================== */
 
@@ -487,14 +366,13 @@ section + section { border-top: 1px solid var(--line); }
   --tile: 17px;
   background-color: var(--stamp-fill, var(--sage));
   background-image:
-    linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 45%, rgba(43,36,30,0.08) 100%),
     radial-gradient(circle var(--hole) at calc(var(--tile)/2) 0, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
     radial-gradient(circle var(--hole) at calc(var(--tile)/2) 100%, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
     radial-gradient(circle var(--hole) at 0 calc(var(--tile)/2), var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
     radial-gradient(circle var(--hole) at 100% calc(var(--tile)/2), var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole));
-  background-repeat: no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
-  background-position: 0 0, top left, bottom left, top left, top right;
-  background-size: 100% 100%, var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66), calc(var(--tile) * 0.66) var(--tile), calc(var(--tile) * 0.66) var(--tile);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-position: top left, bottom left, top left, top right;
+  background-size: var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66), calc(var(--tile) * 0.66) var(--tile), calc(var(--tile) * 0.66) var(--tile);
   box-shadow: 3px 4px 0 rgba(43,36,30,0.16);
   border: 1.5px solid var(--ink);
 }
@@ -523,11 +401,11 @@ section + section { border-top: 1px solid var(--line); }
   box-shadow: 5px 8px 0 rgba(43,36,30,0.22);
   transition: transform 0.18s cubic-bezier(0.3,1.3,0.4,1), box-shadow 0.18s ease;
 }
-.c-dusty-rose { --stamp-fill: var(--dusty-rose); }
-.c-sage { --stamp-fill: var(--sage); }
-.c-powder-blue { --stamp-fill: var(--powder-blue); }
-.c-butter-yellow { --stamp-fill: var(--butter-yellow); }
-.c-lavender { --stamp-fill: var(--lavender); }
+.stamp-card.c-dusty-rose { --stamp-fill: var(--dusty-rose); }
+.stamp-card.c-sage { --stamp-fill: var(--sage); }
+.stamp-card.c-powder-blue { --stamp-fill: var(--powder-blue); }
+.stamp-card.c-butter-yellow { --stamp-fill: var(--butter-yellow); }
+.stamp-card.c-lavender { --stamp-fill: var(--lavender); }
 
 .stamp-inner {
   border: 1px solid currentColor;
@@ -540,8 +418,6 @@ section + section { border-top: 1px solid var(--line); }
   flex-direction: column;
   justify-content: space-between;
 }
-.stamp-tag-row { display: flex; align-items: center; gap: 6px; }
-.stamp-icon { width: 17px; height: 17px; flex: 0 0 auto; opacity: 0.85; }
 .stamp-tag { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; display: block; }
 .stamp-title {
   font-family: var(--font-display);
@@ -581,12 +457,12 @@ section + section { border-top: 1px solid var(--line); }
   line-height: 1.3;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  transform: rotate(-14deg) scale(0.92);
-  opacity: 0.55;
+  transform: rotate(-14deg) scale(0.85);
+  opacity: 0;
   transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.3,1.6,0.4,1);
 }
 .postmark::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--accent-ink); border-radius: 50%; }
-.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: 1; transform: rotate(-14deg) scale(1); }
+.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: 0.9; transform: rotate(-14deg) scale(1); }
 
 /* ==========================================================================
    Case-file overlay
@@ -721,6 +597,7 @@ section + section { border-top: 1px solid var(--line); }
   border: 2px solid var(--ink);
   background: var(--panel);
   padding: 8px 8px 26px;
+  transform: rotate(-1.5deg);
   box-shadow: 3px 4px 0 rgba(43,36,30,0.14);
   position: relative;
 }
@@ -728,26 +605,6 @@ section + section { border-top: 1px solid var(--line); }
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-}
-.passport-placeholder {
-  width: 100%; height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: var(--ink-soft);
-}
-.passport-placeholder svg {
-  width: 34px; height: 34px;
-  fill: none;
-  stroke: var(--ink-soft);
-  stroke-width: 1.4;
-  opacity: 0.6;
-}
-.passport-placeholder span {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
 }
 .passport-photo::after {
   content: "PORTRAIT";
@@ -822,9 +679,27 @@ section + section { border-top: 1px solid var(--line); }
 }
 .postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
 
-/* every postcard is held to the page by a small strip of washi tape —
-   see .washi-tape above; colour + rotation + position are set per-card
-   in app.js so the rack doesn't look mechanically repeated */
+/* pushpin, slightly off-center */
+.postcard::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 46%;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #D68B7D 0%, var(--accent-ink) 62%, var(--accent-ink-deep) 100%);
+  box-shadow: 0 2px 3px rgba(37,31,25,0.35);
+  z-index: 2;
+}
+
+/* small stamp-corner mark, top right, like a spot reserved for postage */
+.postcard::after {
+  content: "";
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 24px; height: 28px;
+  border: 1px solid var(--line);
+}
 
 .postcard-frank {
   align-self: flex-start;
@@ -861,211 +736,3 @@ footer.site-footer { border-top: 1px solid var(--line); padding: 32px 0 48px; }
 .footer-links { display: flex; gap: 18px; }
 .footer-links a { color: var(--ink-soft); text-decoration: none; }
 .footer-links a:hover { color: var(--accent-ink); }
-
-/* ==========================================================================
-   DARK MODE — the same album, seen at night under a brass desk lamp.
-   Token remap only: every rule above already reads these custom properties,
-   so overriding them here is what carries the identity through unchanged.
-   ========================================================================== */
-
-html[data-theme="dark"] {
-  --paper: #302C27;
-  --paper-deep: #221F1B;
-  --panel: #3C362E;
-  --ink: #F3EEE3;
-  --ink-soft: #D1CBC0;
-  --line: #4C4438;
-  --accent-ink: #D9A566;
-  --accent-ink-deep: #C08A47;
-
-  --dusty-rose: #7C3341;
-  --sage: #47563F;
-  --powder-blue: #3C5266;
-  --butter-yellow: #A97C3B;
-  --lavender: #5C4463;
-  --antique-cream: #EAE0C8;
-}
-
-/* paper grain reads as warm dust motes in lamplight rather than ink specks */
-html[data-theme="dark"] body::before {
-  opacity: 0.35;
-  background-image:
-    radial-gradient(circle at 12% 22%, rgba(243,238,227,0.05) 0, transparent 1.4px),
-    radial-gradient(circle at 68% 8%, rgba(243,238,227,0.045) 0, transparent 1.2px),
-    radial-gradient(circle at 34% 61%, rgba(243,238,227,0.05) 0, transparent 1.5px),
-    radial-gradient(circle at 82% 47%, rgba(243,238,227,0.04) 0, transparent 1.3px),
-    radial-gradient(circle at 51% 88%, rgba(243,238,227,0.05) 0, transparent 1.4px),
-    radial-gradient(circle at 5% 76%, rgba(243,238,227,0.04) 0, transparent 1.2px),
-    radial-gradient(circle at 91% 91%, rgba(243,238,227,0.045) 0, transparent 1.3px);
-}
-
-html[data-theme="dark"] .album {
-  box-shadow: 0 3px 22px rgba(0,0,0,0.5);
-}
-
-/* ---- postmark: multiply-blend cream reads muddy on dark stamps; swap it
-   for an inked-stamp look that keeps brass contrast on any stamp color ---- */
-html[data-theme="dark"] .postmark {
-  background: rgba(34, 29, 23, 0.55);
-  mix-blend-mode: normal;
-  border-color: var(--accent-ink);
-  color: var(--accent-ink);
-}
-html[data-theme="dark"] .postmark::before { border-color: var(--accent-ink); }
-
-/* ---- rail tabs: physical dividers catching lamp light, not UI chrome ---- */
-html[data-theme="dark"] .rail-tab {
-  border-color: rgba(243,238,227,0.14);
-  box-shadow: 2px 4px 8px rgba(0,0,0,0.4);
-}
-html[data-theme="dark"] .rail-tab::before {
-  border-color: rgba(243,238,227,0.1);
-}
-html[data-theme="dark"] .rail-tab[aria-current="page"] {
-  box-shadow: 0 5px 16px rgba(217,165,102,0.28), 0 3px 6px rgba(0,0,0,0.45);
-  transform: translateY(-2px);
-}
-html[data-theme="dark"] .rail-tab:hover {
-  box-shadow: 3px 6px 12px rgba(0,0,0,0.45);
-}
-html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
-  box-shadow: 0 0 0 1.5px rgba(20,17,14,0.35);
-}
-
-/* ---- the lamp toggle: a dainty flower lamp resting at the foot of the
-   rail, below the tabs. It IS the dark-mode control — closed and unlit
-   in light mode, glowing softly once switched on. One SVG, two states,
-   driven by these tokens so the shapes never change, only the light. ---- */
-:root {
-  --lamp-metal-hi: #C6BCA9;
-  --lamp-metal-lo: #948A76;
-  --lamp-stroke: #6B6153;
-  --lamp-petal: #E7E1D2;
-  --lamp-center: #BDB29C;
-  --lamp-leaf: #A79C89;
-  --lamp-glow: transparent;
-}
-html[data-theme="dark"] {
-  --lamp-metal-hi: #F0D28A;
-  --lamp-metal-lo: #B9822E;
-  --lamp-stroke: #6B4A1E;
-  --lamp-petal: #F3D9A6;
-  --lamp-center: #E8B65B;
-  --lamp-leaf: #B08F45;
-  --lamp-glow: rgba(232,182,112,0.4);
-}
-
-.lamp-toggle {
-  position: relative;
-  width: 46px;
-  height: 70px;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  flex: 0 0 auto;
-  overflow: visible;
-}
-.lamp-toggle-glow {
-  position: absolute;
-  top: -14px; left: -4px;
-  width: 112px; height: 112px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--lamp-glow) 0%, transparent 70%);
-  filter: blur(3px);
-  pointer-events: none;
-  transition: background 0.6s ease;
-}
-.lamp-toggle-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: grayscale(1) brightness(0.94);
-  transition: filter 0.4s ease;
-}
-html[data-theme="dark"] .lamp-toggle-img { filter: none; }
-.lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
-.lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-petal { fill: var(--lamp-petal); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); transition: fill 0.4s ease; }
-.lamp-toggle-svg .lamp-leaf { fill: var(--lamp-leaf); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-stem { fill: none; stroke: var(--lamp-metal-hi); stroke-width: 2.6; stroke-linecap: round; transition: stroke 0.4s ease; }
-.lamp-toggle:hover .lamp-toggle-svg { filter: brightness(1.08); }
-.lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
-html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
-
-@media (max-width: 880px) {
-  .lamp-toggle { width: 38px; height: 58px; }
-  .lamp-toggle-glow { width: 96px; height: 96px; top: -12px; left: -3px; }
-}
-
-
-/* ---- Contact page: the mail stamp becomes a proper vintage airmail
-   collectible in dark mode — cream stock, ink-dark type, chevron border,
-   a drawn airplane mark, a little print imperfection. Redesigned, not
-   recolored: light mode's version is untouched. ---- */
-html[data-theme="dark"] .mail-stamp {
-  --stamp-fill: var(--antique-cream);
-  color: #2E2015;
-  transform: rotate(1.5deg);
-}
-html[data-theme="dark"] .mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini {
-  border: 1.5px solid #2E2015;
-  position: relative;
-  background: var(--antique-cream);
-}
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  z-index: -1;
-  border-radius: 1px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--dusty-rose) 0 5px,
-    var(--antique-cream) 5px 10px,
-    var(--powder-blue) 10px 15px,
-    var(--antique-cream) 15px 20px
-  );
-}
-html[data-theme="dark"] .mail-stamp .stamp-inner-mini::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(46,32,21,0.09) 0, transparent 1.2px),
-    radial-gradient(circle at 70% 15%, rgba(46,32,21,0.08) 0, transparent 1px),
-    radial-gradient(circle at 40% 70%, rgba(46,32,21,0.09) 0, transparent 1.3px),
-    radial-gradient(circle at 85% 60%, rgba(46,32,21,0.07) 0, transparent 1px),
-    radial-gradient(circle at 60% 90%, rgba(46,32,21,0.08) 0, transparent 1.2px);
-  background-size: 46px 46px;
-  mix-blend-mode: multiply;
-}
-.mail-stamp .m-eyebrow svg { display: none; }
-html[data-theme="dark"] .mail-stamp .m-eyebrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  opacity: 0.85;
-  letter-spacing: 0.16em;
-}
-html[data-theme="dark"] .mail-stamp .m-eyebrow svg {
-  display: inline-block;
-  width: 10px; height: 10px;
-  fill: #2E2015;
-  flex: 0 0 auto;
-}
-html[data-theme="dark"] .mail-stamp .m-title {
-  font-weight: 700;
-  color: #2E2015;
-}
-html[data-theme="dark"] .mail-stamp .m-sub {
-  color: #4A3623;
-  opacity: 0.85;
-}
