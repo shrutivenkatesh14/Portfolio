@@ -3,7 +3,7 @@
    ========================================================================== */
 
 :root {
-  --paper: #F3F0E8;
+  --paper: #F0E8D8;
   --paper-deep: #DDD6C4;
   --panel: #EAE5D8;
   --ink: #251F19;
@@ -35,10 +35,10 @@
    --paper on <body>, which would otherwise shadow the dark theme's value
    (set on <html>) for every descendant, so each is undone in dark mode
    directly below rather than left to lose the cascade. */
-body.wash-about   { --paper: #F3EFE5; }
-body.wash-projects{ --paper: #F1F0E4; }
-body.wash-writing { --paper: #F0F0E5; }
-body.wash-contact { --paper: #F3EEE6; }
+body.wash-about   { --paper: #F0E7D5; }
+body.wash-projects{ --paper: #EEE8D4; }
+body.wash-writing { --paper: #EDE8D5; }
+body.wash-contact { --paper: #F0E6D6; }
 
 html[data-theme="dark"] body.wash-about,
 html[data-theme="dark"] body.wash-projects,
@@ -182,7 +182,12 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   background: var(--paper);
   margin: 14px;
   min-height: calc(100vh - 28px);
-  box-shadow: 0 3px 16px rgba(37,31,25,0.28);
+  box-shadow:
+    0 3px 16px rgba(37,31,25,0.28),
+    6px 6px 0 0 var(--paper-deep),
+    6px 6px 0 1px rgba(37,31,25,0.18),
+    11px 11px 0 0 var(--line),
+    11px 11px 0 1px rgba(37,31,25,0.14);
   position: relative;
 }
 .album::after {
@@ -358,7 +363,16 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 }
 
 @media (max-width: 880px) {
-  .album { margin: 6px; min-height: calc(100vh - 12px); }
+  .album {
+    margin: 6px;
+    min-height: calc(100vh - 12px);
+    box-shadow:
+      0 3px 16px rgba(37,31,25,0.28),
+      3px 3px 0 0 var(--paper-deep),
+      3px 3px 0 1px rgba(37,31,25,0.18),
+      5px 5px 0 0 var(--line),
+      5px 5px 0 1px rgba(37,31,25,0.14);
+  }
   .page-content { box-shadow: none; }
   .rail {
     position: fixed;
