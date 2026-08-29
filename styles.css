@@ -231,6 +231,13 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   transform: translateY(-3px);
   box-shadow: 3px 6px 0 rgba(37,31,25,0.24);
 }
+.rail-brand[aria-current="page"] {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+  color: var(--paper);
+  box-shadow: 3px 5px 10px rgba(37,31,25,0.22);
+}
+.rail-brand[aria-current="page"]::after { border-color: rgba(243,238,227,0.45); }
 html[data-theme="dark"] .rail-brand:hover,
 html[data-theme="dark"] .rail-brand:focus-visible {
   box-shadow: 3px 6px 10px rgba(0,0,0,0.4);
@@ -414,14 +421,6 @@ html[data-theme="dark"] .rail-brand:focus-visible {
    ========================================================================== */
 
 .hero { padding: 56px 0 0; }
-.hero-stamp {
-  width: 132px;
-  position: relative;
-  margin-bottom: 20px;
-}
-.hero-stamp .stamp-inner { min-height: 0; padding: 14px 10px 30px; }
-.hero-stamp .stamp-title { font-size: 1rem; margin: 8px 0 0; }
-.hero-stamp .postmark { width: 54px; height: 54px; top: 6px; right: 4px; font-size: 7.5px; }
 .hero-name {
   font-size: clamp(2.6rem, 9vw, 6.5rem);
   line-height: 1.02;
@@ -910,7 +909,7 @@ html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
   --lamp-stroke: #6B6153;
   --lamp-petal: #E7E1D2;
   --lamp-center: #BDB29C;
-  --lamp-leaf: #9CAA8E;
+  --lamp-leaf: #A79C89;
   --lamp-glow: transparent;
 }
 html[data-theme="dark"] {
