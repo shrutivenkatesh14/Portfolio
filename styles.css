@@ -195,7 +195,15 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail {
   flex: 0 0 var(--rail-w);
   width: var(--rail-w);
-  background: var(--paper-deep);
+  background-color: var(--paper-deep);
+  background-image:
+    radial-gradient(circle at 18% 14%, rgba(43,36,30,0.06) 0, transparent 1.4px),
+    radial-gradient(circle at 66% 32%, rgba(43,36,30,0.05) 0, transparent 1.2px),
+    radial-gradient(circle at 38% 58%, rgba(43,36,30,0.06) 0, transparent 1.5px),
+    radial-gradient(circle at 82% 70%, rgba(43,36,30,0.045) 0, transparent 1.3px),
+    radial-gradient(circle at 24% 86%, rgba(43,36,30,0.05) 0, transparent 1.4px);
+  background-size: 130px 130px;
+  box-shadow: inset -10px 0 18px -12px rgba(37,31,25,0.4);
   border-right: 1px solid var(--line);
   position: sticky;
   top: 0;
@@ -943,6 +951,15 @@ html[data-theme="dark"] {
   pointer-events: none;
   transition: background 0.6s ease;
 }
+.lamp-toggle-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0.94);
+  transition: filter 0.4s ease;
+}
+html[data-theme="dark"] .lamp-toggle-img { filter: none; }
 .lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
 .lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
 .lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
