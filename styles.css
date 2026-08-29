@@ -18,6 +18,9 @@
   --butter-yellow: #E3D19C;
   --lavender: #C9BDD1;
 
+  --spine: #3D2C20;
+  --spine-mark: rgba(243,238,227,0.4);
+
   --font-display: 'Courier Prime', 'Courier New', monospace;
   --font-body: 'Courier Prime', 'Courier New', monospace;
   --font-mono: 'Courier Prime', 'Courier New', monospace;
@@ -204,15 +207,15 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail {
   flex: 0 0 var(--rail-w);
   width: var(--rail-w);
-  background-color: var(--paper-deep);
+  background-color: var(--spine);
   background-image:
-    radial-gradient(circle at 18% 14%, rgba(43,36,30,0.06) 0, transparent 1.4px),
-    radial-gradient(circle at 66% 32%, rgba(43,36,30,0.05) 0, transparent 1.2px),
-    radial-gradient(circle at 38% 58%, rgba(43,36,30,0.06) 0, transparent 1.5px),
-    radial-gradient(circle at 82% 70%, rgba(43,36,30,0.045) 0, transparent 1.3px),
-    radial-gradient(circle at 24% 86%, rgba(43,36,30,0.05) 0, transparent 1.4px);
+    radial-gradient(circle at 18% 14%, rgba(255,241,214,0.05) 0, transparent 1.4px),
+    radial-gradient(circle at 66% 32%, rgba(255,241,214,0.045) 0, transparent 1.2px),
+    radial-gradient(circle at 38% 58%, rgba(255,241,214,0.05) 0, transparent 1.5px),
+    radial-gradient(circle at 82% 70%, rgba(255,241,214,0.04) 0, transparent 1.3px),
+    radial-gradient(circle at 24% 86%, rgba(255,241,214,0.045) 0, transparent 1.4px);
   background-size: 130px 130px;
-  box-shadow: inset -10px 0 18px -12px rgba(37,31,25,0.4);
+  box-shadow: inset -10px 0 18px -12px rgba(0,0,0,0.5);
   border-right: 1px solid var(--line);
   position: sticky;
   top: 0;
@@ -220,11 +223,12 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   max-height: calc(100vh - 28px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 34px;
   padding: 22px 0 18px 20px;
   z-index: 80;
 }
+.rail .reg-mark::before, .rail .reg-mark::after { background: var(--spine-mark); }
 .rail::after {
   content: "";
   position: absolute;
@@ -877,6 +881,8 @@ html[data-theme="dark"] {
   --line: #4C4438;
   --accent-ink: #D9A566;
   --accent-ink-deep: #C08A47;
+  --spine: #1C1712;
+  --spine-mark: rgba(217,165,102,0.35);
 
   --dusty-rose: #7C3341;
   --sage: #47563F;
@@ -957,8 +963,8 @@ html[data-theme="dark"] {
 
 .lamp-toggle {
   position: relative;
-  width: 46px;
-  height: 70px;
+  width: 58px;
+  height: 69px;
   padding: 0;
   border: none;
   background: none;
@@ -968,7 +974,7 @@ html[data-theme="dark"] {
 }
 .lamp-toggle-glow {
   position: absolute;
-  top: -14px; left: -4px;
+  top: -16px; left: 2px;
   width: 112px; height: 112px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--lamp-glow) 0%, transparent 70%);
@@ -997,8 +1003,8 @@ html[data-theme="dark"] .lamp-toggle-img { filter: none; }
 html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 @media (max-width: 880px) {
-  .lamp-toggle { width: 38px; height: 58px; }
-  .lamp-toggle-glow { width: 96px; height: 96px; top: -12px; left: -3px; }
+  .lamp-toggle { width: 48px; height: 57px; }
+  .lamp-toggle-glow { width: 96px; height: 96px; top: -13px; left: 0; }
 }
 
 
