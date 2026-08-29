@@ -385,6 +385,7 @@ html[data-theme="dark"] .rail-brand:focus-visible {
     transition: left 0.25s ease;
   }
   .rail.open { left: 0; }
+  .lamp-toggle, .rail-brand { margin-left: 0; }
   .rail-brand { margin-bottom: 4px; }
   .rail-tab { margin-right: 0; border-radius: 6px; }
   .rail-tab::before { display: none; }
@@ -521,6 +522,21 @@ section + section { border-top: 1px solid var(--line); }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px 24px;
+}
+
+.mini-stamp-row { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.mini-stamp {
+  --hole: 3px;
+  --tile: 10px;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px 7px 11px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  box-shadow: 1.5px 2px 0 rgba(37,31,25,0.14);
+  border: 1px solid var(--ink);
 }
 
 .stamp-card {
@@ -709,7 +725,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .skill-group {
   border: 1px solid var(--ink);
-  background: var(--panel);
+  background: var(--paper-deep);
   padding: 16px 18px;
   position: relative;
 }
@@ -975,6 +991,7 @@ html[data-theme="dark"] {
   --lamp-glow: rgba(232,182,112,0.4);
 }
 
+.lamp-toggle, .rail-brand { margin-left: -10px; }
 .lamp-toggle {
   position: relative;
   width: 58px;
