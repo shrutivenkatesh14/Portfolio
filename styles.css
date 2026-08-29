@@ -524,7 +524,7 @@ section + section { border-top: 1px solid var(--line); }
   gap: 30px 24px;
 }
 
-.mini-stamp-row { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.mini-stamp-row { display: flex; flex-wrap: wrap; gap: 14px 16px; }
 .mini-stamp {
   --hole: 3px;
   --tile: 10px;
@@ -535,8 +535,14 @@ section + section { border-top: 1px solid var(--line); }
   font-size: 11px;
   letter-spacing: 0.02em;
   color: var(--ink);
-  box-shadow: 1.5px 2px 0 rgba(37,31,25,0.14);
+  box-shadow: 2px 3px 0 rgba(37,31,25,0.18);
   border: 1px solid var(--ink);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.mini-stamp:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 3px 4.5px 0 rgba(37,31,25,0.22);
 }
 
 .stamp-card {
