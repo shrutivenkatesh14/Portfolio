@@ -3,11 +3,42 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
+  initTheme();
   initRailToggle();
+  initCursor();
   initStampGrid();
   initOverlay();
   initPostcards();
 });
+
+/* --------------------------------------------------------------------------
+   Dark mode — same album, night, brass desk lamp.
+   Preference is read before paint (see the inline snippet in <head>) so
+   there is no flash; this wires up the switch and keeps it in sync.
+   -------------------------------------------------------------------------- */
+function initTheme() {
+  var toggle = document.querySelector('.lamp-toggle');
+  if (!toggle) return;
+
+  var root = document.documentElement;
+
+  function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+
+  function reflect() {
+    var dark = isDark();
+    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    toggle.setAttribute('aria-label', dark ? 'Turn off the lamp (light mode)' : 'Turn on the lamp (dark mode)');
+  }
+
+  reflect();
+
+  toggle.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) { /* private mode etc. */ }
+    reflect();
+  });
+}
 
 /* --------------------------------------------------------------------------
    Mobile rail drawer
@@ -32,14 +63,75 @@ function initRailToggle() {
   });
 }
 
-/* Custom magnifying-glass cursor now lives entirely in styles.css as a
-   native `cursor: url(svg)` swap — no JS, no DOM element, no per-frame
-   position write, so it can't ever lag behind the OS pointer. */
+/* --------------------------------------------------------------------------
+   Custom magnifying-glass cursor (desktop / fine-pointer only)
+   -------------------------------------------------------------------------- */
+function initCursor() {
+  var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canHover || reduced) return;
+
+  var loupe = document.createElement('div');
+  loupe.className = 'loupe-cursor';
+  loupe.innerHTML = '<span class="loupe-glass"></span><span class="loupe-handle"></span>';
+  document.body.appendChild(loupe);
+  document.body.classList.add('has-loupe-cursor');
+
+  var x = window.innerWidth / 2, y = window.innerHeight / 2;
+  var cx = x, cy = y;
+
+  window.addEventListener('mousemove', function (e) {
+    x = e.clientX;
+    y = e.clientY;
+    loupe.style.opacity = '1';
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
+
+  var interactive = 'a, button, summary, .stamp-card, [role="button"]';
+  document.addEventListener('mouseover', function (e) {
+    if (e.target.closest && e.target.closest(interactive)) {
+      loupe.classList.add('is-active');
+    }
+  });
+  document.addEventListener('mouseout', function (e) {
+    if (e.target.closest && e.target.closest(interactive)) {
+      loupe.classList.remove('is-active');
+    }
+  });
+
+  function tick() {
+    cx += (x - cx) * 0.4;
+    cy += (y - cy) * 0.4;
+    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
 
 /* --------------------------------------------------------------------------
    Render the stamp grid (project cards) from PROJECTS data
    Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Stamp category icons — one small monoline glyph per project tag, so each
+   stamp reads at a glance instead of relying on color + text alone.
+   -------------------------------------------------------------------------- */
+var STAMP_ICONS = {
+  "Data Analysis": '<path d="M4 16V10M10 16V4M16 16V12"/>',
+  "Process Improvement": '<circle cx="10" cy="10" r="3.4"/><path d="M10 2.5v2.4M10 15.1v2.4M17.5 10h-2.4M4.9 10H2.5M15.6 4.4l-1.7 1.7M6.1 13.9l-1.7 1.7M15.6 15.6l-1.7-1.7M6.1 6.1L4.4 4.4"/>',
+  "Strategy": '<circle cx="10" cy="10" r="7.2"/><path d="M10 5.2l1.5 3.3 3.3 1.5-3.3 1.5-1.5 3.3-1.5-3.3-3.3-1.5 3.3-1.5z"/>',
+  "Financial Modelling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
+  "Data Visualisation": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
+  "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>'
+};
+var STAMP_ICON_FALLBACK = '<path d="M10 2.2l1.9 4.7 5.1.4-3.9 3.3 1.2 5-4.3-2.8-4.3 2.8 1.2-5-3.9-3.3 5.1-.4z"/>';
+
+function stampIconSvg(tag) {
+  var inner = STAMP_ICONS[tag] || STAMP_ICON_FALLBACK;
+  return '<svg class="stamp-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+}
+
 function initStampGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
@@ -52,7 +144,7 @@ function initStampGrid() {
     return '' +
       '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
         '<span class="stamp-inner">' +
-          '<span class="stamp-tag">' + p.tag + '</span>' +
+          '<span class="stamp-tag-row">' + stampIconSvg(p.tag) + '<span class="stamp-tag">' + p.tag + '</span></span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
           '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
         '</span>' +
@@ -133,15 +225,24 @@ function initOverlay() {
 
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
+   Each postcard is "taped" into the album — a small washi-tape strip
+   across the top edge, varied in colour, position, and tilt so the rack
+   doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  rack.innerHTML = POSTS.map(function (post) {
+  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+
+  rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
+    var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
+    var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
+    var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
