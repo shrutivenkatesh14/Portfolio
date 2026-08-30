@@ -707,6 +707,8 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 .overlay-body { display: grid; gap: 20px; margin-top: 20px; }
+.overlay-content { transition: opacity 0.15s ease; }
+.overlay-content.is-switching { opacity: 0; }
 .overlay-body h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; }
 .overlay-body p { font-size: 14.5px; margin: 0; }
 .overlay-body ul { margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
@@ -1055,14 +1057,16 @@ html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img { filter: brightness
 .lamp-toggle::after {
   content: "Light";
   position: absolute;
-  bottom: -13px;
+  bottom: -14px;
   left: 0; right: 0;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--spine-mark);
+  color: var(--paper);
+  opacity: 0.75;
   pointer-events: none;
 }
 html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; }

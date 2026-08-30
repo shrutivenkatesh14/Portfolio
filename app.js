@@ -169,8 +169,10 @@ function initOverlay() {
   var closeBtn = overlay.querySelector('.overlay-close');
   var prevBtn = overlay.querySelector('.overlay-prev');
   var nextBtn = overlay.querySelector('.overlay-next');
+  var content = overlay.querySelector('.overlay-content');
   var body = overlay.querySelector('.overlay-body');
   var currentIndex = 0;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function render(index) {
     var p = items[index];
@@ -184,6 +186,15 @@ function initOverlay() {
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
+  }
+
+  function goTo(index) {
+    if (reduced) { render(index); return; }
+    content.classList.add('is-switching');
+    setTimeout(function () {
+      render(index);
+      content.classList.remove('is-switching');
+    }, 150);
   }
 
   function open(index) {
@@ -212,14 +223,14 @@ function initOverlay() {
 
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
-  prevBtn.addEventListener('click', function () { render((currentIndex - 1 + items.length) % items.length); });
-  nextBtn.addEventListener('click', function () { render((currentIndex + 1) % items.length); });
+  prevBtn.addEventListener('click', function () { goTo((currentIndex - 1 + items.length) % items.length); });
+  nextBtn.addEventListener('click', function () { goTo((currentIndex + 1) % items.length); });
 
   document.addEventListener('keydown', function (e) {
     if (!overlay.classList.contains('open')) return;
     if (e.key === 'Escape') close();
-    if (e.key === 'ArrowRight') render((currentIndex + 1) % items.length);
-    if (e.key === 'ArrowLeft') render((currentIndex - 1 + items.length) % items.length);
+    if (e.key === 'ArrowRight') goTo((currentIndex + 1) % items.length);
+    if (e.key === 'ArrowLeft') goTo((currentIndex - 1 + items.length) % items.length);
   });
 }
 
