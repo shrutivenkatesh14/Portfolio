@@ -420,15 +420,6 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 .btn-quiet:hover { background: var(--panel); }
 
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  border: 1px solid var(--line);
-  padding: 7px 12px;
-  border-radius: 20px;
-  color: var(--ink-soft);
-  background: var(--panel);
-}
 
 /* ==========================================================================
    Washi tape — a small "I taped this into my album" accent.
@@ -767,7 +758,6 @@ section + section { border-top: 1px solid var(--line); }
   display: block;
   margin-bottom: 8px;
 }
-.skill-list { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.6; }
 
 .intro-grid { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
 .passport-photo {
@@ -991,27 +981,16 @@ html[data-theme="dark"] .rail-tab[aria-current="page"] .tab-dot {
 html[data-theme="dark"] .tool-mark { text-shadow: 0.4px 0.4px 0 rgba(217,165,102,0.2); }
 
 /* ---- the lamp toggle: a dainty flower lamp resting at the foot of the
-   rail, below the tabs. It IS the dark-mode control — closed and unlit
-   in light mode, glowing softly once switched on. One SVG, two states,
-   driven by these tokens so the shapes never change, only the light. ---- */
+   rail, below the tabs. It IS the dark-mode control — grayscale and unlit
+   in light mode, full color once switched on, via a filter on the img.
+   The glow halo behind it still needs a token per theme. ---- */
 :root {
-  --lamp-metal-hi: #C6BCA9;
-  --lamp-metal-lo: #948A76;
-  --lamp-stroke: #6B6153;
-  --lamp-petal: #E7E1D2;
-  --lamp-center: #BDB29C;
-  --lamp-leaf: #A79C89;
   --lamp-glow: transparent;
 }
 html[data-theme="dark"] {
-  --lamp-metal-hi: #F0D28A;
-  --lamp-metal-lo: #B9822E;
-  --lamp-stroke: #6B4A1E;
-  --lamp-petal: #F3D9A6;
-  --lamp-center: #E8B65B;
-  --lamp-leaf: #B08F45;
   --lamp-glow: rgba(232,182,112,0.4);
 }
+
 
 .lamp-toggle, .rail-brand { margin-left: -10px; }
 .lamp-toggle {
@@ -1044,13 +1023,6 @@ html[data-theme="dark"] {
   transition: filter 0.4s ease;
 }
 html[data-theme="dark"] .lamp-toggle-img { filter: none; }
-.lamp-toggle-svg { position: relative; display: block; width: 100%; height: 100%; }
-.lamp-toggle-svg .lamp-metal { fill: var(--lamp-metal-hi); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-metal-lo { fill: var(--lamp-metal-lo); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-petal { fill: var(--lamp-petal); stroke: var(--lamp-stroke); stroke-width: 1; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-center { fill: var(--lamp-center); transition: fill 0.4s ease; }
-.lamp-toggle-svg .lamp-leaf { fill: var(--lamp-leaf); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
-.lamp-toggle-svg .lamp-stem { fill: none; stroke: var(--lamp-metal-hi); stroke-width: 2.6; stroke-linecap: round; transition: stroke 0.4s ease; }
 .lamp-toggle:hover .lamp-toggle-img { filter: grayscale(1) brightness(1.08); }
 html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img { filter: brightness(1.08); }
 .lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
@@ -1070,7 +1042,6 @@ html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img { filter: brightness
   pointer-events: none;
 }
 html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; }
-html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 @media (max-width: 880px) {
   .lamp-toggle { width: 48px; height: 57px; }
