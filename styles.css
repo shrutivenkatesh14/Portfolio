@@ -521,7 +521,7 @@ section + section { border-top: 1px solid var(--line); }
   align-items: center;
   padding: 7px 13px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent-ink);
