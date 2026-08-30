@@ -1049,8 +1049,23 @@ html[data-theme="dark"] .lamp-toggle-img { filter: none; }
 .lamp-toggle-svg .lamp-center { fill: var(--lamp-center); transition: fill 0.4s ease; }
 .lamp-toggle-svg .lamp-leaf { fill: var(--lamp-leaf); stroke: var(--lamp-stroke); stroke-width: 0.8; transition: fill 0.4s ease, stroke 0.4s ease; }
 .lamp-toggle-svg .lamp-stem { fill: none; stroke: var(--lamp-metal-hi); stroke-width: 2.6; stroke-linecap: round; transition: stroke 0.4s ease; }
-.lamp-toggle:hover .lamp-toggle-svg { filter: brightness(1.08); }
+.lamp-toggle:hover .lamp-toggle-img { filter: grayscale(1) brightness(1.08); }
+html[data-theme="dark"] .lamp-toggle:hover .lamp-toggle-img { filter: brightness(1.08); }
 .lamp-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
+.lamp-toggle::after {
+  content: "Light";
+  position: absolute;
+  bottom: -13px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--spine-mark);
+  pointer-events: none;
+}
+html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; }
 html[data-theme="dark"] .lamp-toggle-svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 @media (max-width: 880px) {
