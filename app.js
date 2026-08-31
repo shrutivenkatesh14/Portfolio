@@ -200,12 +200,16 @@ function initOverlay() {
   function open(index) {
     render(index);
     overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.inert = false;
     document.body.classList.add('no-scroll');
     closeBtn.focus();
   }
 
   function close() {
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.inert = true;
     document.body.classList.remove('no-scroll');
   }
 

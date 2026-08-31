@@ -8,8 +8,8 @@
   // back to the day palette while styles.css loads.
   (function () {
     try {
-      if (localStorage.getItem('collection-theme') === 'evening') {
-        document.documentElement.setAttribute('data-theme', 'evening');
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
   })();
@@ -25,17 +25,11 @@
 
 <div class="album">
   <nav class="rail" aria-label="Primary">
-    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
-    <button type="button" class="lamp-toggle" aria-pressed="false" aria-label="Turn on the lamp" title="Toggle light / dark mode">
-      <svg class="lamp-glyph" viewBox="0 0 28 30" aria-hidden="true">
-        <path class="lamp-shade" d="M8 4 H20 L24 15 H4 Z"></path>
-        <circle class="lamp-bulb" cx="14" cy="19.5" r="4.5"></circle>
-      </svg>
-      <span class="lamp-cord-swing">
-        <span class="lamp-cord"></span>
-        <span class="lamp-bead"></span>
-      </span>
+    <button class="lamp-toggle" type="button" aria-label="Turn on the lamp (dark mode)" aria-pressed="false" title="Toggle light / dark mode">
+      <span class="lamp-toggle-glow" aria-hidden="true"></span>
+      <img class="lamp-toggle-img" src="assets/lamp.png" alt="" width="140" height="166" aria-hidden="true">
     </button>
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
     <span class="reg-mark" aria-hidden="true"></span>
     <div class="rail-tabs">
       <a class="rail-tab t-lavender" href="about.html"><span class="tab-dot"></span>About</a>
