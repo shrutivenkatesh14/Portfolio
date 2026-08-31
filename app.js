@@ -197,12 +197,15 @@ function initOverlay() {
     }, 150);
   }
 
-  function open(index) {
+  var lastTrigger = null;
+
+  function open(index, trigger) {
     render(index);
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
     overlay.inert = false;
     document.body.classList.add('no-scroll');
+    lastTrigger = trigger || null;
     closeBtn.focus();
   }
 
@@ -211,6 +214,10 @@ function initOverlay() {
     overlay.setAttribute('aria-hidden', 'true');
     overlay.inert = true;
     document.body.classList.remove('no-scroll');
+    if (lastTrigger && typeof lastTrigger.focus === 'function') {
+      lastTrigger.focus();
+    }
+    lastTrigger = null;
   }
 
   document.addEventListener('click', function (e) {
@@ -221,7 +228,7 @@ function initOverlay() {
     if (index > -1) {
       card.classList.add('lifting');
       setTimeout(function () { card.classList.remove('lifting'); }, 260);
-      open(index);
+      open(index, card);
     }
   });
 
