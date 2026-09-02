@@ -78,12 +78,18 @@ function initCursor() {
   document.body.classList.add('has-loupe-cursor');
 
   var x = window.innerWidth / 2, y = window.innerHeight / 2;
-  var cx = x, cy = y;
+  var raf = null;
+
+  function writePosition() {
+    loupe.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    raf = null;
+  }
 
   window.addEventListener('mousemove', function (e) {
     x = e.clientX;
     y = e.clientY;
     loupe.style.opacity = '1';
+    if (raf === null) raf = requestAnimationFrame(writePosition);
   }, { passive: true });
 
   document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
@@ -93,20 +99,12 @@ function initCursor() {
     if (e.target.closest && e.target.closest(interactive)) {
       loupe.classList.add('is-active');
     }
-  });
+  }, { passive: true });
   document.addEventListener('mouseout', function (e) {
     if (e.target.closest && e.target.closest(interactive)) {
       loupe.classList.remove('is-active');
     }
-  });
-
-  function tick() {
-    cx += (x - cx) * 0.4;
-    cy += (y - cy) * 0.4;
-    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  }, { passive: true });
 }
 
 /* --------------------------------------------------------------------------
