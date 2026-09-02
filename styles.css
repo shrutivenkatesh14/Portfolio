@@ -431,7 +431,7 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 
 .washi-tape {
   position: absolute;
-  top: -10px;
+  top: -20px;
   left: 0;
   height: 22px;
   width: 60px;
@@ -839,13 +839,13 @@ html[data-theme="dark"] .contact-ledger .ledger-row { border-bottom-color: rgba(
 
 .mail-stamp {
   --stamp-fill: var(--butter-yellow);
-  width: 118px; padding: 12px 8px 10px; text-align: center; color: var(--ink);
-  text-decoration: none; transform: rotate(2deg); transition: transform 0.15s ease; display: block;
+  width: 150px; padding: 16px 10px 14px; text-align: center; color: var(--ink);
+  text-decoration: none; transform: rotate(2deg); transition: transform 0.15s ease, box-shadow 0.15s ease; display: block;
 }
-.mail-stamp:hover { transform: rotate(0deg) translateY(-2px); }
-.mail-stamp .stamp-inner-mini { border: 1px solid rgba(43,36,30,0.28); padding: 12px 6px; }
+.mail-stamp:hover { transform: rotate(0deg) translateY(-3px); }
+.mail-stamp .stamp-inner-mini { border: 1px solid rgba(43,36,30,0.28); padding: 14px 8px; }
 .mail-stamp .m-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
-.mail-stamp .m-title { font-family: var(--font-display); font-size: 1rem; margin: 6px 0; }
+.mail-stamp .m-title { font-family: var(--font-display); font-size: 1.2rem; margin: 8px 0; }
 .mail-stamp .m-sub { font-family: var(--font-mono); font-size: 11px; opacity: 0.7; }
 
 
