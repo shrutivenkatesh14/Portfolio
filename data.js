@@ -112,29 +112,13 @@ const PROJECTS = [
 const POSTS = [
   {
     id: "post-1",
-    platform: "Substack",
     tag: "SQL",
     title: "SQL Noir, Case #001: The Vanishing Briefcase",
     teaser: "A briefcase goes missing from a 1980s lounge, and the only way to find the culprit is by querying crime scenes, suspects, and interview transcripts.",
     date: "Aug 2026",
-    url: "https://substack.com/home/post/p-213179638"
-  },
-  {
-    id: "post-2",
-    platform: "Medium",
-    tag: "SQL",
-    title: "SQL Noir, Case #001: The Vanishing Briefcase",
-    teaser: "A briefcase goes missing from a 1980s lounge, and the only way to find the culprit is by querying crime scenes, suspects, and interview transcripts.",
-    date: "Aug 2026",
-    url: "https://medium.com/@vshruti193/sql-noir-a-detective-sql-story-case-001-the-vanishing-briefcase-7f0cf78a3b8d"
-  },
-  {
-    id: "post-3",
-    platform: "Substack",
-    tag: "Case Study",
-    title: "[Article title]",
-    teaser: "[One or two sentences on what the piece is about.]",
-    date: "[Month Year]",
-    url: "https://yourname.substack.com/"
+    links: [
+      { platform: "Substack", url: "https://substack.com/home/post/p-213179638" },
+      { platform: "Medium", url: "https://medium.com/@vshruti193/sql-noir-a-detective-sql-story-case-001-the-vanishing-briefcase-7f0cf78a3b8d" }
+    ]
   }
 ];

@@ -260,14 +260,16 @@ function initPostcards() {
     var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
     var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
     var tapeColor = tapeColors[i % tapeColors.length];
+    var links = (post.links || []).map(function (link) {
+      return '<a class="postcard-cta" href="' + link.url + '" target="_blank" rel="noopener noreferrer">Read on ' + link.platform + ' ↗</a>';
+    }).join('');
     return '' +
-      '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+      '<div class="postcard" style="--tilt:' + tilt + ';">' +
         '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
-        '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
         '<span class="postcard-teaser">' + post.teaser + '</span>' +
-        '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
-      '</a>';
+        '<div class="postcard-links">' + links + '</div>' +
+      '</div>';
   }).join('');
 }
