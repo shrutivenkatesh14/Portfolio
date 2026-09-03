@@ -113,20 +113,20 @@ const POSTS = [
   {
     id: "post-1",
     platform: "Substack",
-    tag: "Analytics",
-    title: "[Article title — e.g. \"What three months of churn data taught me\"]",
-    teaser: "[One or two sentences on what the piece is about — enough to make someone want to click through.]",
-    date: "[Month Year]",
-    url: "https://yourname.substack.com/"
+    tag: "SQL",
+    title: "SQL Noir, Case #001: The Vanishing Briefcase",
+    teaser: "A briefcase goes missing from a 1980s lounge, and the only way to find the culprit is by querying crime scenes, suspects, and interview transcripts.",
+    date: "Aug 2026",
+    url: "https://substack.com/home/post/p-213179638"
   },
   {
     id: "post-2",
     platform: "Medium",
-    tag: "Career",
-    title: "[Article title — e.g. \"Why I collect stamps and data, for the same reason\"]",
-    teaser: "[One or two sentences on what the piece is about.]",
-    date: "[Month Year]",
-    url: "https://medium.com/@yourname"
+    tag: "SQL",
+    title: "SQL Noir, Case #001: The Vanishing Briefcase",
+    teaser: "A briefcase goes missing from a 1980s lounge, and the only way to find the culprit is by querying crime scenes, suspects, and interview transcripts.",
+    date: "Aug 2026",
+    url: "https://medium.com/@vshruti193/sql-noir-a-detective-sql-story-case-001-the-vanishing-briefcase-7f0cf78a3b8d"
   },
   {
     id: "post-3",
