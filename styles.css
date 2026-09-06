@@ -830,14 +830,14 @@ section + section { border-top: 1px solid var(--line); }
    Contact — specimen card (stamp + catalogue) and message form
    ========================================================================== */
 
-.specimen-plaque { max-width: 620px; background: var(--paper); border: 3px solid var(--ink); box-shadow: 6px 8px 0 rgba(37,31,25,0.22); padding: 34px; }
+.specimen-plaque { background: var(--paper); border: 3px solid var(--ink); box-shadow: 6px 8px 0 rgba(37,31,25,0.22); padding: 34px; }
 html[data-theme="dark"] .specimen-plaque { box-shadow: 6px 8px 0 rgba(0,0,0,0.35); }
 
-.e-cols { display: flex; gap: 34px; align-items: flex-start; flex-wrap: wrap; }
+.e-cols { display: flex; gap: 34px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
 .mount { flex: 0 0 auto; position: relative; }
 .mount-hinge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 40px; height: 16px; background: rgba(37,31,25,0.16); }
 
-.stamp {
+.specimen-stamp {
   --hole: 7px; --tile: 19px;
   width: 190px; height: 244px;
   background-color: var(--accent-ink-deep);
@@ -855,16 +855,22 @@ html[data-theme="dark"] .specimen-plaque { box-shadow: 6px 8px 0 rgba(0,0,0,0.35
   text-decoration: none;
   transform: rotate(-1.2deg);
 }
-.stamp-inner { position: relative; z-index: 2; height: 100%; padding: 20px 17px; display: flex; flex-direction: column; justify-content: space-between; color: var(--paper); }
-.stamp-inner::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(243,238,227,0.4); pointer-events: none; }
-.stamp-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.13em; opacity: 0.85; position: relative; z-index: 1; }
-.stamp-title { font-size: 1.5rem; font-weight: 700; text-transform: uppercase; line-height: 1.05; position: relative; z-index: 1; }
-.stamp-bottom { display: flex; align-items: flex-end; justify-content: flex-end; position: relative; z-index: 1; }
-.stamp-edition { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; opacity: 0.85; text-align: right; line-height: 1.35; }
+.specimen-inner { position: relative; z-index: 2; height: 100%; padding: 20px 17px; display: flex; flex-direction: column; justify-content: space-between; color: var(--paper); }
+.specimen-inner::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(243,238,227,0.4); pointer-events: none; }
+.specimen-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.13em; opacity: 0.85; position: relative; z-index: 1; }
+.specimen-title { font-size: 1.5rem; font-weight: 700; text-transform: uppercase; line-height: 1.05; position: relative; z-index: 1; }
+.specimen-bottom { display: flex; align-items: flex-end; justify-content: flex-end; position: relative; z-index: 1; }
+.specimen-edition { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; opacity: 0.85; text-align: right; line-height: 1.35; }
+
+/* petals: pink in light mode; in dark mode the stamp fill itself
+   remaps toward brass/gold, so pink read as a clash — swap to a
+   soft warm white instead, same shading, no separate SVG needed */
+:root { --petal-1: #FBEAEC; --petal-2: #F0C4CB; --petal-3: #DDA0AC; --petal-stroke: #C97F8E; }
+html[data-theme="dark"] { --petal-1: #FFFFFF; --petal-2: #F7F3EA; --petal-3: #E9E2D2; --petal-stroke: rgba(243,238,227,0.55); }
 .blossoms { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.4; }
 .cancel { position: absolute; z-index: 4; bottom: -22px; right: -26px; width: 108px; height: 108px; mix-blend-mode: screen; }
 
-.catalog { flex: 1 1 240px; min-width: 220px; }
+.catalog { flex: 0 1 340px; max-width: 340px; min-width: 220px; }
 .catalog-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent-ink); font-weight: 700; display: flex; align-items: center; gap: 7px; margin-bottom: 18px; }
 .fld { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 9px; margin-bottom: 12px; font-size: 13.5px; }
 .fld .k { color: var(--ink); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; font-weight: 700; }
@@ -885,6 +891,7 @@ html[data-theme="dark"] .specimen-plaque { box-shadow: 6px 8px 0 rgba(0,0,0,0.35
 .tear-label { position: relative; display: inline-block; background: var(--paper); padding: 0 14px; font-family: var(--font-hand); font-size: 1.15rem; color: var(--accent-ink-deep); }
 
 .msg-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); margin-bottom: 16px; text-align: center; }
+.msg-form { max-width: 520px; margin: 0 auto; }
 .f-field { margin-bottom: 16px; }
 .f-field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-soft); margin-bottom: 5px; }
 .f-field input, .f-field textarea {
