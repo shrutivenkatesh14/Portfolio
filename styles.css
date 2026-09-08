@@ -56,11 +56,7 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
-body.no-scroll {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-}
+body.no-scroll { overflow: hidden; }
 
 /* faint paper grain — a handful of irregular radial specks, tiled, so the
    page reads as textured stock rather than a flat digital fill */
@@ -194,9 +190,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   position: sticky;
   top: 0;
   height: 100vh;
-  height: 100dvh;
   max-height: calc(100vh - 28px);
-  max-height: calc(100dvh - 28px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -286,10 +280,9 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rail-toggle {
   display: none;
   position: fixed;
-  top: max(16px, env(safe-area-inset-top));
-  right: max(16px, env(safe-area-inset-right));
+  top: 16px; right: 16px;
   z-index: 90;
-  width: 44px; height: 44px;
+  width: 42px; height: 42px;
   background: var(--paper);
   border: 1.5px solid var(--ink);
   border-radius: var(--radius);
@@ -301,16 +294,15 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .page-content { flex: 1; min-width: 0; }
 
 @media (max-width: 880px) {
-  .album { margin: 6px; min-height: calc(100vh - 12px); min-height: calc(100dvh - 12px); }
+  .album { margin: 6px; min-height: calc(100vh - 12px); }
   .rail {
     position: fixed;
     top: 0; left: -260px;
     width: 240px;
     height: 100vh;
-    height: 100dvh;
     max-height: none;
     align-items: stretch;
-    padding: 70px 18px calc(24px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    padding: 70px 18px 24px;
     transition: left 0.25s ease;
   }
   .rail.open { left: 0; }
@@ -447,7 +439,7 @@ section + section { border-top: 1px solid var(--line); }
 
 .stamp-collection {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px 24px;
 }
 
@@ -530,13 +522,7 @@ section + section { border-top: 1px solid var(--line); }
   transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.3,1.6,0.4,1);
 }
 .postmark::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--accent-ink); border-radius: 50%; }
-.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark, .stamp-card:active .postmark { opacity: 0.9; transform: rotate(-14deg) scale(1); }
-
-/* touch devices can't hover: show the postmark at rest, at reduced strength,
-   instead of hiding the completion date behind an interaction that never fires */
-@media (hover: none) {
-  .postmark { opacity: 0.55; }
-}
+.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: 0.9; transform: rotate(-14deg) scale(1); }
 
 /* ==========================================================================
    Case-file overlay
@@ -574,8 +560,8 @@ section + section { border-top: 1px solid var(--line); }
 
 .overlay-close {
   position: absolute;
-  top: 12px; right: 12px;
-  width: 44px; height: 44px;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
   border: 1.5px solid var(--ink);
   background: var(--paper);
   border-radius: 50%;
@@ -616,8 +602,7 @@ section + section { border-top: 1px solid var(--line); }
   background: none;
   border: 1.5px solid var(--ink);
   border-radius: var(--radius);
-  padding: 13px 16px;
-  min-height: 44px;
+  padding: 9px 16px;
   color: var(--ink);
   cursor: pointer;
 }
@@ -736,7 +721,7 @@ section + section { border-top: 1px solid var(--line); }
 
 .postcard-rack {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 26px;
 }
 .postcard {

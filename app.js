@@ -137,13 +137,9 @@ function initOverlay() {
     body.querySelector('.o-result').textContent = p.result;
   }
 
-  var lockedScrollY = 0;
-
   function open(index) {
     render(index);
     overlay.classList.add('open');
-    lockedScrollY = window.scrollY;
-    document.body.style.top = '-' + lockedScrollY + 'px';
     document.body.classList.add('no-scroll');
     closeBtn.focus();
   }
@@ -151,8 +147,6 @@ function initOverlay() {
   function close() {
     overlay.classList.remove('open');
     document.body.classList.remove('no-scroll');
-    document.body.style.top = '';
-    window.scrollTo(0, lockedScrollY);
   }
 
   document.addEventListener('click', function (e) {
