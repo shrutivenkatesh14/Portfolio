@@ -69,7 +69,11 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
-body.no-scroll { overflow: hidden; }
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
 
 /* faint paper grain — a handful of irregular radial specks, tiled, so the
    page reads as textured stock rather than a flat digital fill */
@@ -225,7 +229,9 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh;
   max-height: calc(100vh - 28px);
+  max-height: calc(100dvh - 28px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -346,7 +352,8 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 .rail-toggle {
   display: none;
   position: fixed;
-  top: 14px; right: 14px;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
   z-index: 90;
   width: 44px; height: 44px;
   background: var(--paper);
@@ -367,6 +374,7 @@ html[data-theme="dark"] .rail-brand:focus-visible {
   .album {
     margin: 6px;
     min-height: calc(100vh - 12px);
+    min-height: calc(100dvh - 12px);
     box-shadow:
       0 3px 16px rgba(37,31,25,0.28),
       3px 3px 0 0 var(--paper-deep),
@@ -380,9 +388,10 @@ html[data-theme="dark"] .rail-brand:focus-visible {
     top: 0; left: -260px;
     width: 240px;
     height: 100vh;
+    height: 100dvh;
     max-height: none;
     align-items: stretch;
-    padding: 70px 18px 24px;
+    padding: 70px 18px calc(24px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
     transition: left 0.25s ease;
   }
   .rail.open { left: 0; }
@@ -512,7 +521,7 @@ section + section { border-top: 1px solid var(--line); }
 
 .stamp-collection {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
   gap: 30px 24px;
 }
 
@@ -631,7 +640,13 @@ section + section { border-top: 1px solid var(--line); }
   transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.3,1.6,0.4,1);
 }
 .postmark::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--accent-ink); border-radius: 50%; }
-.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark { opacity: 1; transform: rotate(-14deg) scale(1); }
+.stamp-card:hover .postmark, .stamp-card:focus-visible .postmark, .stamp-card:active .postmark { opacity: 1; transform: rotate(-14deg) scale(1); }
+
+/* touch devices can't hover: the completion date shouldn't be hidden behind
+   an interaction that never fires there */
+@media (hover: none) {
+  .postmark { opacity: 0.6; }
+}
 
 /* ==========================================================================
    Case-file overlay
@@ -917,7 +932,7 @@ html[data-theme="dark"] { --petal-1: #FFFFFF; --petal-2: #F7F3EA; --petal-3: #E9
 
 .postcard-rack {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 26px;
 }
 .postcard {

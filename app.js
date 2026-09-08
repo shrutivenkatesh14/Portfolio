@@ -196,12 +196,15 @@ function initOverlay() {
   }
 
   var lastTrigger = null;
+  var lockedScrollY = 0;
 
   function open(index, trigger) {
     render(index);
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
     overlay.inert = false;
+    lockedScrollY = window.scrollY;
+    document.body.style.top = '-' + lockedScrollY + 'px';
     document.body.classList.add('no-scroll');
     lastTrigger = trigger || null;
     closeBtn.focus();
@@ -212,6 +215,8 @@ function initOverlay() {
     overlay.setAttribute('aria-hidden', 'true');
     overlay.inert = true;
     document.body.classList.remove('no-scroll');
+    document.body.style.top = '';
+    window.scrollTo(0, lockedScrollY);
     if (lastTrigger && typeof lastTrigger.focus === 'function') {
       lastTrigger.focus();
     }
