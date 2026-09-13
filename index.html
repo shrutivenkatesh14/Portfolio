@@ -2,34 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>
-(function () {
-  try {
-    var t = localStorage.getItem('theme');
-    if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', t);
-  } catch (e) {}
-})();
-</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Shruti Venkatesh — Business Analyst &amp; Aspiring Consultant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Your Name] — Business Analyst &amp; Aspiring Consultant</title>
 <meta name="description" content="A small collection of analytics and consulting work, catalogued like a stamp album.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shruti Venkatesh — Business Analyst &amp; Aspiring Consultant">
-<meta property="og:description" content="A small collection of analytics and consulting work, catalogued like a stamp album.">
-<meta property="og:url" content="https://shrutivenkatesh14.github.io/Portfolio/">
-<meta property="og:site_name" content="Shruti Venkatesh — Portfolio">
-<meta property="og:image" content="https://shrutivenkatesh14.github.io/Portfolio/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shruti Venkatesh — Business Analyst &amp; Aspiring Consultant">
-<meta name="twitter:description" content="A small collection of analytics and consulting work, catalogued like a stamp album.">
-<meta name="twitter:image" content="https://shrutivenkatesh14.github.io/Portfolio/og-image.png">
-<link rel="canonical" href="https://shrutivenkatesh14.github.io/Portfolio/">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
@@ -38,19 +13,14 @@
 <body>
 
 <div class="album">
-    <nav class="rail" aria-label="Primary">
-    <button class="lamp-toggle" type="button" aria-label="Turn on the lamp (dark mode)" aria-pressed="false" title="Toggle light / dark mode">
-    <span class="lamp-toggle-glow" aria-hidden="true"></span>
-    <img class="lamp-toggle-img" src="assets/lamp.png" alt="" width="140" height="166" aria-hidden="true">
-  
-  </button>
-  <a class="rail-brand" href="index.html" aria-label="Home" aria-current="page">Y.N</a>
+  <nav class="rail" aria-label="Primary">
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
     <span class="reg-mark" aria-hidden="true"></span>
     <div class="rail-tabs">
-      <a class="rail-tab t-lavender" href="about.html"><span class="tab-dot"></span>About</a>
-      <a class="rail-tab t-sage" href="projects.html"><span class="tab-dot"></span>Projects</a>
-      <a class="rail-tab t-powder-blue" href="writing.html"><span class="tab-dot"></span>Writing</a>
-      <a class="rail-tab t-dusty-rose" href="contact.html"><span class="tab-dot"></span>Contact</a>
+      <a class="rail-tab" style="--accent:var(--lavender);" href="about.html"><span class="tab-dot"></span>About</a>
+      <a class="rail-tab" style="--accent:var(--sage);" href="projects.html"><span class="tab-dot"></span>Projects</a>
+      <a class="rail-tab" style="--accent:var(--powder-blue);" href="writing.html"><span class="tab-dot"></span>Writing</a>
+      <a class="rail-tab" style="--accent:var(--dusty-rose);" href="contact.html"><span class="tab-dot"></span>Contact</a>
     </div>
     <span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>
   </nav>
@@ -60,8 +30,7 @@
     <main>
       <section class="hero">
         <div class="wrap">
-          <p class="eyebrow">No.00</p>
-          <h1 class="hero-name">Shruti Venkatesh</h1>
+          <h1 class="hero-name">[Your Name]</h1>
           <p class="hero-role">Business Analyst · Aspiring Management Consultant</p>
           <p class="max-w">
             I turn messy data and vague problems into clear recommendations. This is a small, curated collection of
@@ -83,7 +52,7 @@
                 <span class="washi-tape washi-butter" aria-hidden="true" style="width:74px; left:-6px; transform:rotate(-5deg);"></span>
                 <span class="hand-note">Featured in the album</span>
               </span>
-              <h2 class="mt-0" style="margin-top:8px;">Three worth a closer look</h2>
+              <h2 class="section-title">Three worth a closer look</h2>
             </div>
             <a href="projects.html" class="btn btn-quiet">See the full collection →</a>
           </div>
@@ -93,20 +62,17 @@
 
       <section>
         <div class="wrap">
-          <span class="album-note">
-            <span class="washi-tape washi-sage" aria-hidden="true" style="width:70px; left:-5px; transform:rotate(4deg);"></span>
-            <span class="hand-note">the tools I reach for</span>
-          </span>
-          <h2 class="mt-0" style="margin-top:8px;">Tools in the kit</h2>
-          <div class="tool-mark-row">
-            <span class="tool-mark" style="--tilt:-2.2deg;">Microsoft Excel</span>
-            <span class="tool-mark" style="--tilt:1.6deg;">SQL</span>
-            <span class="tool-mark" style="--tilt:-1.4deg;">Power BI</span>
-            <span class="tool-mark" style="--tilt:2.4deg;">Tableau</span>
-            <span class="tool-mark" style="--tilt:-1.8deg;">Python</span>
-            <span class="tool-mark" style="--tilt:1.2deg;">Microsoft Project</span>
-            <span class="tool-mark" style="--tilt:-2.6deg;">Claude / Gemini / ChatGPT</span>
-            <span class="tool-mark" style="--tilt:1.8deg;">Prompt Engineering</span>
+          <span class="hand-note">the tools I reach for</span>
+          <h2 class="section-title">Tools in the kit</h2>
+          <div class="chip-row">
+            <span class="chip">Excel / Google Sheets</span>
+            <span class="chip">SQL</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">Tableau</span>
+            <span class="chip">Python (pandas)</span>
+            <span class="chip">Financial Modelling</span>
+            <span class="chip">Process Mapping</span>
+            <span class="chip">Stakeholder Interviews</span>
           </div>
         </div>
       </section>
@@ -115,40 +81,14 @@
     <footer class="site-footer">
       <div class="wrap footer-row">
         <span class="leaf-num">Leaf 00 / 04</span>
-        <span>© 2026 Shruti Venkatesh. Catalogued and printed on album stock.</span>
+        <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
         <div class="footer-links">
-          <a href="mailto:shruti3619@outlook.com">Email</a>
-          <a href="https://www.linkedin.com/in/shrutivenkatesh14" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/shrutivenkatesh14" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:you@example.com">Email</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
         </div>
       </div>
     </footer>
-  </div>
-</div>
-
-<div class="overlay" id="case-overlay" aria-hidden="true" inert>
-  <div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">
-    <button class="overlay-close" aria-label="Close">✕</button>
-    <div class="overlay-content">
-      <div class="overlay-head">
-        <div class="overlay-stamp stamp-shape"></div>
-        <div>
-          <span class="overlay-tag"></span>
-          <h3 class="overlay-title"></h3>
-        </div>
-      </div>
-      <span class="overlay-denom"></span>
-      <p class="overlay-outcome"></p>
-      <div class="overlay-body">
-        <div><h4>The problem</h4><p class="o-problem"></p></div>
-        <div><h4>What I did</h4><ul class="o-approach"></ul></div>
-        <div><h4>The outcome</h4><p class="o-result"></p></div>
-      </div>
-    </div>
-    <div class="overlay-nav">
-      <button class="overlay-prev">← Previous</button>
-      <button class="overlay-next">Next →</button>
-    </div>
   </div>
 </div>
 

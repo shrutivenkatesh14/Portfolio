@@ -8,6 +8,7 @@
 const PROJECTS = [
   {
     id: "churn-model",
+    num: "01",
     denom: "01¢",
     tag: "Data Analysis",
     title: "Customer Churn Model",
@@ -25,6 +26,7 @@ const PROJECTS = [
   },
   {
     id: "ops-automation",
+    num: "02",
     denom: "02¢",
     tag: "Process Improvement",
     title: "Ops Reporting Automation",
@@ -42,6 +44,7 @@ const PROJECTS = [
   },
   {
     id: "market-entry",
+    num: "03",
     denom: "03¢",
     tag: "Strategy",
     title: "Market Entry Study",
@@ -59,6 +62,7 @@ const PROJECTS = [
   },
   {
     id: "pricing-model",
+    num: "04",
     denom: "04¢",
     tag: "Financial Modelling",
     title: "Pricing Sensitivity Model",
@@ -76,6 +80,7 @@ const PROJECTS = [
   },
   {
     id: "dashboard",
+    num: "05",
     denom: "05¢",
     tag: "Data Visualisation",
     title: "Executive KPI Dashboard",
@@ -93,6 +98,7 @@ const PROJECTS = [
   },
   {
     id: "capstone",
+    num: "06",
     denom: "06¢",
     tag: "Case Competition",
     title: "[Case Competition Name]",

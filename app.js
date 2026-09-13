@@ -5,8 +5,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   initRailToggle();
   initCursor();
-  initStampGrid();
-  initOverlay();
+  initProjectGrid();
   initPostcards();
 });
 
@@ -80,10 +79,38 @@ function initCursor() {
 }
 
 /* --------------------------------------------------------------------------
-   Render the stamp grid (project cards) from PROJECTS data
+   Case-file overlay markup — injected once, only on pages that render a
+   stamp grid. Was previously duplicated by hand in index.html and
+   projects.html; now it exists in exactly one place.
+   -------------------------------------------------------------------------- */
+var OVERLAY_HTML =
+  '<div class="overlay" id="case-overlay">' +
+    '<div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">' +
+      '<button class="overlay-close" aria-label="Close">✕</button>' +
+      '<div class="overlay-head">' +
+        '<div class="overlay-stamp stamp-shape"></div>' +
+        '<div><span class="overlay-tag"></span><h3 class="overlay-title"></h3></div>' +
+      '</div>' +
+      '<span class="overlay-denom"></span>' +
+      '<p class="overlay-outcome"></p>' +
+      '<div class="overlay-body">' +
+        '<div><h4>The problem</h4><p class="o-problem"></p></div>' +
+        '<div><h4>What I did</h4><ul class="o-approach"></ul></div>' +
+        '<div><h4>The outcome</h4><p class="o-result"></p></div>' +
+      '</div>' +
+      '<div class="overlay-nav">' +
+        '<button class="overlay-prev">← Previous</button>' +
+        '<button class="overlay-next">Next →</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+/* --------------------------------------------------------------------------
+   Render the stamp grid (project cards) and wire up its overlay from one
+   shared `items` list, computed once.
    Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
-function initStampGrid() {
+function initProjectGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
 
@@ -93,29 +120,27 @@ function initStampGrid() {
   grid.innerHTML = items.map(function (p) {
     var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
     return '' +
-      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
+      '<button type="button" class="stamp-card stamp-shape" data-id="' + p.id + '" style="--tilt:' + tilt + ';--accent:var(--' + p.color + ');">' +
         '<span class="stamp-inner">' +
           '<span class="stamp-tag">' + p.tag + '</span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
-          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
+          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + p.num + '</span></span>' +
         '</span>' +
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
       '</button>';
   }).join('');
 
   grid.dataset.rendered = 'true';
+  initOverlay(items);
 }
 
 /* --------------------------------------------------------------------------
-   Case-file overlay — opens when a stamp card is clicked
+   Case-file overlay — opens when a stamp card is clicked. Takes the same
+   `items` list the grid already computed, instead of recomputing it.
    -------------------------------------------------------------------------- */
-function initOverlay() {
+function initOverlay(items) {
+  document.body.insertAdjacentHTML('beforeend', OVERLAY_HTML);
   var overlay = document.getElementById('case-overlay');
-  if (!overlay || typeof PROJECTS === 'undefined') return;
-
-  var grid = document.getElementById('stamp-grid');
-  var filter = grid ? (grid.getAttribute('data-filter') || 'all') : 'all';
-  var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
 
   var closeBtn = overlay.querySelector('.overlay-close');
   var prevBtn = overlay.querySelector('.overlay-prev');
@@ -127,7 +152,6 @@ function initOverlay() {
     var p = items[index];
     if (!p) return;
     currentIndex = index;
-    overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
     overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
