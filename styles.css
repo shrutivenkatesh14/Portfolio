@@ -116,6 +116,9 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .rule { border: none; border-top: 1px solid var(--line); margin: 0; }
 .mt-0 { margin-top: 0; }
 .section-title { margin-top: 8px; }
+.page-title { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+.lede { font-size: 17px; color: var(--ink); }
+.pt-0 { padding-top: 0; }
 .max-w { max-width: 620px; }
 
 /* ==========================================================================

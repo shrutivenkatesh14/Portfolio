@@ -3,11 +3,69 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
+  initNav();
+  initFooter();
   initRailToggle();
   initCursor();
   initProjectGrid();
   initPostcards();
 });
+
+/* --------------------------------------------------------------------------
+   Nav rail + footer — identical on every page except which tab/leaf is
+   current. Was previously duplicated by hand in all five HTML files; now
+   generated once from a `data-page` attribute on <body>.
+   -------------------------------------------------------------------------- */
+var NAV_ITEMS = [
+  { key: 'about', href: 'about.html', label: 'About', color: 'lavender' },
+  { key: 'projects', href: 'projects.html', label: 'Projects', color: 'sage' },
+  { key: 'writing', href: 'writing.html', label: 'Writing', color: 'powder-blue' },
+  { key: 'contact', href: 'contact.html', label: 'Contact', color: 'dusty-rose' }
+];
+
+var LEAF_NUMBERS = { home: '00', about: '01', projects: '02', writing: '03', contact: '04' };
+
+function initNav() {
+  var placeholder = document.getElementById('nav-placeholder');
+  if (!placeholder) return;
+
+  var currentPage = document.body.getAttribute('data-page') || '';
+  var tabsHtml = NAV_ITEMS.map(function (item) {
+    var current = item.key === currentPage;
+    return '<a class="rail-tab" style="--accent:var(--' + item.color + ');" href="' + item.href + '"' +
+      (current ? ' aria-current="page"' : '') + '><span class="tab-dot"></span>' + item.label + '</a>';
+  }).join('');
+
+  placeholder.outerHTML = '' +
+    '<nav class="rail" aria-label="Primary">' +
+      '<a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>' +
+      '<span class="reg-mark" aria-hidden="true"></span>' +
+      '<div class="rail-tabs">' + tabsHtml + '</div>' +
+      '<span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>' +
+    '</nav>' +
+    '<button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>';
+}
+
+function initFooter() {
+  var placeholder = document.getElementById('footer-placeholder');
+  if (!placeholder) return;
+
+  var currentPage = document.body.getAttribute('data-page') || 'home';
+  var leaf = LEAF_NUMBERS[currentPage] || '00';
+
+  placeholder.outerHTML = '' +
+    '<footer class="site-footer">' +
+      '<div class="wrap footer-row">' +
+        '<span class="leaf-num">Leaf ' + leaf + ' / 04</span>' +
+        '<span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>' +
+        '<div class="footer-links">' +
+          '<a href="mailto:you@example.com">Email</a>' +
+          '<a href="#">LinkedIn</a>' +
+          '<a href="#">GitHub</a>' +
+        '</div>' +
+      '</div>' +
+    '</footer>';
+}
 
 /* --------------------------------------------------------------------------
    Mobile rail drawer

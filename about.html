@@ -9,28 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="wash-about">
+<body class="wash-about" data-page="about">
 
 <div class="album">
-  <nav class="rail" aria-label="Primary">
-    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
-    <span class="reg-mark" aria-hidden="true"></span>
-    <div class="rail-tabs">
-      <a class="rail-tab" style="--accent:var(--lavender);" href="about.html" aria-current="page"><span class="tab-dot"></span>About</a>
-      <a class="rail-tab" style="--accent:var(--sage);" href="projects.html"><span class="tab-dot"></span>Projects</a>
-      <a class="rail-tab" style="--accent:var(--powder-blue);" href="writing.html"><span class="tab-dot"></span>Writing</a>
-      <a class="rail-tab" style="--accent:var(--dusty-rose);" href="contact.html"><span class="tab-dot"></span>Contact</a>
-    </div>
-    <span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>
-  </nav>
-  <button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  <div id="nav-placeholder"></div>
 
   <div class="page-content">
     <main>
       <section style="padding-bottom:20px;">
         <div class="wrap">
           <p class="eyebrow">No.01</p>
-          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">About</h1>
+          <h1 class="page-title">About</h1>
           <div class="intro-grid">
             <p class="max-w" style="font-size:17px; color:var(--ink); flex:1; min-width:260px;">
               [One or two paragraphs here: who you are, what kind of problems you like solving, and what led you
@@ -122,17 +111,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="wrap footer-row">
-        <span class="leaf-num">Leaf 01 / 04</span>
-        <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
-        <div class="footer-links">
-          <a href="mailto:you@example.com">Email</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
-        </div>
-      </div>
-    </footer>
+    <div id="footer-placeholder"></div>
   </div>
 </div>
 
