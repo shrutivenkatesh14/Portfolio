@@ -3,69 +3,12 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
-  initNav();
-  initFooter();
   initRailToggle();
   initCursor();
-  initProjectGrid();
+  initStampGrid();
+  initOverlay();
   initPostcards();
 });
-
-/* --------------------------------------------------------------------------
-   Nav rail + footer — identical on every page except which tab/leaf is
-   current. Was previously duplicated by hand in all five HTML files; now
-   generated once from a `data-page` attribute on <body>.
-   -------------------------------------------------------------------------- */
-var NAV_ITEMS = [
-  { key: 'about', href: 'about.html', label: 'About', color: 'lavender' },
-  { key: 'projects', href: 'projects.html', label: 'Projects', color: 'sage' },
-  { key: 'writing', href: 'writing.html', label: 'Writing', color: 'powder-blue' },
-  { key: 'contact', href: 'contact.html', label: 'Contact', color: 'dusty-rose' }
-];
-
-var LEAF_NUMBERS = { home: '00', about: '01', projects: '02', writing: '03', contact: '04' };
-
-function initNav() {
-  var placeholder = document.getElementById('nav-placeholder');
-  if (!placeholder) return;
-
-  var currentPage = document.body.getAttribute('data-page') || '';
-  var tabsHtml = NAV_ITEMS.map(function (item) {
-    var current = item.key === currentPage;
-    return '<a class="rail-tab" style="--accent:var(--' + item.color + ');" href="' + item.href + '"' +
-      (current ? ' aria-current="page"' : '') + '><span class="tab-dot"></span>' + item.label + '</a>';
-  }).join('');
-
-  placeholder.outerHTML = '' +
-    '<nav class="rail" aria-label="Primary">' +
-      '<a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>' +
-      '<span class="reg-mark" aria-hidden="true"></span>' +
-      '<div class="rail-tabs">' + tabsHtml + '</div>' +
-      '<span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>' +
-    '</nav>' +
-    '<button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>';
-}
-
-function initFooter() {
-  var placeholder = document.getElementById('footer-placeholder');
-  if (!placeholder) return;
-
-  var currentPage = document.body.getAttribute('data-page') || 'home';
-  var leaf = LEAF_NUMBERS[currentPage] || '00';
-
-  placeholder.outerHTML = '' +
-    '<footer class="site-footer">' +
-      '<div class="wrap footer-row">' +
-        '<span class="leaf-num">Leaf ' + leaf + ' / 04</span>' +
-        '<span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>' +
-        '<div class="footer-links">' +
-          '<a href="mailto:you@example.com">Email</a>' +
-          '<a href="#">LinkedIn</a>' +
-          '<a href="#">GitHub</a>' +
-        '</div>' +
-      '</div>' +
-    '</footer>';
-}
 
 /* --------------------------------------------------------------------------
    Mobile rail drawer
@@ -117,14 +60,12 @@ function initCursor() {
 
   var interactive = 'a, button, summary, .stamp-card, [role="button"]';
   document.addEventListener('mouseover', function (e) {
-    var match = e.target.closest && e.target.closest(interactive);
-    if (match && !match.contains(e.relatedTarget)) {
+    if (e.target.closest && e.target.closest(interactive)) {
       loupe.classList.add('is-active');
     }
   });
   document.addEventListener('mouseout', function (e) {
-    var match = e.target.closest && e.target.closest(interactive);
-    if (match && !match.contains(e.relatedTarget)) {
+    if (e.target.closest && e.target.closest(interactive)) {
       loupe.classList.remove('is-active');
     }
   });
@@ -139,38 +80,10 @@ function initCursor() {
 }
 
 /* --------------------------------------------------------------------------
-   Case-file overlay markup — injected once, only on pages that render a
-   stamp grid. Was previously duplicated by hand in index.html and
-   projects.html; now it exists in exactly one place.
-   -------------------------------------------------------------------------- */
-var OVERLAY_HTML =
-  '<div class="overlay" id="case-overlay">' +
-    '<div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">' +
-      '<button class="overlay-close" aria-label="Close">✕</button>' +
-      '<div class="overlay-head">' +
-        '<div class="overlay-stamp stamp-shape"></div>' +
-        '<div><span class="overlay-tag"></span><h3 class="overlay-title"></h3></div>' +
-      '</div>' +
-      '<span class="overlay-denom"></span>' +
-      '<p class="overlay-outcome"></p>' +
-      '<div class="overlay-body">' +
-        '<div><h4>The problem</h4><p class="o-problem"></p></div>' +
-        '<div><h4>What I did</h4><ul class="o-approach"></ul></div>' +
-        '<div><h4>The outcome</h4><p class="o-result"></p></div>' +
-      '</div>' +
-      '<div class="overlay-nav">' +
-        '<button class="overlay-prev">← Previous</button>' +
-        '<button class="overlay-next">Next →</button>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
-
-/* --------------------------------------------------------------------------
-   Render the stamp grid (project cards) and wire up its overlay from one
-   shared `items` list, computed once.
+   Render the stamp grid (project cards) from PROJECTS data
    Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
-function initProjectGrid() {
+function initStampGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
 
@@ -180,27 +93,29 @@ function initProjectGrid() {
   grid.innerHTML = items.map(function (p) {
     var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
     return '' +
-      '<button type="button" class="stamp-card stamp-shape" data-id="' + p.id + '" style="--tilt:' + tilt + ';--accent:var(--' + p.color + ');">' +
+      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
         '<span class="stamp-inner">' +
           '<span class="stamp-tag">' + p.tag + '</span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
-          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + p.num + '</span></span>' +
+          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
         '</span>' +
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
       '</button>';
   }).join('');
 
   grid.dataset.rendered = 'true';
-  initOverlay(items);
 }
 
 /* --------------------------------------------------------------------------
-   Case-file overlay — opens when a stamp card is clicked. Takes the same
-   `items` list the grid already computed, instead of recomputing it.
+   Case-file overlay — opens when a stamp card is clicked
    -------------------------------------------------------------------------- */
-function initOverlay(items) {
-  document.body.insertAdjacentHTML('beforeend', OVERLAY_HTML);
+function initOverlay() {
   var overlay = document.getElementById('case-overlay');
+  if (!overlay || typeof PROJECTS === 'undefined') return;
+
+  var grid = document.getElementById('stamp-grid');
+  var filter = grid ? (grid.getAttribute('data-filter') || 'all') : 'all';
+  var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
 
   var closeBtn = overlay.querySelector('.overlay-close');
   var prevBtn = overlay.querySelector('.overlay-prev');
@@ -212,9 +127,10 @@ function initOverlay(items) {
     var p = items[index];
     if (!p) return;
     currentIndex = index;
+    overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
-    overlay.querySelector('.overlay-denom').textContent = p.num + '¢ — ' + p.date;
+    overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
     overlay.querySelector('.overlay-outcome').textContent = p.outcome;
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
@@ -255,19 +171,6 @@ function initOverlay(items) {
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowRight') render((currentIndex + 1) % items.length);
     if (e.key === 'ArrowLeft') render((currentIndex - 1 + items.length) % items.length);
-    if (e.key === 'Tab') {
-      var focusable = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
-      if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
   });
 }
 
@@ -281,7 +184,7 @@ function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  var tapeColors = ['dusty-rose', 'sage', 'powder-blue', 'butter-yellow', 'lavender'];
+  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
 
   rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
@@ -290,13 +193,12 @@ function initPostcards() {
     var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
-        '<span class="washi-tape" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + '); --accent:var(--' + tapeColor + ');"></span>' +
+        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
         '<span class="postcard-teaser">' + post.teaser + '</span>' +
         '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
-        '<span class="sr-only"> (opens in a new tab)</span>' +
       '</a>';
   }).join('');
 }

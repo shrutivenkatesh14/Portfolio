@@ -8,7 +8,7 @@
 const PROJECTS = [
   {
     id: "churn-model",
-    num: "01",
+    denom: "01¢",
     tag: "Data Analysis",
     title: "Customer Churn Model",
     outcome: "Cut projected churn 12% by flagging at-risk accounts 30 days earlier.",
@@ -25,7 +25,7 @@ const PROJECTS = [
   },
   {
     id: "ops-automation",
-    num: "02",
+    denom: "02¢",
     tag: "Process Improvement",
     title: "Ops Reporting Automation",
     outcome: "Replaced a 6-hour manual report with a 10-minute automated build.",
@@ -42,7 +42,7 @@ const PROJECTS = [
   },
   {
     id: "market-entry",
-    num: "03",
+    denom: "03¢",
     tag: "Strategy",
     title: "Market Entry Study",
     outcome: "Sized a new regional market and mapped a 3-phase entry plan.",
@@ -59,7 +59,7 @@ const PROJECTS = [
   },
   {
     id: "pricing-model",
-    num: "04",
+    denom: "04¢",
     tag: "Financial Modelling",
     title: "Pricing Sensitivity Model",
     outcome: "Built a scenario model that guided a 2-tier pricing change.",
@@ -76,7 +76,7 @@ const PROJECTS = [
   },
   {
     id: "dashboard",
-    num: "05",
+    denom: "05¢",
     tag: "Data Visualisation",
     title: "Executive KPI Dashboard",
     outcome: "Gave leadership one live view instead of five weekly spreadsheets.",
@@ -93,7 +93,7 @@ const PROJECTS = [
   },
   {
     id: "capstone",
-    num: "06",
+    denom: "06¢",
     tag: "Case Competition",
     title: "[Case Competition Name]",
     outcome: "[Placement / result] with a recommendation on [topic].",

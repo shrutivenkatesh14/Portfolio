@@ -9,30 +9,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="wash-contact" data-page="contact">
+<body class="wash-contact">
 
 <div class="album">
-  <div id="nav-placeholder"></div>
-  <noscript>
-    <nav aria-label="Primary" style="padding:16px 20px;border-bottom:1px solid #D9D0BC;font-family:monospace;font-size:13px;">
-      <a href="index.html">Home</a> · <a href="about.html">About</a> · <a href="projects.html">Projects</a> · <a href="writing.html">Writing</a> · <a href="contact.html">Contact</a>
-    </nav>
-  </noscript>
+  <nav class="rail" aria-label="Primary">
+    <a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>
+    <span class="reg-mark" aria-hidden="true"></span>
+    <div class="rail-tabs">
+      <a class="rail-tab t-lavender" href="about.html"><span class="tab-dot"></span>About</a>
+      <a class="rail-tab t-sage" href="projects.html"><span class="tab-dot"></span>Projects</a>
+      <a class="rail-tab t-powder-blue" href="writing.html"><span class="tab-dot"></span>Writing</a>
+      <a class="rail-tab t-dusty-rose" href="contact.html" aria-current="page"><span class="tab-dot"></span>Contact</a>
+    </div>
+    <span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>
+  </nav>
+  <button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
   <div class="page-content">
     <main>
       <section style="padding-bottom:16px;">
         <div class="wrap">
           <p class="eyebrow">No.04</p>
-          <h1 class="page-title">Contact</h1>
-          <p class="max-w lede">
+          <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);">Contact</h1>
+          <p class="max-w" style="font-size:17px; color:var(--ink);">
             Open to internships, analyst roles, and conversations about consulting. The fastest way to reach me is
             email — click the stamp.
           </p>
         </div>
       </section>
 
-      <section class="pt-0">
+      <section style="padding-top:0;">
         <div class="wrap">
           <span class="hand-note" style="display:inline-block; margin-bottom:18px;">drop me a line</span>
           <div class="envelope">
@@ -63,19 +69,24 @@
         </div>
       </section>
 
-      <section class="pt-0">
+      <section style="padding-top:0;">
         <div class="wrap" style="max-width:640px; text-align:center;">
           <span class="hand-note">[usually reply within X days]</span>
         </div>
       </section>
     </main>
 
-    <div id="footer-placeholder"></div>
-    <noscript>
-      <footer style="padding:24px 20px;border-top:1px solid #D9D0BC;font-family:monospace;font-size:12px;">
-        © [Year] [Your Name]. <a href="mailto:you@example.com">Email</a>
-      </footer>
-    </noscript>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span class="leaf-num">Leaf 04 / 04</span>
+        <span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>
+        <div class="footer-links">
+          <a href="mailto:you@example.com">Email</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 
