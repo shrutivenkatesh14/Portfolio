@@ -353,6 +353,8 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
    a little imperfect; never a modern UI decoration.
    ========================================================================== */
 
+/* Colour comes from an inline `--accent` custom property (same pattern as
+   .rail-tab and .stamp-card), not a per-colour class + matching rule. */
 .washi-tape {
   position: absolute;
   top: -10px;
@@ -362,16 +364,12 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   opacity: 0.78;
   border-radius: 1px;
   box-shadow: 0 2px 3px rgba(43,36,30,0.18);
+  background-color: var(--accent, var(--butter-yellow));
   background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.45) 0 2px, transparent 2px 7px);
   background-blend-mode: overlay;
   pointer-events: none;
   z-index: 3;
 }
-.washi-butter   { background-color: var(--butter-yellow); }
-.washi-sage     { background-color: var(--sage); }
-.washi-rose     { background-color: var(--dusty-rose); }
-.washi-blue     { background-color: var(--powder-blue); }
-.washi-lavender { background-color: var(--lavender); }
 
 /* wraps a .hand-note so a small strip of tape can hold it down */
 .album-note { position: relative; display: inline-block; }

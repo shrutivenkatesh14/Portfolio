@@ -154,7 +154,7 @@ function initOverlay(items) {
     currentIndex = index;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
-    overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
+    overlay.querySelector('.overlay-denom').textContent = p.num + '¢ — ' + p.date;
     overlay.querySelector('.overlay-outcome').textContent = p.outcome;
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
@@ -208,7 +208,7 @@ function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+  var tapeColors = ['dusty-rose', 'sage', 'powder-blue', 'butter-yellow', 'lavender'];
 
   rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
@@ -217,7 +217,7 @@ function initPostcards() {
     var tapeColor = tapeColors[i % tapeColors.length];
     return '' +
       '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
-        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
+        '<span class="washi-tape" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + '); --accent:var(--' + tapeColor + ');"></span>' +
         '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
