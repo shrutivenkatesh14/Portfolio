@@ -3,41 +3,68 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
-  initTheme();
+  initNav();
+  initFooter();
   initRailToggle();
   initCursor();
-  initStampGrid();
-  initOverlay();
+  initProjectGrid();
   initPostcards();
 });
 
 /* --------------------------------------------------------------------------
-   Dark mode — same album, night, brass desk lamp.
-   Preference is read before paint (see the inline snippet in <head>) so
-   there is no flash; this wires up the switch and keeps it in sync.
+   Nav rail + footer — identical on every page except which tab/leaf is
+   current. Was previously duplicated by hand in all five HTML files; now
+   generated once from a `data-page` attribute on <body>.
    -------------------------------------------------------------------------- */
-function initTheme() {
-  var toggle = document.querySelector('.lamp-toggle');
-  if (!toggle) return;
+var NAV_ITEMS = [
+  { key: 'about', href: 'about.html', label: 'About', color: 'lavender' },
+  { key: 'projects', href: 'projects.html', label: 'Projects', color: 'sage' },
+  { key: 'writing', href: 'writing.html', label: 'Writing', color: 'powder-blue' },
+  { key: 'contact', href: 'contact.html', label: 'Contact', color: 'dusty-rose' }
+];
 
-  var root = document.documentElement;
+var LEAF_NUMBERS = { home: '00', about: '01', projects: '02', writing: '03', contact: '04' };
 
-  function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+function initNav() {
+  var placeholder = document.getElementById('nav-placeholder');
+  if (!placeholder) return;
 
-  function reflect() {
-    var dark = isDark();
-    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    toggle.setAttribute('aria-label', dark ? 'Turn off the lamp (light mode)' : 'Turn on the lamp (dark mode)');
-  }
+  var currentPage = document.body.getAttribute('data-page') || '';
+  var tabsHtml = NAV_ITEMS.map(function (item) {
+    var current = item.key === currentPage;
+    return '<a class="rail-tab" style="--accent:var(--' + item.color + ');" href="' + item.href + '"' +
+      (current ? ' aria-current="page"' : '') + '><span class="tab-dot"></span>' + item.label + '</a>';
+  }).join('');
 
-  reflect();
+  placeholder.outerHTML = '' +
+    '<nav class="rail" aria-label="Primary">' +
+      '<a class="rail-brand" href="index.html" aria-label="Home">Y.N</a>' +
+      '<span class="reg-mark" aria-hidden="true"></span>' +
+      '<div class="rail-tabs">' + tabsHtml + '</div>' +
+      '<span class="reg-mark" aria-hidden="true" style="margin-top:auto;"></span>' +
+    '</nav>' +
+    '<button class="rail-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>';
+}
 
-  toggle.addEventListener('click', function () {
-    var next = isDark() ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) { /* private mode etc. */ }
-    reflect();
-  });
+function initFooter() {
+  var placeholder = document.getElementById('footer-placeholder');
+  if (!placeholder) return;
+
+  var currentPage = document.body.getAttribute('data-page') || 'home';
+  var leaf = LEAF_NUMBERS[currentPage] || '00';
+
+  placeholder.outerHTML = '' +
+    '<footer class="site-footer">' +
+      '<div class="wrap footer-row">' +
+        '<span class="leaf-num">Leaf ' + leaf + ' / 04</span>' +
+        '<span>© [Year] [Your Name]. Catalogued and printed on album stock.</span>' +
+        '<div class="footer-links">' +
+          '<a href="mailto:you@example.com">Email</a>' +
+          '<a href="#">LinkedIn</a>' +
+          '<a href="#">GitHub</a>' +
+        '</div>' +
+      '</div>' +
+    '</footer>';
 }
 
 /* --------------------------------------------------------------------------
@@ -78,59 +105,72 @@ function initCursor() {
   document.body.classList.add('has-loupe-cursor');
 
   var x = window.innerWidth / 2, y = window.innerHeight / 2;
-  var raf = null;
-
-  function writePosition() {
-    loupe.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    raf = null;
-  }
+  var cx = x, cy = y;
 
   window.addEventListener('mousemove', function (e) {
     x = e.clientX;
     y = e.clientY;
     loupe.style.opacity = '1';
-    if (raf === null) raf = requestAnimationFrame(writePosition);
-  }, { passive: true });
+  });
 
   document.addEventListener('mouseleave', function () { loupe.style.opacity = '0'; });
 
   var interactive = 'a, button, summary, .stamp-card, [role="button"]';
   document.addEventListener('mouseover', function (e) {
-    if (e.target.closest && e.target.closest(interactive)) {
+    var match = e.target.closest && e.target.closest(interactive);
+    if (match && !match.contains(e.relatedTarget)) {
       loupe.classList.add('is-active');
     }
-  }, { passive: true });
+  });
   document.addEventListener('mouseout', function (e) {
-    if (e.target.closest && e.target.closest(interactive)) {
+    var match = e.target.closest && e.target.closest(interactive);
+    if (match && !match.contains(e.relatedTarget)) {
       loupe.classList.remove('is-active');
     }
-  }, { passive: true });
+  });
+
+  function tick() {
+    cx += (x - cx) * 0.18;
+    cy += (y - cy) * 0.18;
+    loupe.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 
 /* --------------------------------------------------------------------------
-   Render the stamp grid (project cards) from PROJECTS data
+   Case-file overlay markup — injected once, only on pages that render a
+   stamp grid. Was previously duplicated by hand in index.html and
+   projects.html; now it exists in exactly one place.
+   -------------------------------------------------------------------------- */
+var OVERLAY_HTML =
+  '<div class="overlay" id="case-overlay">' +
+    '<div class="overlay-sheet" role="dialog" aria-modal="true" aria-label="Case file">' +
+      '<button class="overlay-close" aria-label="Close">✕</button>' +
+      '<div class="overlay-head">' +
+        '<div class="overlay-stamp stamp-shape"></div>' +
+        '<div><span class="overlay-tag"></span><h3 class="overlay-title"></h3></div>' +
+      '</div>' +
+      '<span class="overlay-denom"></span>' +
+      '<p class="overlay-outcome"></p>' +
+      '<div class="overlay-body">' +
+        '<div><h4>The problem</h4><p class="o-problem"></p></div>' +
+        '<div><h4>What I did</h4><ul class="o-approach"></ul></div>' +
+        '<div><h4>The outcome</h4><p class="o-result"></p></div>' +
+      '</div>' +
+      '<div class="overlay-nav">' +
+        '<button class="overlay-prev">← Previous</button>' +
+        '<button class="overlay-next">Next →</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+/* --------------------------------------------------------------------------
+   Render the stamp grid (project cards) and wire up its overlay from one
+   shared `items` list, computed once.
    Looks for a container: <div id="stamp-grid" data-filter="featured|all">
    -------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------
-   Stamp category icons — one small monoline glyph per project tag, so each
-   stamp reads at a glance instead of relying on color + text alone.
-   -------------------------------------------------------------------------- */
-var STAMP_ICONS = {
-  "Data Analysis": '<path d="M4 16V10M10 16V4M16 16V12"/>',
-  "Process Improvement": '<circle cx="10" cy="10" r="3.4"/><path d="M10 2.5v2.4M10 15.1v2.4M17.5 10h-2.4M4.9 10H2.5M15.6 4.4l-1.7 1.7M6.1 13.9l-1.7 1.7M15.6 15.6l-1.7-1.7M6.1 6.1L4.4 4.4"/>',
-  "Strategy": '<circle cx="10" cy="10" r="7.2"/><path d="M10 5.2l1.5 3.3 3.3 1.5-3.3 1.5-1.5 3.3-1.5-3.3-3.3-1.5 3.3-1.5z"/>',
-  "Financial Modelling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
-  "Data Visualisation": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
-  "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>'
-};
-var STAMP_ICON_FALLBACK = '<path d="M10 2.2l1.9 4.7 5.1.4-3.9 3.3 1.2 5-4.3-2.8-4.3 2.8 1.2-5-3.9-3.3 5.1-.4z"/>';
-
-function stampIconSvg(tag) {
-  var inner = STAMP_ICONS[tag] || STAMP_ICON_FALLBACK;
-  return '<svg class="stamp-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
-}
-
-function initStampGrid() {
+function initProjectGrid() {
   var grid = document.getElementById('stamp-grid');
   if (!grid || typeof PROJECTS === 'undefined') return;
 
@@ -140,87 +180,57 @@ function initStampGrid() {
   grid.innerHTML = items.map(function (p) {
     var tilt = (Math.random() * 5.5 - 2.75).toFixed(2) + 'deg';
     return '' +
-      '<button type="button" class="stamp-card stamp-shape c-' + p.color + '" data-id="' + p.id + '" style="--tilt:' + tilt + ';">' +
+      '<button type="button" class="stamp-card stamp-shape" data-id="' + p.id + '" style="--tilt:' + tilt + ';--accent:var(--' + p.color + ');">' +
         '<span class="stamp-inner">' +
-          '<span class="stamp-tag-row">' + stampIconSvg(p.tag) + '<span class="stamp-tag">' + p.tag + '</span></span>' +
+          '<span class="stamp-tag">' + p.tag + '</span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
-          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
+          '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + p.num + '</span></span>' +
         '</span>' +
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
       '</button>';
   }).join('');
 
   grid.dataset.rendered = 'true';
+  initOverlay(items);
 }
 
 /* --------------------------------------------------------------------------
-   Case-file overlay — opens when a stamp card is clicked
+   Case-file overlay — opens when a stamp card is clicked. Takes the same
+   `items` list the grid already computed, instead of recomputing it.
    -------------------------------------------------------------------------- */
-function initOverlay() {
+function initOverlay(items) {
+  document.body.insertAdjacentHTML('beforeend', OVERLAY_HTML);
   var overlay = document.getElementById('case-overlay');
-  if (!overlay || typeof PROJECTS === 'undefined') return;
-
-  var grid = document.getElementById('stamp-grid');
-  var filter = grid ? (grid.getAttribute('data-filter') || 'all') : 'all';
-  var items = filter === 'featured' ? PROJECTS.filter(function (p) { return p.featured; }) : PROJECTS;
 
   var closeBtn = overlay.querySelector('.overlay-close');
   var prevBtn = overlay.querySelector('.overlay-prev');
   var nextBtn = overlay.querySelector('.overlay-next');
-  var content = overlay.querySelector('.overlay-content');
   var body = overlay.querySelector('.overlay-body');
   var currentIndex = 0;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function render(index) {
     var p = items[index];
     if (!p) return;
     currentIndex = index;
-    overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
-    overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
+    overlay.querySelector('.overlay-denom').textContent = p.num + '¢ — ' + p.date;
     overlay.querySelector('.overlay-outcome').textContent = p.outcome;
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
   }
 
-  function goTo(index) {
-    if (reduced) { render(index); return; }
-    content.classList.add('is-switching');
-    setTimeout(function () {
-      render(index);
-      content.classList.remove('is-switching');
-    }, 150);
-  }
-
-  var lastTrigger = null;
-  var lockedScrollY = 0;
-
-  function open(index, trigger) {
+  function open(index) {
     render(index);
     overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden', 'false');
-    overlay.inert = false;
-    lockedScrollY = window.scrollY;
-    document.body.style.top = '-' + lockedScrollY + 'px';
     document.body.classList.add('no-scroll');
-    lastTrigger = trigger || null;
     closeBtn.focus();
   }
 
   function close() {
     overlay.classList.remove('open');
-    overlay.setAttribute('aria-hidden', 'true');
-    overlay.inert = true;
     document.body.classList.remove('no-scroll');
-    document.body.style.top = '';
-    window.scrollTo(0, lockedScrollY);
-    if (lastTrigger && typeof lastTrigger.focus === 'function') {
-      lastTrigger.focus();
-    }
-    lastTrigger = null;
   }
 
   document.addEventListener('click', function (e) {
@@ -231,20 +241,33 @@ function initOverlay() {
     if (index > -1) {
       card.classList.add('lifting');
       setTimeout(function () { card.classList.remove('lifting'); }, 260);
-      open(index, card);
+      open(index);
     }
   });
 
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
-  prevBtn.addEventListener('click', function () { goTo((currentIndex - 1 + items.length) % items.length); });
-  nextBtn.addEventListener('click', function () { goTo((currentIndex + 1) % items.length); });
+  prevBtn.addEventListener('click', function () { render((currentIndex - 1 + items.length) % items.length); });
+  nextBtn.addEventListener('click', function () { render((currentIndex + 1) % items.length); });
 
   document.addEventListener('keydown', function (e) {
     if (!overlay.classList.contains('open')) return;
     if (e.key === 'Escape') close();
-    if (e.key === 'ArrowRight') goTo((currentIndex + 1) % items.length);
-    if (e.key === 'ArrowLeft') goTo((currentIndex - 1 + items.length) % items.length);
+    if (e.key === 'ArrowRight') render((currentIndex + 1) % items.length);
+    if (e.key === 'ArrowLeft') render((currentIndex - 1 + items.length) % items.length);
+    if (e.key === 'Tab') {
+      var focusable = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 }
 
@@ -258,23 +281,22 @@ function initPostcards() {
   var rack = document.getElementById('postcard-rack');
   if (!rack || typeof POSTS === 'undefined') return;
 
-  var tapeColors = ['washi-rose', 'washi-sage', 'washi-blue', 'washi-butter', 'washi-lavender'];
+  var tapeColors = ['dusty-rose', 'sage', 'powder-blue', 'butter-yellow', 'lavender'];
 
   rack.innerHTML = POSTS.map(function (post, i) {
     var tilt = (Math.random() * 2.4 - 1.2).toFixed(2) + 'deg';
     var tapeRotate = (Math.random() * 10 - 5).toFixed(2) + 'deg';
     var tapeLeft = (26 + Math.random() * 24).toFixed(1) + '%';
     var tapeColor = tapeColors[i % tapeColors.length];
-    var links = (post.links || []).map(function (link) {
-      return '<a class="postcard-cta" href="' + link.url + '" target="_blank" rel="noopener noreferrer">Read on ' + link.platform + ' ↗</a>';
-    }).join('');
     return '' +
-      '<div class="postcard" style="--tilt:' + tilt + ';">' +
-        '<span class="washi-tape ' + tapeColor + '" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + ');"></span>' +
+      '<a class="postcard" href="' + post.url + '" target="_blank" rel="noopener noreferrer" style="--tilt:' + tilt + ';">' +
+        '<span class="washi-tape" aria-hidden="true" style="left:' + tapeLeft + '; transform:translateX(-50%) rotate(' + tapeRotate + '); --accent:var(--' + tapeColor + ');"></span>' +
+        '<span class="postcard-frank">' + post.platform + '</span>' +
         '<span class="postcard-tag">' + post.tag + ' · ' + post.date + '</span>' +
         '<span class="postcard-title">' + post.title + '</span>' +
         '<span class="postcard-teaser">' + post.teaser + '</span>' +
-        '<div class="postcard-links">' + links + '</div>' +
-      '</div>';
+        '<span class="postcard-cta">Read on ' + post.platform + ' ↗</span>' +
+        '<span class="sr-only"> (opens in a new tab)</span>' +
+      '</a>';
   }).join('');
 }
