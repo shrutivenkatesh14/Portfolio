@@ -121,13 +121,23 @@ var STAMP_ICONS = {
   "Strategy": '<circle cx="10" cy="10" r="7.2"/><path d="M10 5.2l1.5 3.3 3.3 1.5-3.3 1.5-1.5 3.3-1.5-3.3-3.3-1.5 3.3-1.5z"/>',
   "Financial Modelling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
   "Data Visualisation": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
-  "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>'
+  "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>',
+  "Supply Chain": '<rect x="2" y="7.5" width="9" height="6" rx="0.6"/><path d="M11 9.3h3.4L17 12v1.5h-6V9.3z"/><circle cx="6" cy="15.3" r="1.7"/><circle cx="14.3" cy="15.3" r="1.7"/>',
+  "Operations": '<rect x="2" y="8" width="4" height="4" rx="0.6"/><rect x="8" y="8" width="4" height="4" rx="0.6"/><rect x="14" y="8" width="4" height="4" rx="0.6"/><path d="M6 10h2M12 10h2"/>',
+  "Project Management": '<rect x="4" y="2.5" width="12" height="15" rx="1.2"/><path d="M7.5 2.5h5v2h-5z"/><path d="M6.5 9.2l1.8 1.8L11.2 7.5M6.5 13.8h7"/>'
 };
 var STAMP_ICON_FALLBACK = '<path d="M10 2.2l1.9 4.7 5.1.4-3.9 3.3 1.2 5-4.3-2.8-4.3 2.8 1.2-5-3.9-3.3 5.1-.4z"/>';
 
+function stampIconInner(tag) {
+  var t = (tag || '').toLowerCase();
+  for (var key in STAMP_ICONS) {
+    if (t.indexOf(key.toLowerCase()) !== -1) return STAMP_ICONS[key];
+  }
+  return STAMP_ICON_FALLBACK;
+}
+
 function stampIconSvg(tag) {
-  var inner = STAMP_ICONS[tag] || STAMP_ICON_FALLBACK;
-  return '<svg class="stamp-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+  return '<svg class="stamp-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + stampIconInner(tag) + '</svg>';
 }
 
 function initStampGrid() {
@@ -177,6 +187,7 @@ function initOverlay() {
     if (!p) return;
     currentIndex = index;
     overlay.querySelector('.overlay-stamp').className = 'overlay-stamp stamp-shape c-' + p.color;
+    overlay.querySelector('.overlay-stamp').innerHTML = stampIconSvg(p.tag);
     overlay.querySelector('.overlay-tag').textContent = p.tag;
     overlay.querySelector('.overlay-title').textContent = p.title;
     overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;

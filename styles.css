@@ -699,7 +699,12 @@ section + section { border-top: 1px solid var(--line); }
   width: 58px; height: 70px;
   flex: 0 0 auto;
   border: 1px solid rgba(43,36,30,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
 }
+.overlay-stamp .stamp-icon { width: 30px; height: 30px; opacity: 0.9; }
 .overlay-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); display: block; }
 .overlay-title { margin: 4px 0 0; }
 .overlay-denom { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-soft); display: block; margin-bottom: 16px; }
