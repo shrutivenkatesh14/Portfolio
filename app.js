@@ -184,6 +184,15 @@ function initOverlay() {
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
+
+    var linksEl = overlay.querySelector('.overlay-links');
+    if (linksEl) {
+      var links = p.links || [];
+      linksEl.innerHTML = links.map(function (l) {
+        return '<a class="btn btn-quiet" href="' + l.url + '" target="_blank" rel="noopener noreferrer">' + l.label + ' ↗</a>';
+      }).join('');
+      linksEl.style.display = links.length ? 'flex' : 'none';
+    }
   }
 
   function goTo(index) {
