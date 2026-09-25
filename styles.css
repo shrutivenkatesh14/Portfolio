@@ -22,7 +22,7 @@
   --spine-mark: rgba(243,238,227,0.4);
 
   --font-display: 'Courier Prime', 'Courier New', monospace;
-  --font-body: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body: 'Courier Prime', 'Courier New', monospace;
   --font-mono: 'Courier Prime', 'Courier New', monospace;
   --font-hand: 'Caveat', cursive;
 
@@ -722,8 +722,8 @@ section + section { border-top: 1px solid var(--line); }
 .overlay-content { transition: opacity 0.15s ease; }
 .overlay-content.is-switching { opacity: 0; }
 .overlay-body h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; }
-.overlay-body p { font-size: 16px; line-height: 1.65; margin: 0; }
-.overlay-body ul { margin: 0; padding-left: 18px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+.overlay-body p { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.65; margin: 0; }
+.overlay-body ul { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; margin: 0; padding-left: 18px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
 .overlay-body li { margin-bottom: 9px; }
 .overlay-body li:last-child { margin-bottom: 0; }
 .overlay-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
