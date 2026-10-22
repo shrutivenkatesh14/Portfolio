@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRailToggle();
   initCursor();
   initStampGrid();
+  initHeroStamps();
   initOverlay();
   initPostcards();
 });
@@ -296,5 +297,23 @@ function initPostcards() {
         '<span class="postcard-teaser">' + post.teaser + '</span>' +
         '<div class="postcard-links">' + links + '</div>' +
       '</div>';
+  }).join('');
+}
+
+/* --------------------------------------------------------------------------
+   Hero stamp collage — neat justified rows, no tilt. Decorative only, so it
+   is hidden from assistive tech (aria-hidden on the host, empty alt text).
+   Looks for <div id="hero-scatter"> and renders HERO_STAMPS from data.js.
+   -------------------------------------------------------------------------- */
+function initHeroStamps() {
+  var host = document.getElementById('hero-scatter');
+  if (!host || typeof HERO_STAMPS === 'undefined') return;
+
+  host.innerHTML = HERO_STAMPS.map(function (row) {
+    return '<div class="hero-scatter-row">' + row.map(function (s) {
+      return '<span class="hero-stamp" style="--a:' + s.a + ';">' +
+        '<img src="assets/stamps/' + s.f + '" alt="" decoding="async">' +
+      '</span>';
+    }).join('') + '</div>';
   }).join('');
 }

@@ -44,3 +44,16 @@ const POSTS = [
     ]
   }
 ];
+
+/* Hero stamp collage (home page, right of the intro text).
+   One array per row, left to right. f = file in assets/stamps/, a = width / height of that stamp.
+   Rows fill the collage width on their own, so swap, reorder or move a stamp between rows
+   without touching any CSS. Keep the whole block about as tall as the intro text. */
+const HERO_STAMPS = [
+  [{ f: "bermuda-flower.jpg", a: 1.475 }, { f: "togolaise-hibiscus.jpg", a: 0.764 }, { f: "seychelles-fish.jpg", a: 1.536 }],
+  [{ f: "indonesia-flower.jpg", a: 0.658 }, { f: "romania-woman-in-green-dress.jpg", a: 0.694 }, { f: "peru-statue.jpg", a: 1.329 }, { f: "usa-circus.jpg", a: 0.639 }, { f: "sharjah-cat.jpg", a: 0.812 }],
+  [{ f: "soviet-union-dancers.jpg", a: 1.401 }, { f: "scenery-2.jpg", a: 0.756 }, { f: "seychelles-turtle.jpg", a: 1.521 }],
+  [{ f: "india-ajanta-caves.jpg", a: 0.853 }, { f: "woman-on-horseback.jpg", a: 1.328 }, { f: "seychelles-eagle.jpg", a: 0.674 }, { f: "lady-by-the-river.jpg", a: 1.346 }],
+  [{ f: "monet-sailing-boat.jpg", a: 1.371 }, { f: "van-gogh-sunflowers.jpg", a: 0.749 }, { f: "car-1.jpg", a: 1.365 }],
+  [{ f: "peru-pottery.jpg", a: 0.872 }, { f: "seychelles-owl.jpg", a: 0.674 }, { f: "rwanda-flower-and-mountain.jpg", a: 1.552 }, { f: "seychelles-vanilla-flower.jpg", a: 0.636 }]
+];

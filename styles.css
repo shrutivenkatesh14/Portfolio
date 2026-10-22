@@ -490,6 +490,38 @@ html[data-theme="dark"] .rail-brand:focus-visible {
 }
 .hero-actions { margin-bottom: 48px; }
 
+/* Hero stamp collage — fills the empty right side of the intro, nothing more.
+   Sits beside the text (absolute, so it never makes the hero taller) and is
+   sized to end inside the height of the text block. Rows justify themselves:
+   each stamp grows in proportion to its width/height (--a), so every row is
+   one flush line and no stamp is stretched. Hidden where there is no room. */
+.hero .wrap { position: relative; }
+.hero-scatter {
+  --stamp-frame: #FBF8F0;
+  display: none;
+  position: absolute;
+  top: 14px;   /* centres the block against the intro text */
+  right: clamp(20px, 4vw, 40px);
+  width: 272px;
+  padding: 3px;
+  flex-direction: column;
+  gap: 9px;
+  pointer-events: none;
+}
+html[data-theme="dark"] .hero-scatter { --stamp-frame: #E9E1D0; }
+.hero-scatter-row { display: flex; gap: 9px; align-items: flex-start; }
+.hero-stamp {
+  flex: var(--a) 1 0px;
+  min-width: 0;
+  aspect-ratio: var(--a);
+  box-shadow:
+    0 0 0 3px var(--stamp-frame),
+    0 0 0 4px rgba(37,31,25,0.12),
+    0 4px 10px rgba(37,31,25,0.22);
+}
+.hero-stamp img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 1240px) { .hero-scatter { display: flex; } }
+
 /* ==========================================================================
    Sections
    ========================================================================== */
