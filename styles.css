@@ -889,7 +889,7 @@ section + section { border-top: 1px solid var(--line); }
 html[data-theme="dark"] .specimen-plaque { box-shadow: 6px 8px 0 rgba(0,0,0,0.35); }
 
 .e-cols { display: flex; gap: 34px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
-.mount { flex: 0 0 auto; position: relative; }
+.mount { flex: 1 1 190px; display: flex; justify-content: center; position: relative; }  /* stamp sits centred in its column, not hard left */
 .mount-hinge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 40px; height: 16px; background: rgba(37,31,25,0.16); }
 
 .specimen-stamp {
