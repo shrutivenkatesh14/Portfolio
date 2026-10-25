@@ -197,6 +197,30 @@ function initOverlay() {
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
 
+    var dg = overlay.querySelector('.o-diagram');
+    if (dg) {
+      var d = p.diagram;
+      dg.hidden = !d;
+      if (d) {
+        var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+        dg.querySelector('.flow').innerHTML = d.steps.map(function (s) {
+          return '<li class="flow-step is-' + esc(s.kind) + '">' +
+            '<span class="flow-title">' + esc(s.title) + '</span>' +
+            '<span class="flow-line">' + esc(s.lines.join(' ')) + '</span>' +
+            '<span class="flow-src">' + esc(s.src) + '</span></li>';
+        }).join('');
+        dg.querySelector('.flow-legend').innerHTML = (d.legend || []).map(function (l) {
+          return '<span><i class="flow-swatch is-' + esc(l.kind) + '" aria-hidden="true"></i>' + esc(l.label) + '</span>';
+        }).join('');
+        var take = dg.querySelector('.flow-take');
+        take.innerHTML = d.takeaway ? '<strong>Takeaway:</strong> ' + esc(d.takeaway) : '';
+        take.hidden = !d.takeaway;
+        var note = dg.querySelector('.flow-note');
+        note.textContent = d.note || '';
+        note.hidden = !d.note;
+      }
+    }
+
     var linksEl = overlay.querySelector('.overlay-links');
     if (linksEl) {
       var links = p.links || [];
