@@ -155,6 +155,7 @@ function initStampGrid() {
         '<span class="stamp-inner">' +
           '<span class="stamp-tag-row">' + stampIconSvg(p.tag) + '<span class="stamp-tag">' + p.tag + '</span></span>' +
           '<span class="stamp-title">' + p.title + '</span>' +
+          (p.sub ? '<span class="stamp-sub">' + p.sub + '</span>' : '') +
           '<span class="stamp-denom-badge"><span class="stamp-denom-num">' + (p.denom || '').replace(/[^0-9]/g,'') + '</span></span>' +
         '</span>' +
         '<span class="postmark">Completed<br>' + p.date + '</span>' +
@@ -196,28 +197,37 @@ function initOverlay() {
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
+    body.querySelector('.o-result').parentNode.hidden = !!p.diagram;
 
     var dg = overlay.querySelector('.o-diagram');
     if (dg) {
       var d = p.diagram;
       dg.hidden = !d;
       if (d) {
-        var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
-        dg.querySelector('.flow').innerHTML = d.steps.map(function (s) {
-          return '<li class="flow-step is-' + esc(s.kind) + '">' +
-            '<span class="flow-title">' + esc(s.title) + '</span>' +
-            '<span class="flow-line">' + esc(s.lines.join(' ')) + '</span>' +
-            '<span class="flow-src">' + esc(s.src) + '</span></li>';
+        var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+        dg.querySelector('.netmap-head').textContent = d.head || '';
+        dg.querySelector('.netmap-hand').textContent = d.hand || '';
+        dg.querySelector('.netmap').innerHTML = d.stops.map(function (s) {
+          return '<li class="netmap-step">' +
+            (s.tag ? '<span class="netmap-tag">' + esc(s.tag) + '</span>' : '') +
+            '<div class="netmap-stop stamp-shape c-' + esc(s.color) + (s.key ? ' is-key' : '') + '"><div class="stamp-inner">' +
+            '<span class="netmap-n">' + esc(s.n) + '</span>' +
+            '<span class="netmap-title">' + esc(s.title) + '</span>' +
+            '<span class="netmap-text">' + esc(s.text) + '</span>' +
+            (s.src ? '<span class="netmap-src">' + esc(s.src) + '</span>' : '') +
+            '</div>' +
+            (s.postmark ? '<span class="netmap-postmark" aria-hidden="true"><span>' + esc(s.postmark[0]) + '</span><span>' + esc(s.postmark[1]) + '</span></span>' : '') +
+            '</div></li>';
         }).join('');
-        dg.querySelector('.flow-legend').innerHTML = (d.legend || []).map(function (l) {
-          return '<span><i class="flow-swatch is-' + esc(l.kind) + '" aria-hidden="true"></i>' + esc(l.label) + '</span>';
-        }).join('');
-        var take = dg.querySelector('.flow-take');
-        take.innerHTML = d.takeaway ? '<strong>Takeaway:</strong> ' + esc(d.takeaway) : '';
-        take.hidden = !d.takeaway;
-        var note = dg.querySelector('.flow-note');
-        note.textContent = d.note || '';
-        note.hidden = !d.note;
+        dg.querySelector('.netmap-lock-caption').textContent = d.bar.caption;
+        dg.querySelector('.netmap-lock-left').textContent = d.bar.left;
+        dg.querySelector('.netmap-lock-right').textContent = d.bar.right;
+        var para = function (sel, o) { dg.querySelector(sel).innerHTML = '<strong>' + esc(o.label) + '</strong> ' + esc(o.text); };
+        para('.netmap-why', d.why);
+        para('.netmap-catch', d.catch);
+        var tk = dg.querySelector('.netmap-take');
+        tk.innerHTML = d.takeaway ? '<span class="netmap-take-label">Takeaway</span>' + esc(d.takeaway) : '';
+        tk.hidden = !d.takeaway;
       }
     }
 

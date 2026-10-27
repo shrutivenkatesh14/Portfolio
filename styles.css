@@ -639,6 +639,7 @@ section + section { border-top: 1px solid var(--line); }
   margin: 10px 0;
   display: block;
 }
+.stamp-sub { font-family: var(--font-mono); font-size: 11px; line-height: 1.35; opacity: 0.85; display: block; margin: -4px 0 10px; }
 .stamp-denom-badge {
   width: 34px; height: 34px;
   border: 1.5px solid currentColor;
@@ -1211,41 +1212,71 @@ html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; color: #D9A566; }
   text-align: center;
 }
 
-/* Project overlay: "at a glance" flow diagram */
-.o-diagram { margin: 0 0 26px; }
+/* Project overlay: the network as a netmap of stamps */
+.o-diagram { margin: 0 0 30px; }
 .o-diagram[hidden] { display: none; }
-.flow-head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 12px; }
-.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
-.flow-step {
-  position: relative;
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 12px 8px 10px;
-  text-align: center;
-  background: var(--sage);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  color: var(--ink);
+.netmap-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 18px; }
+.netmap-head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin: 0; }
+.netmap-hand { font-size: 1.35rem; padding-right: 8px; }
+.netmap { list-style: none; margin: 0; padding: 6px 0 12px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; }
+.netmap-step { display: flex; flex-direction: column; min-width: 0; }
+.netmap-tag { display: flex; align-items: flex-end; justify-content: center; min-height: 2.7em; margin-bottom: 7px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.3; color: var(--accent-ink); }
+.netmap-stop.stamp-shape { position: relative; color: var(--ink); display: flex; flex-direction: column; flex: 1; }
+.netmap-stop.is-key { box-shadow: 3px 4px 0 rgba(43,36,30,0.16), 0 0 0 2px var(--accent-ink); }
+.netmap-stop .stamp-inner { flex: 1; min-height: 150px; padding: 11px 9px 9px; justify-content: flex-start; gap: 6px; }
+.netmap-n { font-family: var(--font-mono); font-size: 11px; opacity: 0.75; }
+.netmap-title { font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; letter-spacing: 0; text-transform: uppercase; line-height: 1.2; overflow-wrap: anywhere; }
+.netmap-text { font-family: var(--font-mono); font-size: 12px; line-height: 1.4; color: var(--ink); flex: 1; }
+.netmap-src { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; line-height: 1.3; color: var(--ink); opacity: 0.85; }
+.netmap-step + .netmap-step .netmap-stop::before {
+  content: "\2192"; content: "\2192" / "";
+  position: absolute; left: -26px; top: 50%; transform: translateY(-50%);
+  width: 22px; text-align: center;
+  font-family: var(--font-mono); font-size: 18px; line-height: 1; color: var(--ink);
 }
-.flow-step.is-shock { background: var(--dusty-rose); }
-.flow-step + .flow-step::before {
-  content: "\2192";
-  content: "\2192" / "";
-  position: absolute; left: -15px; top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft);
+.netmap-postmark {
+  position: absolute; top: -12px; right: -20px;
+  width: 58px; height: 58px;
+  display: grid; place-content: center; text-align: center;
+  border: 1.5px solid var(--accent-ink); border-radius: 50%;
+  background: var(--paper);
+  color: var(--accent-ink);
+  font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1.2;
+  transform: rotate(-12deg);
+  box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--accent-ink);
+  pointer-events: none;
 }
-.flow-title { font-family: var(--font-mono); font-size: 12px; font-weight: 700; line-height: 1.3; }
-.flow-line { font-family: 'Newsreader', Georgia, serif; font-size: 13.5px; line-height: 1.3; }
-.flow-src { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); margin-top: auto; padding-top: 7px; border-top: 1px dashed var(--line); line-height: 1.3; }
-.flow-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); }
-.flow-legend span { display: inline-flex; align-items: center; gap: 7px; }
-.flow-swatch { width: 11px; height: 11px; border: 1px solid var(--line); border-radius: 2px; background: var(--sage); display: inline-block; }
-.flow-swatch.is-shock { background: var(--dusty-rose); }
-.o-diagram .flow-take { font-family: 'Newsreader', Georgia, serif; font-size: 16px; line-height: 1.5; margin: 14px 0 0; color: var(--ink); }
-.o-diagram .flow-take[hidden], .o-diagram .flow-note[hidden] { display: none; }
-.o-diagram .flow-note { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; color: var(--ink-soft); margin: 6px 0 0; }
+.netmap-lock { margin: 8px 0 20px; }
+.netmap-lock-caption { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); text-align: center; margin: 0 0 8px; }
+.netmap-lock-bar { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.netmap-lock-end { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.netmap-lock-left::before, .netmap-lock-right::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--butter-yellow); border: 2px solid var(--accent-ink); flex: 0 0 auto; }
+.netmap-lock-right { flex-direction: row; }
+.netmap-lock-line { border-top: 2px dashed var(--ink-soft); height: 0; opacity: 0.7; }
+.o-diagram p.netmap-why, .o-diagram p.netmap-catch { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: var(--ink); margin: 0 0 12px; }
+.o-diagram p strong { font-weight: 700; }
 @media (max-width: 700px) {
-  .flow { grid-template-columns: 1fr; gap: 22px; }
-  .flow-step { padding: 10px 12px; }
-  .flow-step + .flow-step::before { content: "\2193"; content: "\2193" / ""; left: 50%; top: -17px; transform: translateX(-50%); }
+  .netmap { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; }
+  .netmap-step + .netmap-step .netmap-stop::before { content: none; }
+  .netmap-step:last-child { grid-column: 1 / -1; }
+  .netmap-tag { min-height: 0; justify-content: flex-start; margin-bottom: 5px; }
+  .netmap-postmark { width: 50px; height: 50px; top: -8px; right: -8px; font-size: 7px; }
+  .netmap-title { font-size: 0.72rem; overflow-wrap: normal; }
+  .netmap-text { font-size: 12px; }
+  .netmap-lock-bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px 8px; }
+  .netmap-lock-line { grid-column: 1 / -1; grid-row: 2; }
+  .netmap-lock-right { justify-self: end; }
+  .netmap-lock-end { white-space: normal; font-size: 10px; letter-spacing: 0.05em; min-width: 0; }
 }
+
+.overlay-body > div[hidden] { display: none; }
+.o-diagram p.netmap-take {
+  font-family: var(--font-display);
+  font-size: 1.05rem; line-height: 1.45; font-weight: 400;
+  color: var(--ink);
+  border-left: 3px solid var(--accent-ink);
+  padding-left: 14px;
+  margin: 18px 0 0;
+}
+.o-diagram p.netmap-take[hidden] { display: none; }
+.netmap-take-label { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 3px; }
