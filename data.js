@@ -58,6 +58,17 @@ const POSTS = [
       { platform: "Substack", url: "https://substack.com/home/post/p-213179638" },
       { platform: "Medium", url: "https://medium.com/@vshruti193/sql-noir-a-detective-sql-story-case-001-the-vanishing-briefcase-7f0cf78a3b8d" }
     ]
+  },
+  {
+    id: "post-2",
+    tag: "SQL",
+    title: "SQL Noir, Case #002: The Stolen Sound",
+    teaser: "A prized record vanishes from a neon-lit 1980s record store, and no two witnesses agree. Someone is lying, and only the data can tell who.",
+    date: "Oct 2026",
+    links: [
+      { platform: "Substack", url: "https://vshruti.substack.com/p/sql-noir-a-detective-sql-story-case-c73" },
+      { platform: "Medium", url: "https://medium.com/@vshruti193/sql-noir-a-detective-sql-story-case-002-the-stolen-sound-ec14c3aa5465" }
+    ]
   }
 ];
 
