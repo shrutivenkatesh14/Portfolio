@@ -1285,7 +1285,7 @@ html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; color: #D9A566; }
 .page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 32px; flex-wrap: wrap; }
 .page-head-main h1 { margin-bottom: 0; }
 .page-head-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.page-head-side .tool-mark-row { flex-direction: column; align-items: stretch; gap: 8px; }
+.page-head-side .tool-mark-row { flex-direction: column; align-items: stretch; gap: 16px; }
 .page-head-side .tool-mark { justify-content: center; }
 /* intro runs the full width on desktop; it only wraps when the screen is narrow */
 .page-intro { font-size: 17px; color: var(--ink); margin: 8px 0 0; }
