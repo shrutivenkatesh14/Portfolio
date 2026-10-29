@@ -1282,11 +1282,12 @@ html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; color: #D9A566; }
 .netmap-take-label { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 3px; }
 
 /* ---- Writing page header: title + intro left, follow links in a column on the right.
-   The column is as tall as the title block (heading down to the last intro line);
+   The column runs from the top of the heading down to the last intro line;
    its three items spread evenly over that height so the stamps can breathe. ---- */
 .page-head { display: flex; justify-content: space-between; align-items: stretch; gap: 20px 32px; flex-wrap: wrap; }
-.page-head-main h1 { margin-bottom: 0; }
-.page-intro { font-size: 17px; color: var(--ink); margin: 8px 0 0; }
+/* tight line box: the top of the box sits at the top of the letters, so the follow column can line up with it */
+.page-head-main h1 { margin: 0; line-height: 1.05; }
+.page-intro { font-size: 17px; color: var(--ink); margin: 22px 0 0; }
 .page-head-side { display: flex; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 14px; }
 .page-head-side .hand-note { align-self: flex-start; }
 .page-head-side .tool-mark-row { display: contents; }
