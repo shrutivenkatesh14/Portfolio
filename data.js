@@ -44,6 +44,29 @@ const PROJECTS = [
       { label: "Full report", url: "assets/apple-supply-chain/report.pdf" },
       { label: "Slides", url: "assets/apple-supply-chain/slides.pdf" }
     ]
+  },
+  {
+    id: "pokedex-viz",
+    denom: "02¢",
+    tag: "Data Visualisation",
+    title: "Shruti's Pokédex",
+    sub: "My 137 favorites, in Tableau",
+    outcome: "I wondered if my favorite Pokémon were overpowered, so I checked. Next to the whole Pokédex, my team's stats run 59.9 points higher. Next to fair peers, only 14.1.",
+    color: "butter-yellow",
+    date: "Nov 2026",
+    featured: false,
+    problem: "I love Pokémon, and I had a feeling my favorites leaned strong. I wanted to find out if that was true, so I took my 137 favorites and compared them with all 1,025 species. I also wanted the answer to be something people could click around in, not a stack of charts.",
+    approach: [
+      "Put together a 15-sheet data set covering all 1,025 species: stats, color, generation, capture rate, legendary status, and evolution lines",
+      "Compared my picks with the full dex on color, generation, stats, rarity, and evolution stage. I used ratios, so 2.07x means something shows up twice as often on my team as it does in the dex",
+      "Added a fairer comparison group of fully evolved, non-legendary Pokémon. Nearly half the dex is still evolving, so measuring my team against everything made the gap look bigger",
+      "Built six linked dashboards in Tableau (Overview, Look, Power, Rarity, Eevee, Collect), framed like a Pokédex, with custom sprites and clickable dex entries",
+      "Went through the published version page by page, simplified the crowded dashboards, and checked every number in the text against the data"
+    ],
+    result: "It's live on Tableau Public. 26 of my 137 picks (19%) are legendary or mythical, compared with 9% of the dex. White is my most over-represented color at 2.29 times its share, and red is my blind spot at 0.54 times. 46% of my picks are fully evolved, against 36% of the dex. The power gap drops from +59.9 to +14.1 against fair peers, mostly because nearly half the dex is still evolving and only 22% of my team is. I also have 10 complete evolution lines, and 37 more that are missing just one Pokémon, usually the first stage.",
+    links: [
+      { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:display_count=n" }
+    ]
   }
 ];
 
