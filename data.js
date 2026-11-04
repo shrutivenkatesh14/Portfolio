@@ -65,7 +65,7 @@ const PROJECTS = [
     ],
     result: "It's live on Tableau Public. 26 of my 137 picks (19%) are legendary or mythical, compared with 9% of the dex. White is my most over-represented color at 2.29 times its share, and red is my blind spot at 0.54 times. 46% of my picks are fully evolved, against 36% of the dex. The power gap drops from +59.9 to +14.1 against fair peers, mostly because nearly half the dex is still evolving and only 22% of my team is. I also have 10 complete evolution lines, and 37 more that are missing just one Pokémon, usually the first stage.",
     links: [
-      { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:display_count=n" }
+      { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link" }
     ]
   }
 ];
