@@ -120,8 +120,8 @@ var STAMP_ICONS = {
   "Data Analysis": '<path d="M4 16V10M10 16V4M16 16V12"/>',
   "Process Improvement": '<circle cx="10" cy="10" r="3.4"/><path d="M10 2.5v2.4M10 15.1v2.4M17.5 10h-2.4M4.9 10H2.5M15.6 4.4l-1.7 1.7M6.1 13.9l-1.7 1.7M15.6 15.6l-1.7-1.7M6.1 6.1L4.4 4.4"/>',
   "Strategy": '<circle cx="10" cy="10" r="7.2"/><path d="M10 5.2l1.5 3.3 3.3 1.5-3.3 1.5-1.5 3.3-1.5-3.3-3.3-1.5 3.3-1.5z"/>',
-  "Financial Modelling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
-  "Data Visualisation": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
+  "Financial Modeling": '<rect x="3.5" y="2.5" width="13" height="15" rx="1"/><path d="M6 6.5h8M6 10h2.7M11.3 10h2.7M6 13.5h2.7M11.3 13.5h2.7"/>',
+  "Data Visualization": '<circle cx="10" cy="10" r="7.2"/><path d="M10 2.8V10h7.2"/>',
   "Case Competition": '<path d="M6 3h8v3.6a4 4 0 0 1-8 0V3z"/><path d="M6 4H3.2v1.8A2.8 2.8 0 0 0 6 8.6M14 4h2.8v1.8A2.8 2.8 0 0 1 14 8.6M8 12.6v2.9h4v-2.9M7 17h6"/>',
   "Supply Chain": '<rect x="2" y="7.5" width="9" height="6" rx="0.6"/><path d="M11 9.3h3.4L17 12v1.5h-6V9.3z"/><circle cx="6" cy="15.3" r="1.7"/><circle cx="14.3" cy="15.3" r="1.7"/>',
   "Operations": '<rect x="2" y="8" width="4" height="4" rx="0.6"/><rect x="8" y="8" width="4" height="4" rx="0.6"/><rect x="14" y="8" width="4" height="4" rx="0.6"/><path d="M6 10h2M12 10h2"/>',
@@ -194,6 +194,23 @@ function initOverlay() {
     overlay.querySelector('.overlay-title').textContent = p.title;
     overlay.querySelector('.overlay-denom').textContent = p.denom + ' — ' + p.date;
     overlay.querySelector('.overlay-outcome').textContent = p.outcome;
+
+    var shot = overlay.querySelector('.o-shot');
+    if (shot) {
+      var sh = p.shot;
+      shot.hidden = !sh;
+      if (sh) {
+        var tapeMap = { 'dusty-rose': 'washi-rose', 'sage': 'washi-sage', 'powder-blue': 'washi-blue', 'butter-yellow': 'washi-butter', 'lavender': 'washi-lavender' };
+        shot.querySelector('.washi-tape').className = 'washi-tape ' + (tapeMap[p.color] || 'washi-butter');
+        var shotImg = shot.querySelector('img');
+        shotImg.src = sh.src;
+        shotImg.alt = sh.alt || '';
+        var shotLink = shot.querySelector('.o-shot-link');
+        var liveLink = p.links && p.links[0];
+        if (liveLink) { shotLink.href = liveLink.url; } else { shotLink.removeAttribute('href'); }
+        shot.querySelector('.o-shot-note').textContent = sh.note || '';
+      }
+    }
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
@@ -306,7 +323,7 @@ function initOverlay() {
 /* --------------------------------------------------------------------------
    Render postcards (writing page) from POSTS data
    Each postcard is "taped" into the album — a small washi-tape strip
-   across the top edge, varied in colour, position, and tilt so the rack
+   across the top edge, varied in color, position, and tilt so the rack
    doesn't look mechanically repeated. Never a pin; never on a stamp.
    -------------------------------------------------------------------------- */
 function initPostcards() {

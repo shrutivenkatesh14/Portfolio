@@ -500,7 +500,7 @@ html[data-theme="dark"] .rail-brand:focus-visible {
   --stamp-frame: #FBF8F0;
   display: none;
   position: absolute;
-  top: 14px;   /* centres the block against the intro text */
+  top: 14px;   /* centers the block against the intro text */
   right: clamp(20px, 4vw, 40px);
   width: 272px;
   padding: 3px;
@@ -759,6 +759,24 @@ section + section { border-top: 1px solid var(--line); }
 .overlay-body ul { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; margin: 0; padding-left: 18px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
 .overlay-body li { margin-bottom: 9px; }
 .overlay-body li:last-child { margin-bottom: 0; }
+/* Dashboard screenshot — a print taped into the case file. The tape is the
+   same washi-tape used for postcards; the handwritten note is the album's one
+   personal-annotation voice. */
+.o-shot { position: relative; margin: 8px 0 34px; transform: rotate(-0.6deg); }
+.o-shot[hidden] { display: none; }
+.o-shot .washi-tape { top: -13px; left: 50%; width: 96px; transform: translateX(-50%) rotate(-3deg); }
+.o-shot-link {
+  display: block;
+  padding: 8px;
+  background: var(--panel);
+  border: 1.5px solid var(--ink);
+  box-shadow: 3px 4px 0 rgba(43,36,30,0.14);
+  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+}
+.o-shot-link[href]:hover, .o-shot-link[href]:focus-visible { transform: rotate(0.6deg) translateY(-2px); }
+.o-shot img { display: block; width: 100%; height: auto; }
+.o-shot-note { display: block; margin-top: 12px; text-align: right; transform: rotate(-2deg); transform-origin: right center; }
+
 .overlay-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 .overlay-links .btn { padding: 10px 16px; font-size: 12px; }
 
@@ -883,14 +901,14 @@ section + section { border-top: 1px solid var(--line); }
 .route-stop h3 { margin: 4px 0 4px; }
 
 /* ==========================================================================
-   Contact — specimen card (stamp + catalogue) and message form
+   Contact — specimen card (stamp + catalog) and message form
    ========================================================================== */
 
 .specimen-plaque { background: var(--paper); border: 3px solid var(--ink); box-shadow: 6px 8px 0 rgba(37,31,25,0.22); padding: 34px; }
 html[data-theme="dark"] .specimen-plaque { box-shadow: 6px 8px 0 rgba(0,0,0,0.35); }
 
 .e-cols { display: flex; gap: 34px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
-.mount { flex: 1 1 190px; display: flex; justify-content: center; position: relative; }  /* stamp sits centred in its column, not hard left */
+.mount { flex: 1 1 190px; display: flex; justify-content: center; position: relative; }  /* stamp sits centered in its column, not hard left */
 .mount-hinge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 40px; height: 16px; background: rgba(37,31,25,0.16); }
 
 .specimen-stamp {
@@ -991,7 +1009,7 @@ html[data-theme="dark"] { --petal-1: #FFFFFF; --petal-2: #F7F3EA; --petal-3: #E9
 .postcard:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 10px 24px rgba(43,36,30,0.12); }
 
 /* every postcard is held to the page by a small strip of washi tape —
-   see .washi-tape above; colour + rotation + position are set per-card
+   see .washi-tape above; color + rotation + position are set per-card
    in app.js so the rack doesn't look mechanically repeated */
 
 .postcard-tag {

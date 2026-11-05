@@ -48,20 +48,26 @@ const PROJECTS = [
   {
     id: "pokedex-viz",
     denom: "02¢",
-    tag: "Data Visualisation",
+    tag: "Data Visualization",
     title: "Shruti's Pokédex",
     sub: "My 137 favorites, in Tableau",
     outcome: "I wondered if my favorite Pokémon were overpowered, so I checked. Next to the whole Pokédex, my team's stats run 59.9 points higher. Next to fair peers, only 14.1.",
     color: "butter-yellow",
     date: "Nov 2026",
     featured: false,
+    shot: {
+      src: "assets/pokedex-viz/overview.png",
+      alt: "The Overview dashboard: a ring of 1,025 dots with my 137 favorites in color, next to a Mewtwo dex entry, its six stat bars, and a chart of my picks by generation.",
+      note: "psst, the real one is clickable"
+    },
     problem: "I love Pokémon, and I had a feeling my favorites leaned strong. I wanted to find out if that was true, so I took my 137 favorites and compared them with all 1,025 species. I also wanted the answer to be something people could click around in, not a stack of charts.",
     approach: [
-      "Put together a 15-sheet data set covering all 1,025 species: stats, color, generation, capture rate, legendary status, and evolution lines",
+      "Put together a 15-sheet data set covering all 1,025 species: stats, color, generation, capture rate, legendary status, and evolution lines. Reshaped the stats into a long format to make the stat charts easier to build",
       "Compared my picks with the full dex on color, generation, stats, rarity, and evolution stage. I used ratios, so 2.07x means something shows up twice as often on my team as it does in the dex",
       "Added a fairer comparison group of fully evolved, non-legendary Pokémon. Nearly half the dex is still evolving, so measuring my team against everything made the gap look bigger",
-      "Built six linked dashboards in Tableau (Overview, Look, Power, Rarity, Eevee, Collect), framed like a Pokédex, with custom sprites and clickable dex entries",
-      "Went through the published version page by page, simplified the crowded dashboards, and checked every number in the text against the data"
+      "Built 16 sheets in Tableau and assembled them into six fixed-size dashboards with floating layouts, custom background art, and a navigation button tray. Chart types include a ring of 1,025 dots, waffle charts, a dual-axis bar and sprite ladder, diverging ratio bars, a heat map, and a sprite wall",
+      "Added two parameters (the selected Pokémon and the selected Eeveelution) and two Change Parameter actions. Clicking a dot on Overview or an Eeveelution on the wheel feeds calculated fields that update the sprite, dex card, and stat bars",
+      "Wrote calculated fields for the dot highlighting and sizing, above and below the dex flags, top 10 and rarity filters, and the row and column math behind the waffle, club grid, and wall layouts. Added reference lines for the dex averages, custom shape palettes for each sprite set, and a tooltip on every chart"
     ],
     result: "It's live on Tableau Public. 26 of my 137 picks (19%) are legendary or mythical, compared with 9% of the dex. White is my most over-represented color at 2.29 times its share, and red is my blind spot at 0.54 times. 46% of my picks are fully evolved, against 36% of the dex. The power gap drops from +59.9 to +14.1 against fair peers, mostly because nearly half the dex is still evolving and only 22% of my team is. I also have 10 complete evolution lines, and 37 more that are missing just one Pokémon, usually the first stage.",
     links: [
