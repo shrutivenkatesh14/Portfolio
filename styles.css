@@ -17,6 +17,7 @@
   --powder-blue: #AFC3D2;
   --butter-yellow: #E3D19C;
   --lavender: #C9BDD1;
+  --card-stock: #FBF8EF;
 
   --spine: #3D2C20;
   --spine-mark: rgba(243,238,227,0.4);
@@ -682,6 +683,75 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 /* ==========================================================================
+   Series card. A taped catalog (index) card for multi-part writing like SQL
+   Noir: brighter stock than the paper, ink border, ruled lines, a red
+   header rule, a red rubber-stamp status, and one handwritten annotation.
+   It is a note, so it belongs with the writing, not with the project stamps.
+   It sits in a two-column cell but stays narrower than it, keeping the
+   landscape card proportions.
+   ========================================================================== */
+.series-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  padding: 0 0 16px;
+  text-decoration: none;
+  color: var(--ink);
+  background-color: var(--card-stock);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, color-mix(in srgb, var(--ink) 20%, transparent) 27px 28px);
+  border: 1.5px solid var(--ink);
+  box-shadow: 3px 4px 0 rgba(43,36,30,0.22);
+  transform: rotate(var(--tilt, -0.6deg));
+  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+  animation: album-item-enter 0.48s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+@media (min-width: 560px) { .series-card { grid-column: span 2; } }
+.series-card:hover, .series-card:focus-visible { transform: rotate(0deg) translateY(-3px); }
+.series-card .washi-tape { top: -13px; left: 50%; width: 96px; transform: translateX(-50%) rotate(-3deg); }
+.series-card-head {
+  height: 56px;
+  box-sizing: border-box;
+  padding: 0 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--card-stock);
+  border-bottom: 2px solid var(--accent-ink);
+  font-family: var(--font-mono);
+}
+.series-card-head b { font-size: 1.35rem; line-height: 1.1; letter-spacing: 0.06em; }
+.series-card-head span { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+.series-card-row { display: flex; gap: 14px; height: 28px; line-height: 28px; padding: 0 22px; font-family: var(--font-mono); font-size: 13px; }
+.series-card-k { flex: 0 0 44px; color: var(--ink-soft); letter-spacing: 0.06em; }
+.series-card-rubber {
+  position: absolute;
+  top: 72px; right: 22px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  border: 3px solid var(--accent-ink);
+  border-radius: 4px;
+  padding: 3px 10px;
+  transform: rotate(-8deg);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+.series-card-hand { display: block; margin: 10px 22px 0; }
+.series-card-cta { display: block; margin: 4px 22px 0; text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
+/* Dark theme: multiply darkens amber ink into the dark card (about 1.3:1), so
+   the rubber stamp and the handwritten note switch to plain, brighter ink. */
+html[data-theme="dark"] .series-card-rubber { mix-blend-mode: normal; opacity: 1; }
+html[data-theme="dark"] .series-card-hand { color: var(--accent-ink); }
+@media (max-width: 559px) {
+  .series-card-rubber { position: static; display: inline-block; margin: 10px 22px 0; }
+}
+
+/* ==========================================================================
    Case-file overlay
    ========================================================================== */
 
@@ -1069,6 +1139,7 @@ html[data-theme="dark"] {
   --powder-blue: #3C5266;
   --butter-yellow: #A97C3B;
   --lavender: #5C4463;
+  --card-stock: #3C362E;
   --antique-cream: #EAE0C8;
 }
 

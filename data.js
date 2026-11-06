@@ -50,11 +50,11 @@ const PROJECTS = [
     denom: "02¢",
     tag: "Data Visualization",
     title: "Shruti's Pokédex",
-    sub: "My 137 favorites, in Tableau",
-    outcome: "I wondered if my favorite Pokémon were overpowered, so I checked. Next to the whole Pokédex, my team's stats run 59.9 points higher. Next to fair peers, only 14.1.",
+    sub: "137 picks vs 1,025 species, in Tableau",
+    outcome: "I wondered if my favorite Pokémon were overpowered, so I checked. Next to the whole Pokédex, my team's base stats run 59.9 points higher. Next to fair peers, only 14.1.",
     color: "butter-yellow",
     date: "Nov 2026",
-    featured: false,
+    featured: true,
     shot: {
       src: "assets/pokedex-viz/overview.png",
       alt: "The Overview dashboard: a ring of 1,025 dots with my 137 favorites in color, next to a Mewtwo dex entry, its six stat bars, and a chart of my picks by generation.",
@@ -73,6 +73,27 @@ const PROJECTS = [
     links: [
       { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link" }
     ]
+  }
+];
+
+/* Multi-part writing, shown on the home page as a taped catalog card. It links
+   to the Writing page, where each post offers its platforms, and does not open
+   a case file. Add a case to `cases` when
+   it is solved, and update `note` for whatever is in progress. */
+const SERIES = [
+  {
+    id: "sql-noir",
+    title: "SQL Noir",
+    sub: "Detective SQL Stories",
+    href: "writing.html",
+    cta: "Read the series here",
+    featured: true,
+    cases: [
+      { num: "001", name: "The Vanishing Briefcase" },
+      { num: "002", name: "The Stolen Sound" }
+    ],
+    stamp: "Solved",
+    note: "now cracking #003"
   }
 ];
 

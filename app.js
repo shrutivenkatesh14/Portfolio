@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initRailToggle();
   initCursor();
   initStampGrid();
+  initSeriesCards();
   initHeroStamps();
   initOverlay();
   initPostcards();
@@ -163,6 +164,41 @@ function initStampGrid() {
   }).join('');
 
   grid.dataset.rendered = 'true';
+}
+
+/* --------------------------------------------------------------------------
+   Series cards: multi-part writing (SERIES in data.js) as a taped catalog card.
+   Home page only (the grid marked data-filter="featured"). A plain link to the
+   Writing page, where each post offers its platforms. Deliberately not
+   .stamp-card, so the case-file overlay never claims it.
+   -------------------------------------------------------------------------- */
+function initSeriesCards() {
+  var grid = document.getElementById('stamp-grid');
+  if (!grid || typeof SERIES === 'undefined') return;
+  if ((grid.getAttribute('data-filter') || 'all') !== 'featured') return;
+
+  var offset = grid.children.length;
+  SERIES.filter(function (s) { return s.featured; }).forEach(function (s, i) {
+    var a = document.createElement('a');
+    a.className = 'series-card';
+    a.href = s.href;
+    a.setAttribute('aria-label', s.title + ': ' + s.sub + '. ' + s.cta + ' on the Writing page');
+    a.style.setProperty('--tilt', (Math.random() * 1.4 - 0.7).toFixed(2) + 'deg');
+    a.style.setProperty('--enter-delay', Math.min((offset + i) * 55, 300) + 'ms');
+
+    var rows = s.cases.map(function (c) {
+      return '<span class="series-card-row"><span class="series-card-k">#' + c.num + '</span><span>' + c.name + '</span></span>';
+    }).join('');
+
+    a.innerHTML = '' +
+      '<span class="washi-tape washi-blue" aria-hidden="true"></span>' +
+      '<span class="series-card-head"><b>' + s.title.toUpperCase() + '</b><span>' + s.sub + '</span></span>' +
+      rows +
+      (s.stamp ? '<span class="series-card-rubber">' + s.stamp + '</span>' : '') +
+      (s.note ? '<span class="hand-note series-card-hand">' + s.note + '</span>' : '') +
+      '<span class="series-card-cta">' + s.cta + ' →</span>';
+    grid.appendChild(a);
+  });
 }
 
 /* --------------------------------------------------------------------------
