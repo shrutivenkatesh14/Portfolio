@@ -19,9 +19,9 @@ const PROJECTS = [
     problem: "For a supply chain analytics course, Carlos Henríquez and I set out to explain why Apple's supply chain is built the way it is, and where that design is fragile.",
     approach: [
       "Mapped Apple's end-to-end network — sourcing, semiconductor fabrication, contract assembly (Foxconn, Pegatron), warehousing, and distribution — from public filings and supplier reports",
-      "Applied the newsvendor model to launch-window forecasting: running out of a new iPhone costs more (lost sales, ecosystem revenue) than having extra, which pushes Apple to stock high instead of minimizing cost",
+      "Used newsvendor logic to explain launch-window inventory: lost sales and ecosystem revenue cost more than excess stock, so Apple's service level sits above the median forecast",
       "Used the 2022 Zhengzhou lockdowns as a case study in how assembly concentration turns a localized disruption into a global shortage (Reuters reported iPhone output could fall by as much as 30%)",
-      "Connected course frameworks — multi-echelon inventory, risk pooling, the bullwhip effect — to where they hold and where Apple's scale breaks their textbook assumptions",
+      "Linked multi-echelon inventory, risk pooling, and the bullwhip effect to Apple's buffer placement, and to where its scale breaks textbook assumptions",
       "Delivered a written report and class presentation, citing 10-K filings, supplier responsibility reports, and news coverage throughout"
     ],
     result: "Report and presentation for OMG 411 (Supply Chain Analytics), Simon Business School — argued Apple deliberately absorbs inventory risk in exchange for low stockout risk during peak weeks, hedged by vertical integration and supplier diversification.",
@@ -69,7 +69,7 @@ const PROJECTS = [
       "Added two parameters (the selected Pokémon and the selected Eeveelution) and two Change Parameter actions. Clicking a dot on Overview or an Eeveelution on the wheel feeds calculated fields that update the sprite, dex card, and stat bars",
       "Wrote calculated fields for the dot highlighting and sizing, above and below the dex flags, top 10 and rarity filters, and the row and column math behind the waffle, club grid, and wall layouts. Added reference lines for the dex averages, custom shape palettes for each sprite set, and a tooltip on every chart"
     ],
-    result: "It's live on Tableau Public. 26 of my 137 picks (19%) are legendary or mythical, compared with 9% of the dex. White is my most over-represented color at 2.29 times its share, and red is my blind spot at 0.54 times. 46% of my picks are fully evolved, against 36% of the dex. The power gap drops from +59.9 to +14.1 against fair peers, mostly because nearly half the dex is still evolving and only 22% of my team is. I also have 10 complete evolution lines, and 37 more that are missing just one Pokémon, usually the first stage.",
+    result: "It's live on Tableau Public. Against the full dex my team's base stats run 59.9 points higher; against fair peers only 14.1, because nearly half the dex is still evolving and only 22% of my team is. Another tell: 26 of my 137 picks (19%) are legendary or mythical, against 9% of the dex.",
     links: [
       { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link" }
     ]

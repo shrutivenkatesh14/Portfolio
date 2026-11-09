@@ -487,6 +487,13 @@ html[data-theme="dark"] .rail-brand:focus-visible {
   font-size: clamp(13px, 1.6vw, 15px);
   color: var(--ink);
   letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.hero-status {
+  font-family: var(--font-mono);
+  font-size: clamp(11.5px, 1.4vw, 13px);
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
   margin-bottom: 22px;
 }
 .hero-actions { margin-bottom: 48px; }
@@ -1385,3 +1392,8 @@ html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; color: #D9A566; }
 @media (min-width: 1200px) {
   .page-head-side { margin-right: 64px; }
 }
+
+/* Body paragraphs read in Newsreader, same as the case-file overlay.
+   Typewriter stays on headings, labels, eyebrows and structure. */
+.max-w { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; line-height: 1.65; }
+.hero .max-w { font-size: 18px; }
