@@ -1,0 +1,168 @@
+{
+  "posts": 2455,
+  "blogs": 1001,
+  "sources": {
+    "tag:dark academia": 600,
+    "tag:classic literature": 598,
+    "tag:dark academia quotes": 597,
+    "tag:dark academia aesthetic": 590,
+    "tag:aesthetic academia": 70
+  },
+  "best_model": "Random forest",
+  "model_comparison": {
+    "Baseline (average)": {
+      "test_rmse_unseen_blogs": 1.8833174713910004,
+      "test_r2_unseen_blogs": -0.013367259876432724,
+      "cv_r2_unseen_blogs": -0.028161882792980465,
+      "cv_r2_unseen_blogs_std": 0.016411443516742112,
+      "cv_r2_random_split": -0.0025643843553228686
+    },
+    "Ridge regression": {
+      "test_rmse_unseen_blogs": 1.2232380713065474,
+      "test_r2_unseen_blogs": 0.5724944306790506,
+      "cv_r2_unseen_blogs": 0.5031180447077255,
+      "cv_r2_unseen_blogs_std": 0.12205198017639701,
+      "cv_r2_random_split": 0.540665982197557
+    },
+    "Random forest": {
+      "test_rmse_unseen_blogs": 0.9868839883432912,
+      "test_r2_unseen_blogs": 0.7217392163432411,
+      "cv_r2_unseen_blogs": 0.6703770183508038,
+      "cv_r2_unseen_blogs_std": 0.09830450694240321,
+      "cv_r2_random_split": 0.7530249462364044
+    },
+    "Gradient boosting": {
+      "test_rmse_unseen_blogs": 1.0487102518684115,
+      "test_r2_unseen_blogs": 0.6857821698008688,
+      "cv_r2_unseen_blogs": 0.6636714660700862,
+      "cv_r2_unseen_blogs_std": 0.08490389200909565,
+      "cv_r2_random_split": 0.7345904760971426
+    }
+  },
+  "feature_sets": {
+    "base columns": {
+      "cv_r2_unseen_blogs": 0.6703770183508038,
+      "unseen_blog_gap": -0.7492967983050964
+    },
+    "base + tag columns": {
+      "cv_r2_unseen_blogs": 0.6751099365490517,
+      "unseen_blog_gap": -0.7550152266438022
+    }
+  },
+  "feature_columns_used": [
+    "word_count",
+    "avg_word_len",
+    "unique_word_ratio",
+    "readability",
+    "sentiment_compound",
+    "sentiment_pos",
+    "sentiment_neg",
+    "has_question",
+    "has_exclamation",
+    "has_caption",
+    "has_image",
+    "blog_typical_log_notes",
+    "tag_count",
+    "hour",
+    "day_of_week",
+    "type_photo",
+    "type_other",
+    "has_tag_literature",
+    "has_tag_light academia",
+    "has_tag_poetry",
+    "has_tag_books",
+    "has_tag_quotes",
+    "has_tag_aesthetic",
+    "has_tag_dark aesthetic",
+    "has_tag_classic academia",
+    "has_tag_art",
+    "has_tag_romantic academia"
+  ],
+  "unseen_blog_rounds": {
+    "round 1": {
+      "posts": 491,
+      "blogs": 198,
+      "model_rmse": 0.9355478370707678,
+      "baseline_rmse": 1.6357667109416454
+    },
+    "round 2": {
+      "posts": 491,
+      "blogs": 200,
+      "model_rmse": 0.9226046668865976,
+      "baseline_rmse": 1.6601515337936446
+    },
+    "round 3": {
+      "posts": 491,
+      "blogs": 201,
+      "model_rmse": 1.0041156279740036,
+      "baseline_rmse": 1.4727337431125171
+    },
+    "round 4": {
+      "posts": 491,
+      "blogs": 201,
+      "model_rmse": 0.8648396710512246,
+      "baseline_rmse": 1.5139741465308623
+    },
+    "round 5": {
+      "posts": 491,
+      "blogs": 201,
+      "model_rmse": 0.8100509060177901,
+      "baseline_rmse": 2.0296087078407252
+    }
+  },
+  "error_range": [
+    -1.0910766076923488,
+    0.9857668628817942
+  ],
+  "blog_average_r2": 0.5018472968146506,
+  "final_cv_r2_unseen_blogs": 0.6751099365490517,
+  "post_features_only_r2": 0.21448043204935358,
+  "usual_notes_only_r2": 0.6040323418936835,
+  "share_posts_with_blog_peers": 0.7262729124236252,
+  "top_features": [
+    {
+      "feature": "blog_typical_log_notes",
+      "drop_in_r2": 1.2037,
+      "spread": 0.0676
+    },
+    {
+      "feature": "tag_count",
+      "drop_in_r2": 0.0316,
+      "spread": 0.0064
+    },
+    {
+      "feature": "avg_word_len",
+      "drop_in_r2": 0.011,
+      "spread": 0.0026
+    },
+    {
+      "feature": "has_image",
+      "drop_in_r2": 0.0056,
+      "spread": 0.004
+    },
+    {
+      "feature": "word_count",
+      "drop_in_r2": 0.0028,
+      "spread": 0.0017
+    },
+    {
+      "feature": "has_tag_light academia",
+      "drop_in_r2": 0.0014,
+      "spread": 0.0006
+    },
+    {
+      "feature": "has_tag_literature",
+      "drop_in_r2": 0.0012,
+      "spread": 0.0024
+    },
+    {
+      "feature": "unique_word_ratio",
+      "drop_in_r2": 0.001,
+      "spread": 0.0008
+    }
+  ],
+  "trusted_features": [
+    "blog_typical_log_notes",
+    "tag_count"
+  ]
+}
