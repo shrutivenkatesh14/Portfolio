@@ -490,6 +490,7 @@ html[data-theme="dark"] .rail-brand:focus-visible {
   margin-bottom: 8px;
 }
 .hero-status {
+  max-width: 620px;
   font-family: var(--font-mono);
   font-size: clamp(11.5px, 1.4vw, 13px);
   letter-spacing: 0.03em;
@@ -770,7 +771,7 @@ html[data-theme="dark"] .series-card-hand { color: var(--accent-ink); }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: clamp(8px, 1.6vw, 20px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -781,11 +782,12 @@ html[data-theme="dark"] .series-card-hand { color: var(--accent-ink); }
 .overlay-sheet {
   background: var(--paper);
   border: 1px solid var(--line);
-  max-width: 760px;
+  max-width: 1140px;
   width: 100%;
-  max-height: 88vh;
+  max-height: 96vh;
+  max-height: 96dvh;
   overflow-y: auto;
-  padding: clamp(24px, 4vw, 48px);
+  padding: clamp(22px, 3vw, 40px) clamp(22px, 3.4vw, 48px);
   position: relative;
   transform: translateY(14px) scale(0.98);
   transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1);
@@ -853,6 +855,34 @@ html[data-theme="dark"] .series-card-hand { color: var(--accent-ink); }
 .o-shot-link[href]:hover, .o-shot-link[href]:focus-visible { transform: rotate(0.6deg) translateY(-2px); }
 .o-shot img { display: block; width: 100%; height: auto; }
 .o-shot-note { display: block; margin-top: 12px; text-align: right; transform: rotate(-2deg); transform-origin: right center; }
+
+/* Wide screens: use the extra width instead of one long scroll.
+   - entries with a dashboard screenshot: print on the left, text on the right
+   - other entries: problem / what I did / outcome as three columns */
+@media (min-width: 1000px) {
+  .overlay-content:not(:has(.o-shot:not([hidden]))) .overlay-body:not(:has(> div[hidden])) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 34px;
+    align-items: start;
+  }
+  /* entries that tell problem/outcome in the diagram keep only "What I did": flow its list in two columns */
+  .overlay-content:not(:has(.o-shot:not([hidden]))) .overlay-body:has(> div[hidden]) .o-approach {
+    columns: 2;
+    column-gap: 40px;
+  }
+  .overlay-body:has(> div[hidden]) .o-approach li { break-inside: avoid; }
+  .overlay-content:has(.o-shot:not([hidden])) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 40px;
+    grid-template-rows: auto auto auto auto 1fr;
+    align-items: start;
+  }
+  .overlay-content:has(.o-shot:not([hidden])) > * { grid-column: 1 / -1; }
+  .overlay-content:has(.o-shot:not([hidden])) > .o-shot { grid-column: 1; grid-row: 4 / span 2; margin: 8px 0 0; }
+  .overlay-content:has(.o-shot:not([hidden])) > .overlay-body { grid-column: 2; grid-row: 4; margin-top: 8px; }
+  .overlay-content:has(.o-shot:not([hidden])) > .overlay-links { grid-column: 2; grid-row: 5; margin-top: 22px; align-self: start; }
+}
 
 .overlay-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 .overlay-links .btn { padding: 10px 16px; font-size: 12px; }
@@ -1393,7 +1423,7 @@ html[data-theme="dark"] .lamp-toggle::after { content: "Dark"; color: #D9A566; }
   .page-head-side { margin-right: 64px; }
 }
 
-/* Body paragraphs read in Newsreader, same as the case-file overlay.
-   Typewriter stays on headings, labels, eyebrows and structure. */
-.max-w { font-family: 'Newsreader', Georgia, 'Times New Roman', serif; line-height: 1.65; }
-.hero .max-w { font-size: 18px; }
+/* Page body copy stays in the site typewriter face (Courier Prime).
+   Newsreader is reserved for the case-file overlay reading text. */
+.max-w { line-height: 1.65; }
+.hero .max-w { font-size: 17px; }
