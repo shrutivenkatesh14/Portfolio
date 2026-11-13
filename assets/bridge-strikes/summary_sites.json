@@ -1,0 +1,389 @@
+{
+ "bin": {
+  "units": 140,
+  "coverage_all_time_in_sample": {
+   "5": 35.2,
+   "10": 51.2,
+   "20": 66.4
+  },
+  "backtest_2016_25": {
+   "all_time": {
+    "5": 30.1,
+    "10": 46.6,
+    "20": 61.9
+   },
+   "last3": {
+    "5": 31.5,
+    "10": 43.7,
+    "20": 58.8
+   },
+   "last1": {
+    "5": 29.9,
+    "10": 44.4,
+    "20": 57.4
+   }
+  },
+  "top10": [
+   {
+    "id": "2075837",
+    "strikes": 106
+   },
+   {
+    "id": "2232167",
+    "strikes": 62
+   },
+   {
+    "id": "2231290",
+    "strikes": 58
+   },
+   {
+    "id": "2233040",
+    "strikes": 56
+   },
+   {
+    "id": "2233038",
+    "strikes": 38
+   },
+   {
+    "id": "2229470",
+    "strikes": 34
+   },
+   {
+    "id": "2266770",
+    "strikes": 32
+   },
+   {
+    "id": "2230190",
+    "strikes": 28
+   },
+   {
+    "id": "2231590",
+    "strikes": 26
+   },
+   {
+    "id": "2229500",
+    "strikes": 25
+   }
+  ],
+  "step_tested": 25,
+  "step_q_lt_0.05": [
+   {
+    "unit": "2075837",
+    "n": 106,
+    "p": 0.0,
+    "split_from": 2019,
+    "rate_before": 14.17,
+    "rate_after": 3.0,
+    "q": 0.0003,
+    "label": "Hutchinson River Parkway at Westchester Avenue"
+   },
+   {
+    "unit": "2231290",
+    "n": 58,
+    "p": 0.0,
+    "split_from": 2023,
+    "rate_before": 5.8,
+    "rate_after": 0.0,
+    "q": 0.0003,
+    "label": "Belt Parkway at 17th Avenue"
+   },
+   {
+    "unit": "2229470",
+    "n": 34,
+    "p": 0.0,
+    "split_from": 2017,
+    "rate_before": 0.0,
+    "rate_after": 3.78,
+    "q": 0.0004,
+    "label": "Henry Hudson Parkway at West 239th Street"
+   },
+   {
+    "unit": "7233070",
+    "n": 10,
+    "p": 0.0049,
+    "split_from": 2019,
+    "rate_before": 0.0,
+    "rate_after": 1.43,
+    "q": 0.0305,
+    "label": "Belt Parkway at East 14th Street"
+   },
+   {
+    "unit": "2230190",
+    "n": 28,
+    "p": 0.0095,
+    "split_from": 2019,
+    "rate_before": 0.83,
+    "rate_after": 3.29,
+    "q": 0.0476,
+    "label": "Jackie Robinson Parkway at Markwood Place"
+   }
+  ],
+  "step_q_0.05_0.15": [
+   {
+    "unit": "2231630",
+    "n": 8,
+    "p": 0.0238,
+    "split_from": 2024,
+    "rate_before": 0.27,
+    "rate_after": 2.5,
+    "q": 0.0991,
+    "label": "Belt Parkway at Springfield Boulevard"
+   },
+   {
+    "unit": "2231590",
+    "n": 26,
+    "p": 0.0398,
+    "split_from": 2015,
+    "rate_before": 0.0,
+    "rate_after": 2.36,
+    "q": 0.1394,
+    "label": "Belt Parkway at 130th Street"
+   },
+   {
+    "unit": "2233038",
+    "n": 38,
+    "p": 0.0446,
+    "split_from": 2018,
+    "rate_before": 1.4,
+    "rate_after": 3.88,
+    "q": 0.1394,
+    "label": "FDR Drive at East 62nd Street"
+   },
+   {
+    "unit": "2233040",
+    "n": 56,
+    "p": 0.0526,
+    "split_from": 2023,
+    "rate_before": 3.4,
+    "rate_after": 7.33,
+    "q": 0.146,
+    "label": "FDR Drive at East 61st Street"
+   }
+  ]
+ },
+ "site": {
+  "units": 128,
+  "coverage_all_time_in_sample": {
+   "5": 35.5,
+   "10": 52.3,
+   "20": 69.3
+  },
+  "backtest_2016_25": {
+   "all_time": {
+    "5": 30.0,
+    "10": 46.4,
+    "20": 64.9
+   },
+   "last3": {
+    "5": 32.3,
+    "10": 44.8,
+    "20": 60.4
+   },
+   "last1": {
+    "5": 29.7,
+    "10": 46.8,
+    "20": 59.5
+   }
+  },
+  "top10": [
+   {
+    "id": "2075837",
+    "strikes": 106,
+    "label": "Hutchinson River Parkway at Westchester Avenue",
+    "ids": [
+     "2075837"
+    ]
+   },
+   {
+    "id": "2232167",
+    "strikes": 62,
+    "label": "FDR Drive at East 90th Street",
+    "ids": [
+     "2232167"
+    ]
+   },
+   {
+    "id": "2231290",
+    "strikes": 60,
+    "label": "Belt Parkway at 17th Avenue",
+    "ids": [
+     "2231290",
+     "2231300"
+    ]
+   },
+   {
+    "id": "2233040",
+    "strikes": 56,
+    "label": "FDR Drive at East 61st Street",
+    "ids": [
+     "2233040"
+    ]
+   },
+   {
+    "id": "2229470",
+    "strikes": 38,
+    "label": "Henry Hudson Parkway at West 239th Street",
+    "ids": [
+     "2229470",
+     "2229670"
+    ]
+   },
+   {
+    "id": "2233038",
+    "strikes": 38,
+    "label": "FDR Drive at East 62nd Street",
+    "ids": [
+     "2233038"
+    ]
+   },
+   {
+    "id": "2266770",
+    "strikes": 32,
+    "label": "Cross Island Parkway at Southern State Parkway",
+    "ids": [
+     "2266770"
+    ]
+   },
+   {
+    "id": "2233080",
+    "strikes": 29,
+    "label": "Belt Parkway at East 14th Street",
+    "ids": [
+     "2233080",
+     "7233070"
+    ]
+   },
+   {
+    "id": "2230190",
+    "strikes": 28,
+    "label": "Jackie Robinson Parkway at Markwood Place",
+    "ids": [
+     "2230190"
+    ]
+   },
+   {
+    "id": "2231590",
+    "strikes": 26,
+    "label": "Belt Parkway at 130th Street",
+    "ids": [
+     "2231590"
+    ]
+   }
+  ],
+  "step_tested": 25,
+  "step_q_lt_0.05": [
+   {
+    "unit": "2229470",
+    "n": 38,
+    "p": 0.0,
+    "split_from": 2017,
+    "rate_before": 0.0,
+    "rate_after": 4.22,
+    "q": 0.0002,
+    "label": "Henry Hudson Parkway at West 239th Street"
+   },
+   {
+    "unit": "2075837",
+    "n": 106,
+    "p": 0.0,
+    "split_from": 2019,
+    "rate_before": 14.17,
+    "rate_after": 3.0,
+    "q": 0.0002,
+    "label": "Hutchinson River Parkway at Westchester Avenue"
+   },
+   {
+    "unit": "2231290",
+    "n": 60,
+    "p": 0.0,
+    "split_from": 2023,
+    "rate_before": 6.0,
+    "rate_after": 0.0,
+    "q": 0.0002,
+    "label": "Belt Parkway at 17th Avenue"
+   }
+  ],
+  "step_q_0.05_0.15": [
+   {
+    "unit": "2230190",
+    "n": 28,
+    "p": 0.0096,
+    "split_from": 2019,
+    "rate_before": 0.83,
+    "rate_after": 3.29,
+    "q": 0.06,
+    "label": "Jackie Robinson Parkway at Markwood Place"
+   },
+   {
+    "unit": "2231630",
+    "n": 8,
+    "p": 0.0239,
+    "split_from": 2024,
+    "rate_before": 0.27,
+    "rate_after": 2.5,
+    "q": 0.1197,
+    "label": "Belt Parkway at Springfield Boulevard"
+   },
+   {
+    "unit": "2231730",
+    "n": 9,
+    "p": 0.0358,
+    "split_from": 2022,
+    "rate_before": 0.22,
+    "rate_after": 1.75,
+    "q": 0.1267,
+    "label": "Belt Parkway at 130th Avenue"
+   },
+   {
+    "unit": "2231590",
+    "n": 26,
+    "p": 0.0402,
+    "split_from": 2015,
+    "rate_before": 0.0,
+    "rate_after": 2.36,
+    "q": 0.1267,
+    "label": "Belt Parkway at 130th Street"
+   },
+   {
+    "unit": "1077860",
+    "n": 13,
+    "p": 0.0414,
+    "split_from": 2021,
+    "rate_before": 0.38,
+    "rate_after": 2.0,
+    "q": 0.1267,
+    "label": "Cross Island Parkway at Douglaston Parkway"
+   },
+   {
+    "unit": "2233038",
+    "n": 38,
+    "p": 0.0456,
+    "split_from": 2018,
+    "rate_before": 1.4,
+    "rate_after": 3.88,
+    "q": 0.1267,
+    "label": "FDR Drive at East 62nd Street"
+   },
+   {
+    "unit": "2233040",
+    "n": 56,
+    "p": 0.0523,
+    "split_from": 2023,
+    "rate_before": 3.4,
+    "rate_after": 7.33,
+    "q": 0.1307,
+    "label": "FDR Drive at East 61st Street"
+   },
+   {
+    "unit": "2233080",
+    "n": 29,
+    "p": 0.0631,
+    "split_from": 2023,
+    "rate_before": 1.6,
+    "rate_after": 4.33,
+    "q": 0.1435,
+    "label": "Belt Parkway at East 14th Street"
+   }
+  ]
+ }
+}

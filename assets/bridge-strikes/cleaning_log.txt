@@ -1,0 +1,12 @@
+Loaded 943 rows, nothing dropped. Missing = blank or the text N/A only (343 N/A + 2 blank in license).
+Dates parsed. Time-of-day always midnight: True. Range 2013-01-07 to 2025-12-29.
+Bridge ID kept as text. Missing: 40.
+Malformed latitude set to missing and flagged: 1 row(s).
+Latitudes outside NYC box: 0.
+Rows whose street name and location both contradict their bridge ID: 3. 0 reassigned to the one bridge within 25 m, 3 set to missing. Original ID kept in bin_original.
+Missing bridge IDs recovered from coordinates (one bridge within 25 m, next bridge at least 3x farther): 8. Rows still without a bridge ID: 35.
+TYPE is STRIKE in all rows: True. Column kept, ignored in analysis.
+Exact repeats on ['date', 'bin', 'main_street', 'cross_street', 'direction']: 19 extra rows. Kept; sensitivity check below.
+Canonical label built for 140 bridge IDs from the most common street pair. 27 IDs have more than one street pair.
+Rows with suspect coordinates (wrong-sign longitude, or over 1,000 m from the median point of their own bridge ID): 7. Flagged, values kept; counts unaffected. Exclude from any map.
+Site id: bridge IDs within 30 m of each other on the same roadway are merged. 140 bridge IDs become 128 sites. Raw bridge ID kept alongside.

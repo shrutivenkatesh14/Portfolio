@@ -1,0 +1,141 @@
+bin,main_street,cross_street,n_label_variants,lat,lon,label,borough,site
+1055130,Long Island Expressway,150th Street,1,40.740223,-73.819521,Long Island Expressway at 150th Street,QUEENS,1055130
+1055230,Long Island Expressway,Springfield Boulevard,2,40.749411,-73.756855,Long Island Expressway at Springfield Boulevard,QUEENS,1055230
+1055320,Long Island Expressway,Springfield Boulevard,1,40.749411,-73.756855,Long Island Expressway at Springfield Boulevard,QUEENS,1055230
+1055619,Belt Parkway,Van Wyck Expressway,1,40.666257,-73.802114,Belt Parkway at Van Wyck Expressway,QUEENS,1055619
+1055630,Van Wyck Expressway,Rockway Boulevard,1,40.674427,-73.80208,Van Wyck Expressway at Rockway Boulevard,QUEENS,1055630
+1055859,Grand Central Parkway,82nd Street,1,40.766958,-73.887576,Grand Central Parkway at 82nd Street,QUEENS,1055859
+1055930,Grand Central Parkway,Roosevelt Avenue,1,40.752716,-73.852024,Grand Central Parkway at Roosevelt Avenue,QUEENS,1055930
+1056000,Grand Concourse,East Fordham Road,1,40.86243,-73.896938,Grand Concourse at East Fordham Road,BRONX,1056000
+1065020,Grand Central Parkway,72nd Road,1,40.721793,-73.835529,Grand Central Parkway at 72nd Road,QUEENS,1065020
+1065030,Grand Central Parkway,Union Turnpike,1,40.716425,-73.827978,Grand Central Parkway at Union Turnpike,QUEENS,1065030
+1065060,Long Island Expressway,164th Street,1,40.738368,-73.804742,Long Island Expressway at 164th Street,QUEENS,1065060
+1065210,Cross Island Parkway,Whitestone Expressway,1,40.790655,-73.822075,Cross Island Parkway at Whitestone Expressway,QUEENS,1065210
+1065460,Brooklyn-Queens Expressway,Bedford Avenue,1,40.703231,-73.96011,Brooklyn-Queens Expressway at Bedford Avenue,BROOKLYN,1065460
+1065530,Brooklyn-Queens Expressway,South 3rd Street,1,40.710229,-73.956236,Brooklyn-Queens Expressway at South 3rd Street,BROOKLYN,1065530
+1065590,Brooklyn-Queens Expressway,Borinquen Place,1,40.710654,-73.955664,Brooklyn-Queens Expressway at Borinquen Place,BROOKLYN,1065590
+1065900,Long Island Expressway,48th Street,1,40.731968,-73.919073,Long Island Expressway at 48th Street,QUEENS,1065900
+1066289,Cross Bronx Expressway,Grand Concourse,1,40.845219,-73.910506,Cross Bronx Expressway at Grand Concourse,BRONX,1066289
+1066320,Cross Bronx Expressway,Clay Avenue,1,40.844747,-73.904892,Cross Bronx Expressway at Clay Avenue,BRONX,1066320
+1066349,Cross Bronx Expressway,Webster Avenue,1,40.844557,-73.902709,Cross Bronx Expressway at Webster Avenue,BRONX,1066349
+1066399,Cross Bronx Expressway,Southern Boulevard,1,40.840544,-73.886064,Cross Bronx Expressway at Southern Boulevard,BRONX,1066399
+1066407,Cross Bronx Expressway,Boston Road,1,40.839368,-73.883927,Cross Bronx Expressway at Boston Road,BRONX,1066407
+1066419,Cross Bronx Expressway,Sheridan Expressway,1,40.837538,-73.880532,Cross Bronx Expressway at Sheridan Expressway,BRONX,1066419
+1066960,Major Deegan Expressway,West 230th Street,1,40.876575,-73.904544,Major Deegan Expressway at West 230th Street,BRONX,1066960
+1067000,Major Deegan Expressway,West 238th Street,1,40.884435,-73.898583,Major Deegan Expressway at West 238th Street,BRONX,1067000
+1067130,Bronx River Parkway,East Gunhill Road,1,40.878502,-73.870077,Bronx River Parkway at East Gunhill Road,BRONX,1067130
+1067631,Forest Avenue,Dr Martin Luther King Jr Expressway,1,40.624972,-74.146318,Forest Avenue at Dr Martin Luther King Jr Expressway,STATEN ISLAND,1067631
+1067720,Staten Island Expressway,Woolley Avenue,1,40.607581,-74.140881,Staten Island Expressway at Woolley Avenue,STATEN ISLAND,1067720
+1067730,Staten Island Expressway,Bradley Avenue,1,40.608284,-74.132052,Staten Island Expressway at Bradley Avenue,STATEN ISLAND,1067730
+1069720,West Shore Expressway,Arden Avenue,1,40.560651,-74.199497,West Shore Expressway at Arden Avenue,STATEN ISLAND,1069720
+1075142,West Shore Expressway,Arthur Kill Road,1,40.557239,-74.204841,West Shore Expressway at Arthur Kill Road,STATEN ISLAND,1075142
+1075670,Grand Central Parkway,Northern Boulevard,1,40.75846,-73.854591,Grand Central Parkway at Northern Boulevard,QUEENS,1075670
+1075740,Bronx River Parkway,Watson Avenue,1,40.826687,-73.872707,Bronx River Parkway at Watson Avenue,BRONX,1075740
+1075860,Hutchinson River Parkway,Orchard Beach Road,1,40.873041,-73.818738,Hutchinson River Parkway at Orchard Beach Road,BRONX,1075860
+1076020,West Shore Expressway,Sharrotts Road,1,40.537116,-74.224531,West Shore Expressway at Sharrotts Road,STATEN ISLAND,1076020
+1076050,Cross Island Parkway,Union Turnpike,1,40.74087,-73.726832,Cross Island Parkway at Union Turnpike,QUEENS,1076050
+1076600,Cross Island Parkway,Grand Central Parkway,1,40.743484,-73.732009,Cross Island Parkway at Grand Central Parkway,QUEENS,1076600
+1076610,Cross Island Parkway,Grand Central Parkway,1,40.743943,-73.73287,Cross Island Parkway at Grand Central Parkway,QUEENS,1076610
+1076620,Grand Central Parkway,Cross Island Parkway,1,40.74372,-73.732056,Grand Central Parkway at Cross Island Parkway,QUEENS,1076620
+1076660,Belt Parkway,150th Street,2,40.666311,-73.789565,Belt Parkway at 150th Street,QUEENS,1076660
+1077860,Cross Island Parkway,West Alley Road,1,40.751567,-73.742529,Cross Island Parkway at West Alley Road,QUEENS,1077860
+2075820,Hutchinson River Parkway,East Tremont Avenue,2,40.840729,-73.83848,Hutchinson River Parkway at East Tremont Avenue,BRONX,2075820
+2075837,Hutchinson River Parkway,Westchester Avenue,1,40.842963,-73.837802,Hutchinson River Parkway at Westchester Avenue,BRONX,2075837
+2075849,Hutchinson River Parkway,Pelham Parkway,1,40.855884,-73.832899,Hutchinson River Parkway at Pelham Parkway,BRONX,2075849
+2076109,Hutchinson River Parkway,Bruckner Boulevard,1,40.829008,-73.837189,Hutchinson River Parkway at Bruckner Boulevard,BRONX,2076109
+2229450,Henry Hudson Parkway,West 232nd Street,1,40.884539,-73.914667,Henry Hudson Parkway at West 232nd Street,BRONX,2229450
+2229460,Henry Hudson Parkway,West 236th Street,1,40.886527,9.049999999888314e-05,Henry Hudson Parkway at West 236th Street,BRONX,2229460
+2229470,Henry Hudson Parkway,West 239th Street,1,40.889358,-73.908774,Henry Hudson Parkway at West 239th Street,BRONX,2229470
+2229480,Henry Hudson Parkway,Manhattan College Parkway,1,40.890719,-73.908124,Henry Hudson Parkway at Manhattan College Parkway,BRONX,2229480
+2229490,Henry Hudson Parkway,West 246th Street,1,40.8935475,-73.9081425,Henry Hudson Parkway at West 246th Street,BRONX,2229490
+2229500,Henry Hudson Parkway,West 252nd Street,2,40.899333,-73.907194,Henry Hudson Parkway at West 252nd Street,BRONX,2229500
+2229670,Henry Hudson Parkway,West 239th Street,1,40.889358,-73.908774,Henry Hudson Parkway at West 239th Street,BRONX,2229470
+2230000,Jackie Robinson Parkway,Highland Boulevard,2,40.6789555,-73.897209,Jackie Robinson Parkway at Highland Boulevard,BROOKLYN,2230000
+2230020,Jackie Robinson Parkway,Highland Boulevard,1,40.678189,-73.897491,Jackie Robinson Parkway at Highland Boulevard,BROOKLYN,2230020
+2230040,Jackie Robinson Parkway,Cypress Hills Street,2,40.692131,-73.882544,Jackie Robinson Parkway at Cypress Hills Street,QUEENS,2230040
+2230109,Jackie Robinson Parkway,Forest Park Drive,1,40.69976,-73.86865,Jackie Robinson Parkway at Forest Park Drive,QUEENS,2230109
+2230120,Jackie Robinson Parkway,Myrtle Avenue,1,40.702909,-73.858049,Jackie Robinson Parkway at Myrtle Avenue,QUEENS,2230120
+2230179,Jackie Robinson Parkway,Metropolitan Avenue,1,40.708996,-73.841639,Jackie Robinson Parkway at Metropolitan Avenue,QUEENS,2230179
+2230180,Jackie Robinson Parkway,Union Turnpike,1,40.710683,-73.83738,Jackie Robinson Parkway at Union Turnpike,QUEENS,2230180
+2230190,Jackie Robinson Parkway,Markwood Place,1,40.711773,-73.836038,Jackie Robinson Parkway at Markwood Place,QUEENS,2230190
+2230209,Jackie Robinson Parkway,Queens Boulevard,1,40.714381,-73.830989,Jackie Robinson Parkway at Queens Boulevard,QUEENS,2230209
+2230520,Brooklyn-Queens Expressway,65th Place,1,40.739863,-73.899923,Brooklyn-Queens Expressway at 65th Place,QUEENS,2230520
+2230530,Brooklyn-Queens Expressway,Queens Boulevard,1,40.740803,-73.898972,Brooklyn-Queens Expressway at Queens Boulevard,QUEENS,2230530
+2230550,Brooklyn-Queens Expressway,69th Street,1,40.749883,-73.897232,Brooklyn-Queens Expressway at 69th Street,QUEENS,2230550
+2230587,Brooklyn-Queens Expressway,Roosevelt Avenue,1,40.746442,-73.894767,Brooklyn-Queens Expressway at Roosevelt Avenue,QUEENS,2230587
+2231270,Belt Parkway,4th Avenue,1,40.610636,-74.035803,Belt Parkway at 4th Avenue,BROOKLYN,2231270
+2231290,Belt Parkway,17th Avenue,3,40.601674,-74.011772,Belt Parkway at 17th Avenue,BROOKLYN,2231290
+2231300,Belt Parkway,17th Avenue,1,40.6016005,-74.0118265,Belt Parkway at 17th Avenue,BROOKLYN,2231290
+2231319,Belt Parkway,Bay Parkway,1,40.595893,-74.000009,Belt Parkway at Bay Parkway,BROOKLYN,2231319
+2231330,Belt Parkway,27th Avenue,1,40.587711,-73.991782,Belt Parkway at 27th Avenue,BROOKLYN,2231330
+2231340,Belt Parkway,Cropsey Avenue,1,40.584215,-73.987016,Belt Parkway at Cropsey Avenue,BROOKLYN,2231340
+2231359,Belt Parkway,Shell Road,1,40.582824,-73.97448,Belt Parkway at Shell Road,BROOKLYN,2231359
+2231360,Belt Parkway,Ocean Parkway,1,40.583891,-73.966856,Belt Parkway at Ocean Parkway,BROOKLYN,2231360
+2231380,Belt Parkway,Coney Island Avenue,1,40.584695999999994,-73.96023,Belt Parkway at Coney Island Avenue,BROOKLYN,2231380
+2231390,Belt Parkway,East 12th Street,1,40.585008,-73.957673,Belt Parkway at East 12th Street,BROOKLYN,2231390
+2231449,Belt Parkway,Knapp Street,1,40.585744,-73.931484,Belt Parkway at Knapp Street,BROOKLYN,2231449
+2231559,Belt Parkway,Cross Bay Boulevard,1,40.666227,-73.841453,Belt Parkway at Cross Bay Boulevard,QUEENS,2231559
+2231570,Belt Parkway,North Conduit Avenue,1,40.666704499999994,-73.83558149999999,Belt Parkway at North Conduit Avenue,QUEENS,2231570
+2231590,Belt Parkway,130th Street,1,40.666577,-73.810575,Belt Parkway at 130th Street,QUEENS,2231590
+2231610,Belt Parkway,Coney Island Avenue,2,40.584596,-73.960353,Belt Parkway at Coney Island Avenue,BROOKLYN,2231380
+2231620,Belt Parkway,Farmers Boulevard,1,40.666941,-73.767092,Belt Parkway at Farmers Boulevard,QUEENS,2231620
+2231630,Belt Parkway,Springfield Boulevard,2,40.66592,-73.758147,Belt Parkway at Springfield Boulevard,QUEENS,2231630
+2231640,Belt Parkway,225th Street,1,40.665896,-73.752027,Belt Parkway at 225th Street,QUEENS,2231640
+2231650,Belt Parkway,Sunrise Highway,1,40.665755,-73.741079,Belt Parkway at Sunrise Highway,QUEENS,2231650
+2231710,Belt Parkway,Merrick Boulevard,1,40.673653,-73.734423,Belt Parkway at Merrick Boulevard,QUEENS,2231710
+2231720,Belt Parkway,Merrick Boulevard,2,40.673922,-73.734519,Belt Parkway at Merrick Boulevard,QUEENS,2231720
+2231730,Belt Parkway,130th Avenue,1,40.678676,-73.729805,Belt Parkway at 130th Avenue,QUEENS,2231730
+2231740,Belt Parkway,130th Avenue,2,40.678904,-73.72989,Belt Parkway at 130th Avenue,QUEENS,2231730
+2231750,Cross Island Parkway,Linden Boulevard,2,40.690743,-73.72678,Cross Island Parkway at Linden Boulevard,QUEENS,2231750
+2231770,Cross Island Parkway,109th Avenue,1,40.706209,-73.727496,Cross Island Parkway at 109th Avenue,QUEENS,2231770
+2231780,Cross Island Parkway,Hempstead Avenue,1,40.7111895,-73.728217,Cross Island Parkway at Hempstead Avenue,QUEENS,2231780
+2231800,Cross Island Parkway,Superior Road,1,40.720565,-73.725604,Cross Island Parkway at Superior Road,QUEENS,2231800
+2231819,Cross Island Parkway,Jamaica Avenue,1,40.72421,-73.7246,Cross Island Parkway at Jamaica Avenue,QUEENS,2231819
+2231829,Cross Island Parkway,Braddock Avenue,1,40.725643,-73.724454,Cross Island Parkway at Braddock Avenue,QUEENS,2231829
+2231840,Cross Island Parkway,Hillside Avenue,1,40.734262,-73.722845,Cross Island Parkway at Hillside Avenue,QUEENS,2231840
+2231850,Cross Island Parkway,Union Turnpike,1,40.74087,-73.726832,Cross Island Parkway at Union Turnpike,QUEENS,1076050
+2231860,Cross Island Parkway,West Alley Road,1,40.751706,-73.742698,Cross Island Parkway at West Alley Road,QUEENS,1077860
+2231870,Cross Island Parkway,Northern Boulevard,1,40.762317,-73.757125,Cross Island Parkway at Northern Boulevard,QUEENS,2231870
+2231930,Belt Parkway,Francis Lewis Boulevard,2,40.786434,-73.806265,Belt Parkway at Francis Lewis Boulevard,QUEENS,2231930
+2231940,Cross Island Parkway,Clintonville Street,1,40.786873,-73.810109,Cross Island Parkway at Clintonville Street,QUEENS,2231940
+2231950,Cross Island Parkway,150th Street,1,40.787291,-73.813322,Cross Island Parkway at 150th Street,QUEENS,2231950
+2231970,Cross Island Parkway,14th Avenue,1,40.788146,-73.816896,Cross Island Parkway at 14th Avenue,QUEENS,2231970
+2231980,Cross Island Parkway,147th Street,1,40.789313,-73.819404,Cross Island Parkway at 147th Street,QUEENS,2231980
+2232110,FDR Drive,East 63rd Street,1,40.76056,-73.956649,FDR Drive at East 63rd Street,MANHATTAN,2232110
+2232120,FDR Drive,East 71st Street,1,40.76534,-73.951969,FDR Drive at East 71st Street,MANHATTAN,2232120
+2232140,FDR Drive,East 78th Street,2,40.769563,-73.948332,FDR Drive at East 78th Street,MANHATTAN,2232140
+2232158,FDR Drive,East 84th Street,1,40.7731025,-73.9445065,FDR Drive at East 84th Street,MANHATTAN,2232158
+2232167,FDR Drive,East 90th Street,1,40.777492,-73.942847,FDR Drive at East 90th Street,MANHATTAN,2232167
+2232190,FDR Drive,East 111th Street,1,40.791787,-73.935472,FDR Drive at East 111th Street,MANHATTAN,2232190
+2233038,FDR Drive,East 62nd Street,8,40.760101,-73.957473,FDR Drive at East 62nd Street,MANHATTAN,2233038
+2233040,FDR Drive,East 61st Street,11,40.757719,-73.959396,FDR Drive at East 61st Street,MANHATTAN,2233040
+2233080,Belt Parkway,East 14th Street,1,40.585019,-73.954903,Belt Parkway at East 14th Street,BROOKLYN,2233080
+2240019,Brooklyn Bridge,(Missing),1,40.706143,-73.996773,Brooklyn Bridge at (Missing),MANHATTAN,2240019
+2240507,Van Wyck Expressway,Roosevelt Avenue,1,40.757141,-73.838787,Van Wyck Expressway at Roosevelt Avenue,QUEENS,2240507
+2240508,Van Wyck Expressway,Roosevelt Avenue,1,40.757162,-73.838782,Van Wyck Expressway at Roosevelt Avenue,QUEENS,2240507
+2243310,Belt Parkway,Flatbush Avenue,1,40.596576,-73.907907,Belt Parkway at Flatbush Avenue,BROOKLYN,2243310
+2244150,Belt Parkway,Shore Road,1,40.641704,-74.030508,Belt Parkway at Shore Road,BROOKLYN,2244150
+2246100,65th Street,Transverse Road,1,40.769876,-73.974707,65th Street at Transverse Road,MANHATTAN,2246100
+2246120,Central Park Traverse,West 66th Street,1,40.771707,-73.977705,Central Park Traverse at West 66th Street,MANHATTAN,2246120
+2246240,Transverse Road,East 79th Street,1,40.779875,-73.970888,Transverse Road at East 79th Street,MANHATTAN,2246240
+2246280,West 79th Street,Central Park Traverse,1,40.779835,-73.970865,West 79th Street at Central Park Traverse,MANHATTAN,2246280
+2246440,79th Street,Transverse Road,1,40.778809,-73.968183,79th Street at Transverse Road,MANHATTAN,2246440
+2246540,Park Avenue,East 33rd Street,2,40.746410499999996,-73.9817945,Park Avenue at East 33rd Street,MANHATTAN,2246540
+2246550,Park Avenue,East 40th Street,2,40.7505125,-73.9787935,Park Avenue at East 40th Street,MANHATTAN,2246550
+2246620,128th Street,3rd Avenue,1,40.805645,-73.93441,128th Street at 3rd Avenue,MANHATTAN,2246620
+2248159,Queens Boulevard,Woodhaven Blvd,2,40.733479,-73.87048,Queens Boulevard at Woodhaven Blvd,QUEENS,2248159
+2248160,Queens Boulevard,59th Avenue,1,40.732583,-73.86786,Queens Boulevard at 59th Avenue,QUEENS,2248160
+2248299,Belt Parkway,Shell Road,2,40.713031,-73.833666,Belt Parkway at Shell Road,BROOKLYN,2248299
+2266139,Cross Island Parkway,Douglaston Parkway,1,40.751664,-73.742826,Cross Island Parkway at Douglaston Parkway,QUEENS,1077860
+2266160,Cross Island Parkway,Whitestone Bridge,2,40.789428,-73.822636,Cross Island Parkway at Whitestone Bridge,QUEENS,2266160
+2266630,FDR Drive,East 49th Street,3,40.752444,-73.964531,FDR Drive at East 49th Street,MANHATTAN,2266630
+2266770,Cross Island Parkway,Southern State Parkway,5,40.687191,-73.724985,Cross Island Parkway at Southern State Parkway,QUEENS,2266770
+2267160,Shea Road,Roosevelt Avenue,1,40.752929,-73.851261,Shea Road at Roosevelt Avenue,QUEENS,2267160
+2268518,Brooklyn Bridge,(Missing),1,40.706063,-73.996889,Brooklyn Bridge at (Missing),BROOKLYN,2240019
+5521900,Belt Parkway,Verrazano Bridge,1,40.609572,-74.034941,Belt Parkway at Verrazano Bridge,BROOKLYN,5521900
+7067078,Bronx River Parkway,Westchester Avenue,2,40.829899,-73.873194,Bronx River Parkway at Westchester Avenue,BRONX,7067078
+7075210,Grand Central Parkway,77th Avenue,2,40.716826499999996,-73.83002450000001,Grand Central Parkway at 77th Avenue,QUEENS,7075210
+7233000,Belt Parkway,Shell Road,1,40.582824,-73.97448,Belt Parkway at Shell Road,BROOKLYN,2231359
+7233070,Belt Parkway,East 14th Street,2,40.585019,-73.954903,Belt Parkway at East 14th Street,BROOKLYN,2233080
+7702720,Remsen Avenue,Avenue D,2,40.647167,-73.913637,Remsen Avenue at Avenue D,BROOKLYN,7702720
+7704590,Jackie Robinson Parkway,71st Avenue,1,40.707028,-73.850944,Jackie Robinson Parkway at 71st Avenue,QUEENS,7704590

@@ -1,0 +1,224 @@
+{
+ "rows": 943,
+ "per_year": {
+  "2013": 58,
+  "2014": 81,
+  "2015": 80,
+  "2016": 66,
+  "2017": 67,
+  "2018": 73,
+  "2019": 69,
+  "2020": 75,
+  "2021": 108,
+  "2022": 84,
+  "2023": 63,
+  "2024": 62,
+  "2025": 57
+ },
+ "truck_route_share_no": 0.9172852598091198,
+ "weekday_share": 0.848356309650053,
+ "top6_roadway_share": 0.8589607635206787,
+ "roadway_top": {
+  "BELT PARKWAY": 243,
+  "FDR DRIVE": 174,
+  "HUTCHINSON RIVER PARKWAY": 144,
+  "CROSS ISLAND PARKWAY": 89,
+  "JACKIE ROBINSON PARKWAY": 83,
+  "HENRY HUDSON PARKWAY": 77,
+  "GRAND CENTRAL PARKWAY": 18,
+  "BROOKLYN QUEENS EXPRESSWAY": 17,
+  "BRONX RIVER PARKWAY": 11,
+  "CROSS BRONX EXPRESSWAY": 9,
+  "QUEENS BOULEVARD": 9,
+  "QUEENSBORO BRIDGE": 8
+ },
+ "unique_bridges": 140,
+ "coverage_all_time": {
+  "5": 0.3524229074889868,
+  "10": 0.512114537444934,
+  "20": 0.6640969162995595,
+  "30": 0.748898678414097,
+  "50": 0.8502202643171806
+ },
+ "backtest": {
+  "all_time": {
+   "5": 0.30139489969405747,
+   "10": 0.4662149126469157,
+   "20": 0.6186076161506351
+  },
+  "last3": {
+   "5": 0.31451763281531514,
+   "10": 0.43704026720440126,
+   "20": 0.5880217336180094
+  },
+  "last1": {
+   "5": 0.2986150177212108,
+   "10": 0.4441611296647189,
+   "20": 0.5739656632020729
+  },
+  "oracle": {
+   "5": 0.40100591732478214,
+   "10": 0.5910360146743328,
+   "20": 0.7994761519800464
+  },
+  "random": {
+   "5": 0.03485574508379862,
+   "10": 0.07272110922063267,
+   "20": 0.14348530394617295
+  }
+ },
+ "backtest_2023_25": {
+  "all_time": {
+   "5": 0.26900494965011096,
+   "10": 0.4895359121165573,
+   "20": 0.6394885878756846
+  },
+  "last3": {
+   "5": 0.26073174137690264,
+   "10": 0.43645518161647195,
+   "20": 0.5730050117146891
+  },
+  "last1": {
+   "5": 0.2358050551598939,
+   "10": 0.4278297568620149,
+   "20": 0.5898183059473382
+  }
+ },
+ "top10_direction": [
+  {
+   "bin": "2075837",
+   "label": "Hutchinson River Parkway at Westchester Avenue",
+   "strikes": 106,
+   "main_dir": "S/B",
+   "main_dir_n": 71
+  },
+  {
+   "bin": "2232167",
+   "label": "FDR Drive at East 90th Street",
+   "strikes": 62,
+   "main_dir": "S/B",
+   "main_dir_n": 62
+  },
+  {
+   "bin": "2231290",
+   "label": "Belt Parkway at 17th Avenue",
+   "strikes": 58,
+   "main_dir": "E/B",
+   "main_dir_n": 51
+  },
+  {
+   "bin": "2233040",
+   "label": "FDR Drive at East 61st Street",
+   "strikes": 56,
+   "main_dir": "N/B",
+   "main_dir_n": 49
+  },
+  {
+   "bin": "2233038",
+   "label": "FDR Drive at East 62nd Street",
+   "strikes": 38,
+   "main_dir": "N/B",
+   "main_dir_n": 36
+  },
+  {
+   "bin": "2229470",
+   "label": "Henry Hudson Parkway at West 239th Street",
+   "strikes": 34,
+   "main_dir": "N/B",
+   "main_dir_n": 31
+  },
+  {
+   "bin": "2266770",
+   "label": "Cross Island Parkway at Southern State Parkway",
+   "strikes": 32,
+   "main_dir": "E/B",
+   "main_dir_n": 17
+  },
+  {
+   "bin": "2230190",
+   "label": "Jackie Robinson Parkway at Markwood Place",
+   "strikes": 28,
+   "main_dir": "W/B",
+   "main_dir_n": 27
+  },
+  {
+   "bin": "2231590",
+   "label": "Belt Parkway at 130th Street",
+   "strikes": 26,
+   "main_dir": "E/B",
+   "main_dir_n": 18
+  },
+  {
+   "bin": "2229500",
+   "label": "Henry Hudson Parkway at West 252nd Street",
+   "strikes": 25,
+   "main_dir": "S/B",
+   "main_dir_n": 17
+  }
+ ],
+ "truck_by_roadway": {
+  "BELT PARKWAY": {
+   "n": 243,
+   "on_route": 1
+  },
+  "FDR DRIVE": {
+   "n": 174,
+   "on_route": 0
+  },
+  "HUTCHINSON RIVER PARKWAY": {
+   "n": 144,
+   "on_route": 0
+  },
+  "CROSS ISLAND PARKWAY": {
+   "n": 89,
+   "on_route": 1
+  },
+  "JACKIE ROBINSON PARKWAY": {
+   "n": 83,
+   "on_route": 0
+  },
+  "HENRY HUDSON PARKWAY": {
+   "n": 77,
+   "on_route": 0
+  },
+  "GRAND CENTRAL PARKWAY": {
+   "n": 18,
+   "on_route": 0
+  },
+  "BROOKLYN QUEENS EXPRESSWAY": {
+   "n": 17,
+   "on_route": 15
+  },
+  "BRONX RIVER PARKWAY": {
+   "n": 11,
+   "on_route": 0
+  },
+  "CROSS BRONX EXPRESSWAY": {
+   "n": 9,
+   "on_route": 9
+  },
+  "QUEENS BOULEVARD": {
+   "n": 9,
+   "on_route": 9
+  },
+  "QUEENSBORO BRIDGE": {
+   "n": 8,
+   "on_route": 7
+  }
+ },
+ "license_2019_24": {
+  "n": 354,
+  "ny_share": 0.16101694915254236
+ },
+ "dup_sensitivity": {
+  "top10_same_set": true,
+  "top10_overlap": 10,
+  "coverage10_with": 0.512114537444934,
+  "coverage10_without": 0.5084364454443194
+ },
+ "bin_recovery": {
+  "missing_bin_with_coords": 32,
+  "within_25m": 0,
+  "within_25m_and_unambiguous": 0
+ }
+}
