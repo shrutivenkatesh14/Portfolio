@@ -250,7 +250,7 @@ function initOverlay() {
     body.querySelector('.o-problem').textContent = p.problem;
     body.querySelector('.o-approach').innerHTML = p.approach.map(function (a) { return '<li>' + a + '</li>'; }).join('');
     body.querySelector('.o-result').textContent = p.result;
-    body.querySelector('.o-result').parentNode.hidden = !!p.diagram;
+    body.querySelector('.o-result').parentNode.hidden = false;
 
     var dg = overlay.querySelector('.o-diagram');
     if (dg) {
