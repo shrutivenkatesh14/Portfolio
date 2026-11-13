@@ -856,32 +856,14 @@ html[data-theme="dark"] .series-card-hand { color: var(--accent-ink); }
 .o-shot img { display: block; width: 100%; height: auto; }
 .o-shot-note { display: block; margin-top: 12px; text-align: right; transform: rotate(-2deg); transform-origin: right center; }
 
-/* Wide screens: use the extra width instead of one long scroll.
-   - entries with a dashboard screenshot: print on the left, text on the right
-   - other entries: problem / what I did / outcome as three columns */
+/* Wide screens: keep the original reading order (problem, what I did, outcome),
+   but use the extra width: the "what I did" list flows in two columns, the
+   paragraphs keep a comfortable line length, and a screenshot print stays a sensible size. */
 @media (min-width: 1000px) {
-  .overlay-content:not(:has(.o-shot:not([hidden]))) .overlay-body:not(:has(> div[hidden])) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 34px;
-    align-items: start;
-  }
-  /* entries that tell problem/outcome in the diagram keep only "What I did": flow its list in two columns */
-  .overlay-content:not(:has(.o-shot:not([hidden]))) .overlay-body:has(> div[hidden]) .o-approach {
-    columns: 2;
-    column-gap: 40px;
-  }
-  .overlay-body:has(> div[hidden]) .o-approach li { break-inside: avoid; }
-  .overlay-content:has(.o-shot:not([hidden])) {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    column-gap: 40px;
-    grid-template-rows: auto auto auto auto 1fr;
-    align-items: start;
-  }
-  .overlay-content:has(.o-shot:not([hidden])) > * { grid-column: 1 / -1; }
-  .overlay-content:has(.o-shot:not([hidden])) > .o-shot { grid-column: 1; grid-row: 4 / span 2; margin: 8px 0 0; }
-  .overlay-content:has(.o-shot:not([hidden])) > .overlay-body { grid-column: 2; grid-row: 4; margin-top: 8px; }
-  .overlay-content:has(.o-shot:not([hidden])) > .overlay-links { grid-column: 2; grid-row: 5; margin-top: 22px; align-self: start; }
+  .overlay-body p { max-width: 860px; }
+  .overlay-body .o-approach { columns: 2; column-gap: 44px; }
+  .overlay-body .o-approach li { break-inside: avoid; }
+  .o-shot { max-width: 720px; margin-left: auto; margin-right: auto; }
 }
 
 .overlay-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
