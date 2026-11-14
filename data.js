@@ -80,34 +80,34 @@ const PROJECTS = [
     tag: "Data Analysis",
     title: "Bridge Strikes",
     sub: "Which NYC bridges to fix first, in Python",
-    outcome: "Trucks hit low NYC bridges 943 times in 13 years, and 92% of the strikes were on roads that are not truck routes. Funding the ten sites with the most past strikes would have covered 46% of the next year's strikes, against about 8% for ten picked at random.",
+    outcome: "Trucks hit low bridges in New York City 943 times in 13 years, and 92% of the hits were on roads that are not truck routes. Fixing the 10 bridges hit most in earlier years would have covered 46% of the next year's strikes.",
     color: "powder-blue",
     date: "Nov 2026",
     featured: true,
-    problem: "A city transportation team can only treat so many low bridges. I used NYC's public truck strike reports to ask which bridges to treat first, and whether past strikes are a good guide to next year's.",
+    problem: "A city can only fix so many low bridges. I used New York City's public records of truck strikes to ask which bridges to fix first, and whether past strikes show where the next ones will be.",
     approach: [
-      "Cleaned 943 strike reports in Python and logged every rule: fixed a malformed coordinate, recovered 8 missing bridge IDs from coordinates, cleared 3 rows whose street name and location contradicted their bridge ID, and left 35 rows with no ID out of the site counts",
-      "Merged bridge IDs within 30 m of each other on the same road, since a few physical bridges carry two IDs. That turned 140 IDs into 128 sites",
-      "Backtested the ranking. For each year from 2016 to 2025 I ranked sites using only earlier years, then measured how many of that year's strikes fell at the top ones, against ten picked at random and a best-possible ranking made with hindsight",
-      "Tested which sites changed their strike rate over time, with a simulation that accounts for picking the best year and controls false discoveries",
-      "Split the problem in two: strikes on roads that are not truck routes (92%, a routing and signage problem) and strikes on truck routes (78, a clearance problem). Checked how one-directional the strikes are at the busiest sites",
-      "Built the interactive page in Python with Plotly: a slider for how many sites to fund, a hotspot history, and the truck-route split. Stated what the data cannot show"
+      "Cleaned up 943 strike records with Python. I flagged 10 map points that looked wrong, filled in 8 missing bridge ID numbers from where the strike happened, and cleared the ID on 3 records that did not match their street. 35 records still have no ID, so they are not in the bridge counts. Every step is written down in the code",
+      "Counted bridges that have two ID numbers as one. If two IDs were within 30 meters of each other on the same road, I merged them. That turned 140 IDs into 128 bridges",
+      "Tested the idea. For each year from 2016 to 2025, I pretended I only knew the years before it, picked the bridges hit most so far, and counted how many of that year's strikes happened at them. I compared that with picking at random and with the best possible picks",
+      "Checked which bridges changed over time, using a test that allows for luck. Three did",
+      "Split the problem in two: the 92% of strikes on roads that are not truck routes, and the 78 on truck routes. For the first group I would look at how trucks end up on these roads, and at signs. For the second, the bridge or road itself may need a closer look. I also checked which direction the strikes come from at the busiest bridges",
+      "Built an interactive page in Python with Plotly. It has a slider for how many bridges to fix, a table of strikes per year, and the truck-route split. It also says what the data cannot show"
     ],
-    result: "Funding the top ten sites, ranked from past years only, would have covered 46% of the next year's strikes on average, against about 8% at random and 60% for the best possible ranking. Ranking on all history did about as well as ranking on the last three years. Three sites changed their strike rate beyond chance (two fell, one rose) and I could not tell why. The file has no clearance, cost or traffic data, so the analysis makes no savings claims. My recommendation: treat those ten sites first on the approach where strikes come from, and run a separate routing and signage effort for the 92% of strikes that are off truck routes.",
+    result: "Picking by every past year worked about as well as picking by only the last 3 years. Ten bridges picked at random would cover about 8% of the next year's strikes, and the best possible picks would cover 61%. Three bridges changed in ways luck does not explain. Two dropped, one rose, and I do not know why. The data has no bridge height, cost or traffic counts, so I make no claims about money saved. My advice: start with those 10 bridges, put a sign or sensor on the side where strikes come from, and look at how trucks end up on the roads that are not truck routes, and at the signs there.",
     diagram: {
-      head: "The analysis, in five stamps",
-      hand: "past strikes point to where to act",
+      head: "The project, in five stamps",
+      hand: "past strikes show where to look",
       stops: [
-        { n: "01", title: "Clean",     text: "943 strike reports cleaned, 140 IDs merged into 128 sites", tag: "Data",        src: "NYC Open Data",        color: "powder-blue" },
-        { n: "02", title: "Rank",      text: "Sites ranked using only earlier years",                     tag: "Ranking",     src: "Python",               color: "powder-blue" },
-        { n: "03", title: "Backtest",  text: "Top 10 sites cover 46% of next year's strikes. Random: 8%", tag: "Check",       src: "2016 to 2025",         color: "powder-blue" },
-        { n: "04", title: "Split",     text: "92% of strikes are on roads that are not truck routes",     tag: "Key finding", src: "Our analysis",         color: "dusty-rose", postmark: ["Off route", "92%"], key: true },
-        { n: "05", title: "Recommend", text: "Fix the top 10 first, plus a routing fix for off-route strikes", tag: "Result", src: "For NYC DOT",        color: "dusty-rose" }
+        { n: "01", title: "Clean",      text: "943 strike records cleaned up. 140 IDs became 128 bridges", tag: "Data",        src: "NYC Open Data", color: "powder-blue" },
+        { n: "02", title: "Pick",       text: "Pick the bridges hit most in earlier years",                tag: "Idea",        src: "Python",        color: "powder-blue" },
+        { n: "03", title: "Test",       text: "10 bridges cover 46% of next year's strikes. Random: 8%", tag: "Check",       src: "2016 to 2025",  color: "powder-blue" },
+        { n: "04", title: "Off route",  text: "92% of strikes are on roads that are not truck routes",     tag: "Key finding", src: "My analysis",   color: "dusty-rose", postmark: ["NYC", "2013-25"], key: true },
+        { n: "05", title: "Start here", text: "Start with those 10 bridges. Then check signs on the other roads", tag: "Result", src: "For NYC DOT", color: "dusty-rose" }
       ],
-      bar: { caption: "Every year ranked using only the years before it", left: "Past strikes", right: "Next year's strikes" },
-      why:   { label: "Why backtest?", text: "A ranking only helps if past strikes predict where the next ones land. So each year from 2016 to 2025 was ranked from earlier years, then scored on that year." },
-      catch: { label: "The catch.", text: "The file has no clearance, cost or traffic data, so there are no rates or savings figures, and reports may be incomplete. Three sites changed their strike rate beyond chance, and I could not tell why." },
-      takeaway: "Most strikes are on roads that are not truck routes, so routing and signage matter more than taller bridges."
+      bar: { caption: "Each year, the picks use only earlier years", left: "Past strikes", right: "Next year's strikes" },
+      why:   { label: "Why test it?", text: "Picking bridges only helps if past strikes show where the next ones happen. So for each year from 2016 to 2025, I used only the earlier years to pick, then checked that year." },
+      catch: { label: "The catch.", text: "The data has no bridge height, cost or traffic counts, so I cannot give rates or money saved. Some reports may be missing. Three bridges changed over time and I do not know why." },
+      takeaway: "Most strikes are on roads that are not truck routes, so look at how trucks end up there before building taller bridges."
     },
     links: [
       { label: "Open the interactive analysis", url: "assets/bridge-strikes/index.html" },
