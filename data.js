@@ -46,8 +46,47 @@ const PROJECTS = [
     ]
   },
   {
-    id: "pokedex-viz",
+    id: "dark-academia-tumblr",
     denom: "02¢",
+    tag: "Data Analysis",
+    title: "Why Did This Post Blow Up?",
+    sub: "Dark Academia on Tumblr",
+    outcome: "Tumblr gives creators no analytics, so we built a pre-publish tool: paste a draft and how many notes your posts usually get, and it predicts the post's notes. Testing it showed how much of a post's success comes from the blog, not the post.",
+    color: "lavender",
+    date: "Apr 2026",
+    featured: false,
+    problem: "For a social media analytics course, our team of five set out to give Dark Academia creators on Tumblr something the platform does not: a way to check a post before publishing it.",
+    approach: [
+      "Pulled posts from five Tumblr tag searches with the Tumblr API and kept 2,455 from 1,001 different blogs, all at least 30 days old, since newer posts have not had time to collect notes",
+      "Built 17 features per post: length, reading ease, VADER sentiment, question and exclamation marks, an image flag, tag count, post type, the hour and day posted, and how many notes the blog's other posts usually get",
+      "Compared a baseline, ridge regression, a random forest and gradient boosting on log(notes + 1), always testing on blogs the model had not seen in training",
+      "Scored the model with and without the blog's usual notes, to see how much comes from the blog and how much from the post",
+      "Turned the best model into a Streamlit app that gives a range instead of one number, and rewrote the code into separate scripts with tests and a README after the course ended"
+    ],
+    result: "On blogs it had never seen, the random forest reached an R² of 0.68. Most of that came from the blog's usual notes (0.60 on their own); the post's words, tags and timing alone reached 0.21. A typical prediction is off by a factor of about 2, so the app gives a range. Posts with more tags had more notes in the raw numbers (median 16 for 13 or more tags, against 2 for 1 to 3), but part of that is probably bigger blogs tagging more.",
+    diagram: {
+      head: "The story, in five stamps",
+      hand: "where the notes come from",
+      stops: [
+        { n: "01", title: "Collect",    text: "2,455 posts from 1,001 blogs, all 30+ days old",           tag: "Tumblr API",        src: "Five tag searches", color: "lavender" },
+        { n: "02", title: "Test fairly", text: "Each blog is all in training or all in testing",           tag: "Honest testing",    src: "5 test rounds",     color: "lavender" },
+        { n: "03", title: "Blog first", text: "Blog's usual notes alone: R² 0.60. Post alone: 0.21",       tag: "Main finding",      src: "Random forest",     color: "dusty-rose", postmark: ["Both parts", "R² 0.68"], key: true },
+        { n: "04", title: "Tags",       text: "13+ tags: median 16 notes. 1 to 3 tags: 2",                 tag: "Pattern, not proof", src: "2,455 posts",       color: "lavender" },
+        { n: "05", title: "The app",    text: "Paste a draft, get a range. Typical error: about 2x",       tag: "Result",            src: "Streamlit app",     color: "dusty-rose" }
+      ],
+      bar: { caption: "What explains a post's notes (R² on unseen blogs)", left: "Post only: 0.21", right: "Blog's usual notes: 0.60" },
+      why:   { label: "Why start with the blog?", text: "A big blog gets more notes whatever it posts, so a post can only be judged against what its own blog usually gets." },
+      catch: { label: "The catch.", text: "A blog's usual notes comes from only a few posts per blog in the data. A typical prediction is off by about a factor of 2, so the app shows a range, not one number." },
+      takeaway: "Most of a post's notes come from the blog it is on. The post itself adds a smaller part."
+    },
+    links: [
+      { label: "Live app", url: "https://dark-academia-project.streamlit.app/" },
+      { label: "GitHub repo", url: "https://github.com/shrutivenkatesh14/dark-academia-tumblr" }
+    ]
+  },
+  {
+    id: "pokedex-viz",
+    denom: "03¢",
     tag: "Data Visualization",
     title: "Shruti's Pokédex",
     sub: "137 picks vs 1,025 species, in Tableau",
@@ -76,7 +115,7 @@ const PROJECTS = [
   },
   {
     id: "bridge-strikes",
-    denom: "03¢",
+    denom: "04¢",
     tag: "Data Analysis",
     title: "Bridge Strikes",
     sub: "Which NYC bridges to fix first, in Python",
@@ -112,45 +151,6 @@ const PROJECTS = [
     links: [
       { label: "Open the interactive analysis", url: "assets/bridge-strikes/index.html" },
       { label: "Code and data", url: "https://github.com/shrutivenkatesh14/Portfolio/tree/main/assets/bridge-strikes" }
-    ]
-  },
-  {
-    id: "dark-academia-tumblr",
-    denom: "04¢",
-    tag: "Data Analysis",
-    title: "Why Did This Post Blow Up?",
-    sub: "Dark Academia on Tumblr",
-    outcome: "Tumblr gives creators no analytics, so we built a pre-publish tool: paste a draft and how many notes your posts usually get, and it predicts the post's notes. Testing it showed how much of a post's success comes from the blog, not the post.",
-    color: "lavender",
-    date: "Nov 2026",
-    featured: false,
-    problem: "For a social media analytics course, our team of five set out to give Dark Academia creators on Tumblr something the platform does not: a way to check a post before publishing it.",
-    approach: [
-      "Pulled posts from five Tumblr tag searches with the Tumblr API and kept 2,455 from 1,001 different blogs, all at least 30 days old, since newer posts have not had time to collect notes",
-      "Built 17 features per post: length, reading ease, VADER sentiment, question and exclamation marks, an image flag, tag count, post type, the hour and day posted, and how many notes the blog's other posts usually get",
-      "Compared a baseline, ridge regression, a random forest and gradient boosting on log(notes + 1), always testing on blogs the model had not seen in training",
-      "Scored the model with and without the blog's usual notes, to see how much comes from the blog and how much from the post",
-      "Turned the best model into a Streamlit app that gives a range instead of one number, and rewrote the code into separate scripts with tests and a README after the course ended"
-    ],
-    result: "On blogs it had never seen, the random forest reached an R² of 0.68. Most of that came from the blog's usual notes (0.60 on their own); the post's words, tags and timing alone reached 0.21. A typical prediction is off by a factor of about 2, so the app gives a range. Posts with more tags had more notes in the raw numbers (median 16 for 13 or more tags, against 2 for 1 to 3), but part of that is probably bigger blogs tagging more.",
-    diagram: {
-      head: "The story, in five stamps",
-      hand: "where the notes come from",
-      stops: [
-        { n: "01", title: "Collect",    text: "2,455 posts from 1,001 blogs, all 30+ days old",           tag: "Tumblr API",        src: "Five tag searches", color: "lavender" },
-        { n: "02", title: "Test fairly", text: "Each blog is all in training or all in testing",           tag: "Honest testing",    src: "5 test rounds",     color: "lavender" },
-        { n: "03", title: "Blog first", text: "Blog's usual notes alone: R² 0.60. Post alone: 0.21",       tag: "Main finding",      src: "Random forest",     color: "dusty-rose", postmark: ["Both parts", "R² 0.68"], key: true },
-        { n: "04", title: "Tags",       text: "13+ tags: median 16 notes. 1 to 3 tags: 2",                 tag: "Pattern, not proof", src: "2,455 posts",       color: "lavender" },
-        { n: "05", title: "The app",    text: "Paste a draft, get a range. Typical error: about 2x",       tag: "Result",            src: "Streamlit app",     color: "dusty-rose" }
-      ],
-      bar: { caption: "What explains a post's notes (R² on unseen blogs)", left: "Post only: 0.21", right: "Blog's usual notes: 0.60" },
-      why:   { label: "Why start with the blog?", text: "A big blog gets more notes whatever it posts, so a post can only be judged against what its own blog usually gets." },
-      catch: { label: "The catch.", text: "A blog's usual notes comes from only a few posts per blog in the data. A typical prediction is off by about a factor of 2, so the app shows a range, not one number." },
-      takeaway: "Most of a post's notes come from the blog it is on. The post itself adds a smaller part."
-    },
-    links: [
-      { label: "Live app", url: "https://dark-academia-project.streamlit.app/" },
-      { label: "GitHub repo", url: "https://github.com/shrutivenkatesh14/dark-academia-tumblr" }
     ]
   }
 ];
