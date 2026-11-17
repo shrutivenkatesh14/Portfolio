@@ -19,9 +19,9 @@ const PROJECTS = [
     problem: "For a supply chain analytics course, Carlos Henríquez and I set out to explain why Apple's supply chain is built the way it is, and where that design is fragile.",
     approach: [
       "Mapped Apple's end-to-end network — sourcing, semiconductor fabrication, contract assembly (Foxconn, Pegatron), warehousing, and distribution — from public filings and supplier reports",
-      "Used newsvendor logic to explain launch-window inventory: lost sales and ecosystem revenue cost more than excess stock, so Apple's service level sits above the median forecast",
+      "Applied the newsvendor model to launch-window forecasting: running out of a new iPhone costs more (lost sales, ecosystem revenue) than having extra, which pushes Apple to stock high instead of minimizing cost",
       "Used the 2022 Zhengzhou lockdowns as a case study in how assembly concentration turns a localized disruption into a global shortage (Reuters reported iPhone output could fall by as much as 30%)",
-      "Linked multi-echelon inventory, risk pooling, and the bullwhip effect to Apple's buffer placement, and to where its scale breaks textbook assumptions",
+      "Connected course frameworks — multi-echelon inventory, risk pooling, the bullwhip effect — to where they hold and where Apple's scale breaks their textbook assumptions",
       "Delivered a written report and class presentation, citing 10-K filings, supplier responsibility reports, and news coverage throughout"
     ],
     result: "Report and presentation for OMG 411 (Supply Chain Analytics), Simon Business School — argued Apple deliberately absorbs inventory risk in exchange for low stockout risk during peak weeks, hedged by vertical integration and supplier diversification.",
@@ -46,94 +46,43 @@ const PROJECTS = [
     ]
   },
   {
-    id: "pokedex-viz",
+    id: "dark-academia-tumblr",
     denom: "02¢",
-    tag: "Data Visualization",
-    title: "Shruti's Pokédex",
-    sub: "137 picks vs 1,025 species, in Tableau",
-    outcome: "I wondered if my favorite Pokémon were overpowered, so I checked. Next to the whole Pokédex, my team's base stats run 59.9 points higher. Next to fair peers, only 14.1.",
-    color: "butter-yellow",
-    date: "Nov 2026",
-    featured: true,
-    shot: {
-      src: "assets/pokedex-viz/overview.png",
-      alt: "The Overview dashboard: a ring of 1,025 dots with my 137 favorites in color, next to a Mewtwo dex entry, its six stat bars, and a chart of my picks by generation.",
-      note: "psst, the real one is clickable"
-    },
-    problem: "I love Pokémon, and I had a feeling my favorites leaned strong. I wanted to find out if that was true, so I took my 137 favorites and compared them with all 1,025 species. I also wanted the answer to be something people could click around in, not a stack of charts.",
-    approach: [
-      "Put together a 15-sheet data set covering all 1,025 species: stats, color, generation, capture rate, legendary status, and evolution lines. Reshaped the stats into a long format to make the stat charts easier to build",
-      "Compared my picks with the full dex on color, generation, stats, rarity, and evolution stage. I used ratios, so 2.07x means something shows up twice as often on my team as it does in the dex",
-      "Added a fairer comparison group of fully evolved, non-legendary Pokémon. Nearly half the dex is still evolving, so measuring my team against everything made the gap look bigger",
-      "Built 16 sheets in Tableau and assembled them into six fixed-size dashboards with floating layouts, custom background art, and a navigation button tray. Chart types include a ring of 1,025 dots, waffle charts, a dual-axis bar and sprite ladder, diverging ratio bars, a heat map, and a sprite wall",
-      "Added two parameters (the selected Pokémon and the selected Eeveelution) and two Change Parameter actions. Clicking a dot on Overview or an Eeveelution on the wheel feeds calculated fields that update the sprite, dex card, and stat bars",
-      "Wrote calculated fields for the dot highlighting and sizing, above and below the dex flags, top 10 and rarity filters, and the row and column math behind the waffle, club grid, and wall layouts. Added reference lines for the dex averages, custom shape palettes for each sprite set, and a tooltip on every chart"
-    ],
-    result: "It's live on Tableau Public. Against the full dex my team's base stats run 59.9 points higher; against fair peers only 14.1, because nearly half the dex is still evolving and only 22% of my team is. Another tell: 26 of my 137 picks (19%) are legendary or mythical, against 9% of the dex.",
-    links: [
-      { label: "View live viz", url: "https://public.tableau.com/views/ShrutisPokedex/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link" }
-    ]
-  },
-  {
-    id: "bridge-strikes",
-    denom: "03¢",
     tag: "Data Analysis",
-    title: "Bridge Strikes",
-    sub: "Which NYC bridges to fix first, in Python",
-    outcome: "Trucks hit low bridges in New York City 943 times in 13 years, and 92% of the hits were on roads that are not truck routes. Fixing the 10 bridges hit most in earlier years would have covered 46% of the next year's strikes.",
+    title: "Why Did This Post Blow Up?",
+    sub: "Dark Academia on Tumblr",
+    outcome: "Tumblr gives creators no analytics, so we built a pre-publish tool: paste a draft and how many notes your posts usually get, and it predicts the post's notes. Testing it showed how much of a post's success comes from the blog, not the post.",
     color: "powder-blue",
     date: "Nov 2026",
-    featured: true,
-    problem: "A city can only fix so many low bridges. I used New York City's public records of truck strikes to ask which bridges to fix first, and whether past strikes show where the next ones will be.",
+    featured: false,
+    problem: "For a social media analytics course, our team of five set out to give Dark Academia creators on Tumblr something the platform does not: a way to check a post before publishing it.",
     approach: [
-      "Cleaned up 943 strike records with Python. I flagged 10 map points that looked wrong, filled in 8 missing bridge ID numbers from where the strike happened, and cleared the ID on 3 records that did not match their street. 35 records still have no ID, so they are not in the bridge counts. Every step is written down in the code",
-      "Counted bridges that have two ID numbers as one. If two IDs were within 30 meters of each other on the same road, I merged them. That turned 140 IDs into 128 bridges",
-      "Tested the idea. For each year from 2016 to 2025, I pretended I only knew the years before it, picked the bridges hit most so far, and counted how many of that year's strikes happened at them. I compared that with picking at random and with the best possible picks",
-      "Checked which bridges changed over time, using a test that allows for luck. Three did",
-      "Split the problem in two: the 92% of strikes on roads that are not truck routes, and the 78 on truck routes. For the first group I would look at how trucks end up on these roads, and at signs. For the second, the bridge or road itself may need a closer look. I also checked which direction the strikes come from at the busiest bridges",
-      "Built an interactive page in Python with Plotly. It has a slider for how many bridges to fix, a table of strikes per year, and the truck-route split. It also says what the data cannot show"
+      "Pulled posts from five Tumblr tag searches with the Tumblr API and kept 2,455 from 1,001 different blogs, all at least 30 days old, since newer posts have not had time to collect notes",
+      "Built 17 features per post: length, reading ease, VADER sentiment, question and exclamation marks, an image flag, tag count, post type, the hour and day posted, and how many notes the blog's other posts usually get",
+      "Compared a baseline, ridge regression, a random forest and gradient boosting on log(notes + 1), always testing on blogs the model had not seen in training",
+      "Scored the model with and without the blog's usual notes, to see how much comes from the blog and how much from the post",
+      "Turned the best model into a Streamlit app that gives a range instead of one number, and rewrote the code into separate scripts with tests and a README after the course ended"
     ],
-    result: "Picking by every past year worked about as well as picking by only the last 3 years. Ten bridges picked at random would cover about 8% of the next year's strikes, and the best possible picks would cover 61%. Three bridges changed in ways luck does not explain. Two dropped, one rose, and I do not know why. The data has no bridge height, cost or traffic counts, so I make no claims about money saved. My advice: start with those 10 bridges, put a sign or sensor on the side where strikes come from, and look at how trucks end up on the roads that are not truck routes, and at the signs there.",
+    result: "On blogs it had never seen, the random forest reached an R² of 0.68. Most of that came from the blog's usual notes (0.60 on their own); the post's words, tags and timing alone reached 0.21. A typical prediction is off by a factor of about 2, so the app gives a range. Posts with more tags had more notes in the raw numbers (median 16 for 13 or more tags, against 2 for 1 to 3), but part of that is probably bigger blogs tagging more.",
     diagram: {
-      head: "The project, in five stamps",
-      hand: "past strikes show where to look",
+      head: "The story, in five stamps",
+      hand: "where the notes come from",
       stops: [
-        { n: "01", title: "Clean",      text: "943 strike records cleaned up. 140 IDs became 128 bridges", tag: "Data",        src: "NYC Open Data", color: "powder-blue" },
-        { n: "02", title: "Pick",       text: "Pick the bridges hit most in earlier years",                tag: "Idea",        src: "Python",        color: "powder-blue" },
-        { n: "03", title: "Test",       text: "10 bridges cover 46% of next year's strikes. Random: 8%", tag: "Check",       src: "2016 to 2025",  color: "powder-blue" },
-        { n: "04", title: "Off route",  text: "92% of strikes are on roads that are not truck routes",     tag: "Key finding", src: "My analysis",   color: "dusty-rose", postmark: ["NYC", "2013-25"], key: true },
-        { n: "05", title: "Start here", text: "Start with those 10 bridges. Then check signs on the other roads", tag: "Result", src: "For NYC DOT", color: "dusty-rose" }
+        { n: "01", title: "Collect",    text: "2,455 posts from 1,001 blogs, all 30+ days old",           tag: "Tumblr API",        src: "Five tag searches", color: "powder-blue" },
+        { n: "02", title: "Test fairly", text: "Each blog is all in training or all in testing",           tag: "Honest testing",    src: "5 test rounds",     color: "powder-blue" },
+        { n: "03", title: "Blog first", text: "Blog's usual notes alone: R² 0.60. Post alone: 0.21",       tag: "Main finding",      src: "Random forest",     color: "dusty-rose", postmark: ["Both parts", "R² 0.68"], key: true },
+        { n: "04", title: "Tags",       text: "13+ tags: median 16 notes. 1 to 3 tags: 2",                 tag: "Pattern, not proof", src: "2,455 posts",       color: "powder-blue" },
+        { n: "05", title: "The app",    text: "Paste a draft, get a range. Typical error: about 2x",       tag: "Result",            src: "Streamlit app",     color: "dusty-rose" }
       ],
-      bar: { caption: "Each year, the picks use only earlier years", left: "Past strikes", right: "Next year's strikes" },
-      why:   { label: "Why test it?", text: "Picking bridges only helps if past strikes show where the next ones happen. So for each year from 2016 to 2025, I used only the earlier years to pick, then checked that year." },
-      catch: { label: "The catch.", text: "The data has no bridge height, cost or traffic counts, so I cannot give rates or money saved. Some reports may be missing. Three bridges changed over time and I do not know why." },
-      takeaway: "Most strikes are on roads that are not truck routes, so look at how trucks end up there before building taller bridges."
+      bar: { caption: "What explains a post's notes (R² on unseen blogs)", left: "Post only: 0.21", right: "Blog's usual notes: 0.60" },
+      why:   { label: "Why start with the blog?", text: "A big blog gets more notes whatever it posts, so a post can only be judged against what its own blog usually gets." },
+      catch: { label: "The catch.", text: "A blog's usual notes comes from only a few posts per blog in the data. A typical prediction is off by about a factor of 2, so the app shows a range, not one number." },
+      takeaway: "Most of a post's notes come from the blog it is on. The post itself adds a smaller part."
     },
     links: [
-      { label: "Open the interactive analysis", url: "assets/bridge-strikes/index.html" },
-      { label: "Code and data", url: "https://github.com/shrutivenkatesh14/Portfolio/tree/main/assets/bridge-strikes" }
+      // When the app is live, add it here: { label: "Live app", url: "https://YOUR-APP-NAME.streamlit.app" },
+      { label: "GitHub repo", url: "https://github.com/shrutivenkatesh14/dark-academia-tumblr" }
     ]
-  }
-];
-
-/* Multi-part writing, shown on the home page as a taped catalog card. It links
-   to the Writing page, where each post offers its platforms, and does not open
-   a case file. Add a case to `cases` when
-   it is solved, and update `note` for whatever is in progress. */
-const SERIES = [
-  {
-    id: "sql-noir",
-    title: "SQL Noir",
-    sub: "Detective SQL Stories",
-    href: "writing.html",
-    cta: "Read the series here",
-    featured: true,
-    cases: [
-      { num: "001", name: "The Vanishing Briefcase" },
-      { num: "002", name: "The Stolen Sound" }
-    ],
-    stamp: "Solved",
-    note: "now cracking #003"
   }
 ];
 
