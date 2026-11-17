@@ -9,22 +9,29 @@ It can be hosted for free on Streamlit Community Cloud, which runs a file like t
 straight from a GitHub repo. Train the model first (python -m src.train) and run
 python -m src.analysis, because the app loads the files those two steps save.
 
-The app has three tabs:
+The app has two tabs:
   Score a draft        the main tool
   What the data shows  charts and the main findings
-  About                how it was built and what to keep in mind
+
+The colours and the result card are styled in app_style.css.
 """
 import json
+import math
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 from src import config
-from src.features import FEATURE_COLUMNS
 from src.predict import (DAY_NAMES, Draft, draft_check, load_bundle, popular_tags,
                          predict_notes, suggest_changes)
 
 st.set_page_config(page_title="Dark Academia post scorer", layout="wide")
+
+# Load the stylesheet once. It only contains our own colours and spacing.
+STYLE_FILE = Path(__file__).resolve().parent / "app_style.css"
+st.markdown(f"<style>{STYLE_FILE.read_text()}</style>", unsafe_allow_html=True)
 
 
 @st.cache_resource
@@ -35,7 +42,7 @@ def get_bundle():
 
 @st.cache_data
 def get_metrics():
-    """The numbers train.py saved. They are quoted on the data and about tabs."""
+    """The numbers train.py saved. They are quoted on the data tab."""
     try:
         return json.loads(config.METRICS_FILE.read_text())
     except FileNotFoundError:
@@ -47,82 +54,48 @@ metrics = get_metrics()
 
 
 # ---------------------------------------------------------------------------
-# Tab 1: score a draft
+# The examples and the starting values of the boxes
 # ---------------------------------------------------------------------------
 
-# Three drafts to try. Each one fills in the boxes on the first tab.
+# Three drafts to try. The name is what shows on the chip.
 EXAMPLES = [
-    {"draft_text": "Some nights the library is the only place that still feels like home. "
-                   "The lamp, the dust, the sound of someone turning a page two tables away.",
-     "tags_text": "dark academia, books, library, aesthetic", "usual_text": "6",
-     "post_type": "text", "has_image": False, "day_name": "Thursday", "hour": 21},
-    {"draft_text": "Marginalia are the oldest comment section.",
-     "tags_text": "dark academia, quotes", "usual_text": "25",
-     "post_type": "text", "has_image": False, "day_name": "Saturday", "hour": 14},
-    {"draft_text": "Reading list for the autumn term: Middlemarch, The Secret History, and a "
-                   "stack of poetry I will pretend to understand.",
-     "tags_text": "dark academia, books, reading, autumn, literature, classic literature, "
-                  "bookblr, light academia, poetry, aesthetic, academia, vintage",
-     "usual_text": "3", "post_type": "text", "has_image": False, "day_name": "Monday", "hour": 10},
+    {"name": "Library line",
+     "fields": {"draft_text": "Some nights the library is the only place that still feels like home. "
+                              "The lamp, the dust, the sound of someone turning a page two tables away.",
+                "tags_text": "dark academia, books, library, aesthetic", "usual_text": "6",
+                "post_type": "text", "has_image": False, "day_name": "Thursday", "hour": 21}},
+    {"name": "Short quote",
+     "fields": {"draft_text": "Marginalia are the oldest comment section.",
+                "tags_text": "dark academia, quotes", "usual_text": "25",
+                "post_type": "text", "has_image": False, "day_name": "Saturday", "hour": 14}},
+    {"name": "Reading list",
+     "fields": {"draft_text": "Reading list for the autumn term: Middlemarch, The Secret History, and a "
+                              "stack of poetry I will pretend to understand.",
+                "tags_text": "dark academia, books, reading, autumn, literature, classic literature, "
+                             "bookblr, light academia, poetry, aesthetic, academia, vintage",
+                "usual_text": "3", "post_type": "text", "has_image": False,
+                "day_name": "Monday", "hour": 10}},
 ]
+EXAMPLE_NAMES = [example["name"] for example in EXAMPLES]
 
-# The starting value of every box. setdefault leaves a value alone if it is already there.
+# The starting value of every box.
 DEFAULTS = {"draft_text": "", "tags_text": "dark academia, books, aesthetic", "usual_text": "",
             "post_type": "text", "has_image": False, "day_name": "Friday", "hour": 20}
-for key, value in DEFAULTS.items():
-    st.session_state.setdefault(key, value)
 
-
-def use_example(number):
-    """Runs when an example button is pressed: copy that example into the boxes."""
-    for key, value in EXAMPLES[number].items():
+# First visit only: the page opens with the first example already scored, so there is
+# something to look at straight away instead of an empty half of the page.
+if "scored" not in st.session_state:
+    for key, value in DEFAULTS.items():
         st.session_state[key] = value
+    st.session_state.example_choice = EXAMPLE_NAMES[0]
+    st.session_state.applied_example = None
+    st.session_state.scored = None      # the last result: the draft, the usual notes and where it came from
+    st.session_state.problem = None     # a message to show if the last press did not work
 
 
-def answer_text(draft, typical_notes):
-    """The prediction, the range, the suggested changes and the popular tags, as Markdown."""
-    result = predict_notes(bundle, draft)
-    lines = [
-        f"### About {result['notes']:,.0f} notes",
-        f"Most posts like this get between {result['low']:,.0f} and {result['high']:,.0f} notes. "
-        "That range comes from how far off the model was on blogs it had never seen: "
-        "about 8 posts in 10 landed inside it.",
-        "",
-    ]
-    if typical_notes is None:
-        lines += ["You did not say how many notes your posts usually get, so the middle value "
-                  "for the niche was used. The prediction is much less reliable without it.", ""]
-    limit = bundle.get("usual_notes_limit")
-    if typical_notes is not None and limit is not None and typical_notes > limit:
-        lines += [f"Only about 1 blog in 10 in the data usually gets more than {limit:,.0f} notes, "
-                  "so the model has seen little like yours. Its answer tends to come out too low.", ""]
-    lines.append(f"A post like this is predicted to get more notes than about "
-                 f"{result['percentile']:.0f}% of the posts the model learned from.")
-
-    lines += ["", "### Changes the model would suggest"]
-    changes = suggest_changes(bundle, draft)
-    if changes:
-        lines += [f"- {change}" for change in changes]
-    else:
-        lines.append("None. Once your usual notes are counted, nothing about this draft "
-                     "changes the prediction by much.")
-
-    lines += ["", "### Tags many blogs in the niche use"]
-    for tag, blogs, _ in popular_tags(draft.tags):
-        lines.append(f"- #{tag}, used by {blogs} blogs")
-    lines += ["", "*Times are in UTC. Changes are tested one at a time. They are patterns in "
-                  "past posts, not promises.*"]
-    return "\n".join(lines)
-
-
-def check_table(draft):
-    """The draft next to the niche median, as a small Markdown table."""
-    rows = ["| | Your draft | Niche median |", "|---|---|---|"]
-    for label, yours, median in draft_check(bundle, draft):
-        middle = "" if median is None else f"{median:.0f}"
-        rows.append(f"| {label} | {yours:.0f} | {middle} |")
-    return "### Your draft next to the niche\n" + "\n".join(rows)
-
+# ---------------------------------------------------------------------------
+# Reading the boxes and scoring
+# ---------------------------------------------------------------------------
 
 def read_usual_notes(text):
     """
@@ -142,59 +115,206 @@ def read_usual_notes(text):
     return number, None
 
 
-def score_tab():
-    st.write("Try an example:")
-    columns = st.columns(len(EXAMPLES))
-    for number, column in enumerate(columns):
-        column.button(f"Example {number + 1}", key=f"example_{number}",
-                      on_click=use_example, args=(number,))
+def score_the_boxes(source, scroll=True):
+    """
+    Read the boxes, and if they make sense, keep the draft as the result to show.
 
-    left, right = st.columns(2)
+    source is the name of the example that filled the boxes, or None if the person typed them.
+    scroll says whether to bring the result into view afterwards (see scroll_to_result).
+    """
+    state = st.session_state
+    text = state.draft_text.strip()
+    if not text and not state.has_image:
+        state.problem = "Paste some text first, or tick \"The post has an image\"."
+        return
+    typical_notes, problem = read_usual_notes(state.usual_text)
+    if problem:
+        state.problem = problem
+        return
+    draft = Draft(
+        text=text,
+        tags=[tag.strip().lower() for tag in state.tags_text.split(",") if tag.strip()],
+        post_type=state.post_type,
+        hour=int(state.hour),
+        day_of_week=DAY_NAMES.index(state.day_name),
+        has_image=bool(state.has_image),
+        typical_notes=typical_notes,
+    )
+    state.problem = None
+    state.scored = {"draft": draft, "typical": typical_notes, "source": source}
+    state.scroll_to_result = scroll
+
+
+def apply_example(name):
+    """Copy an example into the boxes and score it straight away."""
+    example = next(item for item in EXAMPLES if item["name"] == name)
+    # On the very first visit the page is just opening, so there is nothing to scroll to.
+    first_visit = st.session_state.scored is None
+    for key, value in example["fields"].items():
+        st.session_state[key] = value
+    st.session_state.applied_example = name
+    score_the_boxes(source=name, scroll=not first_visit)
+
+
+def forget_example():
+    """Runs when the person presses the score button: the boxes are theirs now, not an example's."""
+    st.session_state.example_choice = None
+    st.session_state.applied_example = None
+
+
+# ---------------------------------------------------------------------------
+# The result
+# ---------------------------------------------------------------------------
+
+SCALE_TOP = 1000   # the notes at the right end of the range bar
+
+
+def position(notes):
+    """Where a number of notes sits on the bar, as a percentage. The scale is logarithmic."""
+    share = math.log1p(max(notes, 0)) / math.log1p(SCALE_TOP)
+    return min(max(share, 0.0), 1.0) * 100
+
+
+def range_bar_html(low, best, high, niche_median):
+    """The range as a bar: a filled stretch, a tall mark for the best guess, a thin mark for the niche median."""
+    left = position(low)
+    width = max(position(high) - left, 1.5)
+    ticks = "".join(f'<span style="left:{position(n):.1f}%">{n:,}</span>' for n in (1, 10, 100, 1000))
+    description = (f"Likely range {low:,.0f} to {high:,.0f} notes, best guess {best:,.0f}, "
+                   f"middle post in the data {niche_median:,.0f}, on a scale from 1 to 1,000")
+    # The text above already says all of this, so the picture is hidden from screen readers
+    # apart from this one description.
+    return (f'<div class="range" role="img" aria-label="{description}">'
+            f'<div class="track"><div class="fill" style="left:{left:.1f}%;width:{width:.1f}%"></div>'
+            f'<div class="median" style="left:{position(niche_median):.1f}%"></div>'
+            f'<div class="best" style="left:{position(best):.1f}%"></div></div>'
+            f'<div class="ticks" aria-hidden="true">{ticks}</div></div>')
+
+
+def result_html(result, niche_median):
+    """
+    The card at the top of the result: a perforated stamp with a postmark, like the stamps
+    on the portfolio site. Only numbers go into this HTML, never the person's own text.
+    """
+    headline = f"Most posts like this get {result['low']:,.0f} to {result['high']:,.0f} notes"
+    guess = f"Best guess: about {result['notes']:,.0f}."
+    bar = range_bar_html(result["low"], result["notes"], result["high"], niche_median)
+    legend = ("The tall mark is the best guess. The thin mark is the middle post in the data "
+              f"({niche_median:,.0f} notes). About 8 posts in 10 landed inside a range like this "
+              "when we tested on blogs the model had not seen.")
+    return (f'<section class="result"><div class="stamp"><div class="stamp-inner">'
+            f'<h2>{headline}</h2><p class="guess">{guess}</p>{bar}</div>'
+            '<div class="postmark" aria-hidden="true"><span><b>8 in 10</b><br>in range</span></div>'
+            f'</div><p class="legend">{legend}</p></section>')
+
+
+def scroll_to_result():
+    """
+    On a narrow screen the result sits below the form, out of sight. After the person
+    presses a button, move the page so the result is on screen. On a wide screen the
+    result is already beside the form, so we do nothing there.
+    """
+    components.html(
+        """<script>
+        setTimeout(function () {
+          try {
+            var page = window.parent;
+            if (page.innerWidth < 700) {
+              var card = page.document.querySelector('.result');
+              if (card) { card.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+            }
+          } catch (error) { /* if the page will not let us, the result just stays where it is */ }
+        }, 200);
+        </script>""",
+        height=0,
+    )
+
+
+def show_result(scored):
+    """Everything on the right: the card, the notices, the suggestions, the draft check and the tags."""
+    draft, typical_notes, source = scored["draft"], scored["typical"], scored["source"]
+    result = predict_notes(bundle, draft)
+    niche_median = math.expm1(bundle.get("default_typical_log", 0.0))
+
+    if source:
+        st.caption(f"This is the example \"{source}\". Change the draft and press the button to "
+                   "try your own.")
+    st.markdown(result_html(result, niche_median), unsafe_allow_html=True)
+
+    notices = []
+    if typical_notes is None:
+        notices.append("**You did not say how many notes your posts usually get,** so the middle "
+                       "value for the niche was used. The prediction is much less reliable without it.")
+    limit = bundle.get("usual_notes_limit")
+    if typical_notes is not None and limit is not None and typical_notes > limit:
+        notices.append(f"**Few blogs are like yours.** Only about 1 blog in 10 in the data usually "
+                       f"gets more than {limit:,.0f} notes, so the answer tends to come out too low.")
+    notices.append(f"A post like this is predicted to get more notes than about "
+                   f"{result['percentile']:.0f}% of the posts the model learned from.")
+    st.markdown("\n\n".join(notices))
+
+    st.markdown("## Changes the model would suggest")
+    changes = suggest_changes(bundle, draft)
+    if changes:
+        st.markdown("\n".join(f"- {change}" for change in changes))
+    else:
+        st.markdown("None. Once your usual notes are counted, nothing about this draft "
+                    "changes the prediction by much.")
+
+    # The draft next to the middle value for the niche. This only describes the draft.
+    words, tags, reading = draft_check(bundle, draft)
+    def describe(row, unit):
+        label, yours, median = row
+        return f"{yours:.0f} {unit} (niche median {median:.0f})"
+    st.markdown(f"**Your draft:** {describe(words, 'words')}, {describe(tags, 'tags')}, "
+                f"reading ease {reading[1]:.0f} (niche median {reading[2]:.0f}).")
+
+    st.markdown("## Tags many blogs in the niche use")
+    st.markdown(", ".join(f"#{tag} ({blogs} blogs)" for tag, blogs, _ in popular_tags(draft.tags)))
+    st.caption("Times are in UTC. Changes are tested one at a time. They are patterns in past "
+               "posts, not promises.")
+    if st.session_state.pop("scroll_to_result", False):
+        scroll_to_result()
+
+
+def score_tab():
+    """The first tab: examples and the form on the left, the result on the right."""
+    left, right = st.columns([1, 1.1], gap="large")
     with left:
+        choice = st.pills("Try an example", EXAMPLE_NAMES, key="example_choice")
+        if choice and choice != st.session_state.applied_example:
+            apply_example(choice)
+
         # A form sends everything at once when the button is pressed,
         # instead of re-running the page after every key press.
-        with st.form("draft_form"):
-            st.text_area("Your draft", key="draft_text", height=170,
+        with st.form("draft_form", border=False):
+            st.text_area("Your draft", key="draft_text", height=130,
                          placeholder="Paste the text of your post here")
             st.text_input("Tags (separate with commas)", key="tags_text")
             st.text_input("Notes your posts usually get", key="usual_text",
-                          help="Look at your last 10 to 20 posts and take the middle number. "
-                               "You can leave this empty.")
-            # These change the answer less than the usual notes do, so they are tucked away.
-            with st.expander("More details (these change the answer much less)"):
+                          placeholder="For example 12")
+            st.caption("The middle number from your last 10 to 20 posts. Leave it empty if unsure.")
+            # These change the answer less than the usual notes do, so they are folded away.
+            with st.expander("More details (small effect)"):
+                st.caption("These change the answer much less than your usual notes do.")
                 st.selectbox("Post type", ["text", "photo", "other"], key="post_type")
                 st.checkbox("The post has an image", key="has_image")
                 st.selectbox("Day", DAY_NAMES, key="day_name")
                 st.slider("Hour (UTC)", 0, 23, key="hour")
-            submitted = st.form_submit_button("Score it", type="primary")
+            submitted = st.form_submit_button("Score this draft", type="primary",
+                                              on_click=forget_example)
+        if submitted:
+            score_the_boxes(source=None)
 
     with right:
-        if not submitted:
-            return
-        text = st.session_state.draft_text.strip()
-        if not text and not st.session_state.has_image:
-            st.warning("Paste some text first, or tick \"The post has an image\".")
-            return
-        typical_notes, problem = read_usual_notes(st.session_state.usual_text)
-        if problem:
-            st.warning(problem)
-            return
-        draft = Draft(
-            text=text,
-            tags=[tag.strip().lower() for tag in st.session_state.tags_text.split(",")
-                  if tag.strip()],
-            post_type=st.session_state.post_type,
-            hour=int(st.session_state.hour),
-            day_of_week=DAY_NAMES.index(st.session_state.day_name),
-            has_image=bool(st.session_state.has_image),
-            typical_notes=typical_notes,
-        )
-        st.markdown(answer_text(draft, typical_notes))
-        st.markdown(check_table(draft))
+        if st.session_state.problem:
+            st.warning(st.session_state.problem)
+        if st.session_state.scored:
+            show_result(st.session_state.scored)
 
 
 # ---------------------------------------------------------------------------
-# Tab 2 and 3: the findings and the notes
+# Tab 2: the findings
 # ---------------------------------------------------------------------------
 
 def data_text():
@@ -216,40 +336,21 @@ def data_text():
 
 
 def data_tab():
+    """The second tab: the main finding, the chart and the tag table."""
     st.markdown(data_text())
     chart = config.FIGURE_DIR / "03_group_medians.png"
     if chart.exists():
         st.image(str(chart), caption="Median notes by post choices")
     if config.TAG_GROUPS_FILE.exists():
-        st.markdown("### Notes by number of tags")
+        st.markdown("## Notes by number of tags")
         st.dataframe(pd.read_csv(config.TAG_GROUPS_FILE), hide_index=True)
         st.write("Posts with more tags have more notes in the raw numbers. Part of that is "
                  "probably bigger blogs using more tags, so it is not proof that adding "
                  "tags will help.")
     spread = config.FIGURE_DIR / "01_note_distribution.png"
     if spread.exists():
-        st.markdown("### How uneven notes are")
+        st.markdown("## How uneven notes are")
         st.image(str(spread))
-
-
-def about_text():
-    """The words on the about tab: where the project came from and what to keep in mind."""
-    names = "Aditya Batwal, Arpita Patnaik, Parnika Kulkarni, Ritwik Pandey and Shruti Venkatesh"
-    best = metrics["best_model"].lower() if metrics else "a model"
-    return (
-        "This started as a group project for CIS 434 (Social Media and Text Analytics) at the "
-        f"Simon Business School, Spring 2026. Team 5: {names}.\n\n"
-        f"The model is a {best} trained on log(notes + 1). It sees {len(FEATURE_COLUMNS)} numbers "
-        "for each post: length, reading ease, sentiment, question and exclamation marks, "
-        "whether there is an image, the number of tags, the hour and day, and the blog's "
-        "usual notes.\n\n"
-        "Keep in mind:\n"
-        "- It learned from a small sample of Dark Academia posts, so treat the answer as a "
-        "rough guide.\n"
-        "- The range around the answer is wide on purpose. Notes are very uneven from post to post.\n"
-        "- It cannot see the picture in a post, only whether there is one.\n"
-        "- It describes patterns in past posts. It cannot say what would make your post do better."
-    )
 
 
 # ---------------------------------------------------------------------------
@@ -259,10 +360,8 @@ def about_text():
 st.title("Dark Academia post scorer")
 st.write("What notes might a Tumblr draft get?")
 
-score, data, about = st.tabs(["Score a draft", "What the data shows", "About"])
-with score:
+tab_score, tab_data = st.tabs(["Score a draft", "What the data shows"])
+with tab_score:
     score_tab()
-with data:
+with tab_data:
     data_tab()
-with about:
-    st.markdown(about_text())

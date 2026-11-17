@@ -15,7 +15,7 @@ from src import collect, config
 from src.features import (FEATURE_COLUMNS, blog_history, build_feature_row, clean_raw, parse_tags,
                           pick_tag_vocab, tag_column_name, text_features)
 from src.predict import Draft, draft_check, predict_notes, suggest_changes
-from src.train import average_gap
+from src.train import average_gap, make_error_table, share_inside
 from src.usual_model import UsualNotesModel
 
 
@@ -330,3 +330,29 @@ def test_usual_notes_model_still_works_without_the_usual_notes_column():
     frame = pd.DataFrame({"a": np.arange(30.0)})
     model = UsualNotesModel(RandomForestRegressor(n_estimators=20, random_state=0)).fit(frame, np.arange(30.0))
     assert model.predict(frame).shape == (30,)
+
+
+def test_error_table_gives_a_wider_range_where_the_mistakes_are_bigger():
+    rng = np.random.default_rng(1)
+    predicted = np.linspace(0, 6, 900)
+    # mistakes grow with the size of the prediction
+    actual = predicted + rng.normal(0, 0.2 + predicted / 6, 900)
+    table = make_error_table(actual, predicted)
+    widths = [high - low for low, high in table["ranges"]]
+    assert widths[0] < widths[1] < widths[2]
+    assert 0.78 <= share_inside(actual, predicted, table) <= 0.82   # about 8 in 10 by design
+
+
+def test_the_prediction_range_depends_on_whether_usual_notes_were_given():
+    table_with = {"edges": [1.0, 2.0], "ranges": [[-0.5, 0.5], [-0.5, 0.5], [-0.5, 0.5]]}
+    table_without = {"edges": [1.0, 2.0], "ranges": [[-2.0, 2.0], [-2.0, 2.0], [-2.0, 2.0]]}
+    bundle = {
+        "model": EchoModel(),
+        "feature_columns": FEATURE_COLUMNS,
+        "train_log_notes": np.array([1.0, 2.0, 3.0]),
+        "default_typical_log": 2.0,
+        "error_tables": {"with_usual": table_with, "without_usual": table_without},
+    }
+    given = predict_notes(bundle, Draft("words", typical_notes=7))     # log1p(7) is about 2.08
+    blank = predict_notes(bundle, Draft("words"))
+    assert (given["high"] - given["low"]) < (blank["high"] - blank["low"])

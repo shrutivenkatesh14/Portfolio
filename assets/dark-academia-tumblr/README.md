@@ -14,9 +14,8 @@ and posting time, and it tells you:
 - tags that many blogs in the niche use
 
 It started as a group project for CIS 434 (Social Media and Text Analytics) at the
-Simon Business School, Spring 2026. Team 5: Aditya Batwal, Arpita Patnaik,
-Parnika Kulkarni, Ritwik Pandey and Shruti Venkatesh. This repo is the cleaned-up
-version of the code, split into steps and with tests.
+Simon Business School, Spring 2026. This version was cleaned up and extended by Shruti
+Venkatesh. The code is split into steps and has tests.
 
 ## How it works
 
@@ -44,7 +43,9 @@ version of the code, split into steps and with tests.
 5. **Score** (`src/predict.py` and `streamlit_app.py`). Builds the same numbers for your
    draft, runs the saved model, and tries one change at a time to see what the
    model prefers. The range comes from how far off the model was on blogs it had
-   never seen. The app has three tabs: score a draft, what the data shows, and about.
+   never seen. The app has two tabs: score a draft and what the data shows. It opens
+   with an example already scored, shows the answer as a range on a bar, and on a phone it
+   scrolls to the answer after you press the button.
 
 **How the model is tested.** Someone using the app is usually not one of the blogs
 we trained on. So every test keeps all the posts of a blog together, either all in
@@ -70,7 +71,26 @@ first is the one that matters for the app, because those blogs were never in tra
 | **Random forest + tag columns** | **0.68** | n/a |
 
 The random forest with tag columns beat the baseline's error in every one of the 5
-test rounds.
+test rounds. The score moves with which blogs land in the test part: R² was 0.53 to
+0.83 across the 5 rounds.
+
+**How far off the predictions are.** For blogs where we know the usual notes, a typical
+prediction is off by a factor of about 1.9, and about half (53%) are within a factor of
+2. The range in the app is built from these mistakes, separately for small, middle and
+large predictions. On blogs that were not used to build it, between 71% and 86% of posts
+fell inside the range, against a target of 80%.
+
+**As a yes/no question.** Will the post get more notes than the niche median (5 notes)?
+This is a number prediction, so there is no confusion matrix, but turning it into a yes
+or no gives these scores:
+
+| Measure | Score |
+|---|---|
+| Precision: of the posts the model said "yes" to, how many really were above the median | 0.78 |
+| Recall: of the posts that really were above the median, how many the model found | 0.86 |
+| Right overall (always guessing the more common answer gets 52%) | 80% |
+
+Most of this comes from the blog's usual notes, as the next table shows.
 
 **What the prediction is built on.** How a blog usually does is the biggest thing
 behind a post's notes.
@@ -154,7 +174,8 @@ Free apps go to sleep when nobody visits and wake up on the next visit.
 
 ```
 streamlit_app.py        The app (Streamlit)
-.streamlit/config.toml  Colors and font for the app
+app_style.css           Colors, spacing and the result card for the app
+.streamlit/config.toml  Theme (colors and font) for the app
 src/config.py           Every setting in one place (tags, file paths, cleaning rules)
 src/collect.py          Download posts from the Tumblr API
 src/features.py         Clean the posts and build the numbers the model uses
@@ -170,7 +191,9 @@ reports/                metrics.json and the charts
 ## Limits and next steps
 
 The model learned from 2,455 posts, and a blog's usual notes comes from only a few
-other posts per blog, so it is rough. The app says so. Where to go next:
+other posts per blog, so it is rough. The app says so. The best model and the tag
+columns were chosen using the same test rounds that the scores come from, so the scores
+are a little on the optimistic side. Where to go next:
 
 1. Download more posts for each blog, so the usual notes is steadier and the
    effect of tags and timing can be measured within one blog.

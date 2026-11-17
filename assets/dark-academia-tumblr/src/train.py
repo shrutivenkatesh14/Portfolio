@@ -23,8 +23,7 @@ from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.inspection import permutation_importance
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import (GroupKFold, GroupShuffleSplit, KFold, cross_val_predict,
-                                     cross_val_score)
+from sklearn.model_selection import GroupKFold, GroupShuffleSplit, KFold, cross_val_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -184,6 +183,32 @@ def usual_notes_check(model, df, columns):
     return score(columns), score(post_only), score(["blog_typical_log_notes"])
 
 
+def make_error_table(actual, predicted):
+    """
+    How far off the model was, worked out separately for small, middle and large predictions.
+
+    The mistakes are not the same size everywhere: large predictions have larger
+    mistakes. So we take the 10th and 90th percentile of the mistakes (log scale)
+    separately for the lowest third, the middle third and the top third of the
+    predictions. The app uses the group that a new prediction falls in.
+    """
+    edges = np.quantile(predicted, [1 / 3, 2 / 3])
+    group = np.digitize(predicted, edges)
+    mistakes = actual - predicted
+    ranges = [np.quantile(mistakes[group == g], [0.10, 0.90]) for g in range(3)]
+    return {"edges": [float(e) for e in edges],
+            "ranges": [[float(low), float(high)] for low, high in ranges]}
+
+
+def share_inside(actual, predicted, table):
+    """What share of posts fall inside the range that the table gives. It should be about 0.80."""
+    group = np.digitize(predicted, table["edges"])
+    low = np.array([table["ranges"][g][0] for g in group])
+    high = np.array([table["ranges"][g][1] for g in group])
+    mistakes = actual - predicted
+    return float(((mistakes >= low) & (mistakes <= high)).mean())
+
+
 def make_tag_stats(df):
     """
     For each tag: how many posts and how many different blogs use it.
@@ -279,14 +304,61 @@ def main():
     print(f"Columns the app is allowed to give advice about: {trusted}\n")
 
     # ---- How far off is a typical prediction? ------------------------------
-    # We predict every post from a model that never saw its blog, then look at the
-    # mistakes (on the log scale). The app uses the 10th and 90th percentile of those
-    # mistakes to draw a range around its answer: about 8 posts in 10 land inside it.
-    out_of_fold = cross_val_predict(
-        clone(best_model), df[feature_columns], df["log_notes"],
-        cv=GroupKFold(n_splits=config.BLOG_FOLDS), groups=df["blog"])
-    error_low, error_high = np.quantile(df["log_notes"] - out_of_fold, [0.10, 0.90])
-    print(f"Typical mistake range (log scale): {error_low:+.2f} to {error_high:+.2f}\n")
+    # We predict every post with a model that never saw its blog, then look at the
+    # mistakes (log scale). The app draws a range around its answer from them, so that
+    # about 8 posts in 10 land inside it. There are two cases:
+    #   with usual notes     the creator tells the app how their posts usually do
+    #   without usual notes  the creator leaves the box empty, so we put the middle
+    #                        value for the niche in its place
+    default_typical = float(df["log_notes"].median())
+    with_usual = np.zeros(len(df))
+    without_usual = np.zeros(len(df))
+    round_r2 = []   # the score in each of the 5 test rounds, to see how much it moves
+    for train_rows, test_rows in GroupKFold(n_splits=config.BLOG_FOLDS).split(df, groups=df["blog"]):
+        fitted_fold = clone(best_model).fit(df.iloc[train_rows][feature_columns],
+                                            df.iloc[train_rows]["log_notes"])
+        test_part = df.iloc[test_rows][feature_columns]
+        with_usual[test_rows] = fitted_fold.predict(test_part)
+        round_r2.append(float(r2_score(df.iloc[test_rows]["log_notes"], with_usual[test_rows])))
+        blank = test_part.copy()
+        blank["blog_typical_log_notes"] = default_typical
+        without_usual[test_rows] = fitted_fold.predict(blank)
+
+    r2_std = float(np.std(round_r2))
+    print(f"R2 in each test round: {[round(r, 2) for r in round_r2]}")
+
+    actual = df["log_notes"].to_numpy()
+    # A blog's usual notes is only real information when the blog has other posts in the data.
+    knows_usual = (df["blog_peers"] >= 1).to_numpy()
+    error_tables = {
+        "with_usual": make_error_table(actual[knows_usual], with_usual[knows_usual]),
+        "without_usual": make_error_table(actual, without_usual),
+    }
+    inside_with = share_inside(actual[knows_usual], with_usual[knows_usual], error_tables["with_usual"])
+    inside_without = share_inside(actual, without_usual, error_tables["without_usual"])
+    print(f"Range check: {inside_with:.0%} of posts fall inside the range when the usual notes "
+          f"is given, {inside_without:.0%} when it is not (both should be about 80%)")
+
+    # How big are the mistakes in plain terms? (only posts where the usual notes is known)
+    mistakes = np.abs(actual[knows_usual] - with_usual[knows_usual])
+    typical_factor = float(np.exp(np.median(mistakes)))
+    within_2x = float((mistakes <= np.log(2)).mean())
+    print(f"A typical prediction is off by a factor of {typical_factor:.1f}; "
+          f"{within_2x:.0%} are within a factor of 2.")
+
+    # The same thing as a yes/no question: will the post get more notes than the niche median?
+    # Precision: of the posts we said "yes" to, how many really were above the median.
+    # Recall: of the posts that really were above the median, how many we said "yes" to.
+    median_notes = float(df["note_count"].median())
+    really_above = (df["note_count"].to_numpy() > median_notes)[knows_usual]
+    said_above = (np.expm1(with_usual) > median_notes)[knows_usual]
+    true_yes = int((really_above & said_above).sum())
+    precision = true_yes / max(int(said_above.sum()), 1)
+    recall = true_yes / max(int(really_above.sum()), 1)
+    accuracy = float((really_above == said_above).mean())
+    print(f"Above the niche median ({median_notes:.0f} notes)? precision {precision:.2f}, "
+          f"recall {recall:.2f}, right {accuracy:.0%} of the time (guessing gets "
+          f"{max(really_above.mean(), 1 - really_above.mean()):.0%})\n")
 
     # Middle values for posts with some text. The app shows these next to a draft.
     with_text = df[df["has_caption"] == 1]
@@ -311,12 +383,12 @@ def main():
         "n_posts": int(len(df)),
         "n_blogs": int(df["blog"].nunique()),
         # What to use for "usual notes" when the creator does not tell us (log scale).
-        "default_typical_log": float(df["log_notes"].median()),
         "trusted_features": trusted,
         # The app only suggests a tag count inside the range where most of our posts sit
         # (10th to 90th percentile). Beyond that we have too few posts to say anything.
         "tag_count_range": (int(df["tag_count"].quantile(0.10)), int(df["tag_count"].quantile(0.90))),
-        "error_range": (float(error_low), float(error_high)),
+        "error_tables": error_tables,
+        "default_typical_log": default_typical,
         # Only about 1 blog in 10 in the data usually gets more notes than this (the 90th
         # percentile). The model has seen little above it, and its answer drifts toward
         # the average there. The app warns when a creator is above it.
@@ -336,7 +408,14 @@ def main():
         "feature_sets": feature_set_scores,
         "feature_columns_used": feature_columns,
         "unseen_blog_rounds": held_out,
-        "error_range": [float(error_low), float(error_high)],
+        "error_tables": error_tables,
+        "range_share_inside": {"with_usual": inside_with, "without_usual": inside_without},
+        "typical_factor_off": typical_factor,
+        "share_within_factor_2": within_2x,
+        "above_median": {"median_notes": median_notes, "precision": precision,
+                         "recall": recall, "accuracy": accuracy},
+        "r2_per_round": round_r2,
+        "r2_per_round_std": r2_std,
         "blog_average_r2": blog_r2,
         "final_cv_r2_unseen_blogs": full_r2,
         "post_features_only_r2": post_only_r2,

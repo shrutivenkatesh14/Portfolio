@@ -1,0 +1,211 @@
+/*
+  Look of the app. streamlit_app.py loads this file once at the top.
+
+  The colours match .streamlit/config.toml: dark paper, brass and a serif font.
+  Everything here is either a small fix to Streamlit's own parts or the result card.
+*/
+
+:root {
+  --paper: #1d1914;        /* page */
+  --panel: #26211b;        /* boxes and the stamp */
+  --line: #3d352b;         /* thin borders */
+  --text: #e9e0cf;
+  --muted: #b3a792;        /* secondary text. 7:1 on the page colour */
+  --brass: #c9a96a;
+  --brass-deep: #8a6d3b;
+  --on-brass: #1d1914;     /* text on a brass button. about 8:1 */
+}
+
+/* ---- Page ---------------------------------------------------------------- */
+
+/* Less dead space above the title, and a line length that is easy to read. */
+.block-container {
+  max-width: 1100px;
+  padding-top: 2.2rem;
+  padding-bottom: 4rem;
+}
+
+h1, h2, h3 { text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); line-height: 1.12; padding-bottom: 0.2rem; }
+
+/* Streamlit sizes its headings with its own rules, so ours need !important to win. */
+[data-testid="stMarkdownContainer"] h2 {
+  font-size: 1.3rem !important;
+  line-height: 1.25 !important;
+  margin: 1.8rem 0 0 !important;
+  padding: 0 0 0.3rem !important;
+}
+
+/* Paragraphs and lists stop at about 68 characters so long lines do not tire the eye.
+   "pretty" keeps a single word from being left alone on the last line. */
+.stMarkdown p, .stMarkdown li { max-width: 68ch; text-wrap: pretty; }
+/* Captions are short, so we balance their lines instead. */
+[data-testid="stCaptionContainer"] { max-width: 68ch; text-wrap: balance; }
+
+/* Tab labels were small next to the title. */
+button[role="tab"] p { font-size: 1.02rem; }
+
+/* ---- Small fixes to Streamlit's parts --------------------------------------- */
+
+/* The main button: dark text on brass. White on brass was only 2.2:1. */
+button[kind="primaryFormSubmit"],
+button[kind="primary"] {
+  background: var(--brass);
+  border-color: var(--brass);
+}
+button[kind="primaryFormSubmit"] p,
+button[kind="primary"] p {
+  color: var(--on-brass);
+  font-weight: 600;
+}
+button[kind="primaryFormSubmit"]:hover,
+button[kind="primary"]:hover {
+  background: #d9bd86;
+  border-color: #d9bd86;
+}
+
+/* A visible focus ring for keyboard users, in the palette. */
+:focus-visible {
+  outline: 2px solid var(--brass) !important;
+  outline-offset: 2px;
+}
+
+/* Placeholder text stays readable on the dark boxes. */
+::placeholder { color: #a89c88 !important; opacity: 1 !important; }
+
+/* The parts the browser draws: selected text, the typing cursor and scrollbars. */
+::selection { background: var(--brass); color: var(--on-brass); }
+input, textarea { caret-color: var(--brass); }
+* { scrollbar-color: #4a4034 var(--paper); }
+
+/* "More details" is a plain fold with one thin line, not a second box inside the form. */
+[data-testid="stExpander"] details {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Numbers line up in tables and on the bar. */
+table, [data-testid="stDataFrame"], .range, .legend { font-variant-numeric: tabular-nums; }
+
+/* ---- The result card -------------------------------------------------------- */
+
+.result { margin-bottom: 1.4rem; }
+[data-testid="stMarkdownContainer"] .result h2 {
+  font-size: 1.65rem !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.result .guess { margin: 0.35rem 0 0; color: var(--muted); }
+.result .legend { margin: 0.9rem 0 0; color: var(--muted); font-size: 0.92rem; max-width: 60ch; }
+
+/* The range bar. The scale is logarithmic, so 1, 10, 100 and 1,000 sit evenly apart. */
+.range { margin-top: 1.1rem; }
+.range .track {
+  position: relative;
+  height: 10px;
+  background: #342d24;
+  border-radius: 5px;
+}
+.range .fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--brass-deep);
+  border-radius: 5px;
+}
+.range .best {            /* the best guess */
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 20px;
+  margin-left: -2px;
+  background: var(--brass);
+  border-radius: 2px;
+}
+.range .median {          /* the middle post in the data */
+  position: absolute;
+  top: -2px;
+  width: 1px;
+  height: 14px;
+  background: var(--muted);
+}
+.range .ticks { position: relative; height: 1.3rem; margin-top: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+.range .ticks span { position: absolute; transform: translateX(-50%); }
+.range .ticks span:last-child { transform: translateX(-100%); }
+
+/* ---- The stamp --------------------------------------------------------------- */
+
+/* A perforated edge, drawn the same way as the stamps on the portfolio site:
+   round holes in the colour of the page, cut into a darker rectangle. */
+.stamp {
+  --hole: 6px;
+  --tile: 17px;
+  position: relative;
+  padding: 12px;
+  background-color: #3a3227;     /* warmer and lighter than the page, so the holes show */
+  background-image:
+    radial-gradient(circle var(--hole) at calc(var(--tile) / 2) 0, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
+    radial-gradient(circle var(--hole) at calc(var(--tile) / 2) 100%, var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
+    radial-gradient(circle var(--hole) at 0 calc(var(--tile) / 2), var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole)),
+    radial-gradient(circle var(--hole) at 100% calc(var(--tile) / 2), var(--paper) calc(var(--hole) - 0.5px), transparent var(--hole));
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-position: top left, bottom left, top left, top right;
+  background-size: var(--tile) calc(var(--tile) * 0.66), var(--tile) calc(var(--tile) * 0.66),
+                   calc(var(--tile) * 0.66) var(--tile), calc(var(--tile) * 0.66) var(--tile);
+  border: 1.5px solid var(--brass-deep);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+.stamp .stamp-inner {
+  background: var(--panel);
+  border: 1px solid rgba(201, 169, 106, 0.45);
+  padding: 1.3rem 1.4rem 1.1rem;
+}
+/* The postmark: a ring that says how often the range held. It is not a button. */
+.stamp .postmark {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border: 1.5px solid var(--brass);
+  border-radius: 50%;
+  color: var(--brass);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  background: rgba(29, 25, 20, 0.7);
+  transform: rotate(-12deg);
+  box-shadow: inset 0 0 0 3px rgba(29, 25, 20, 0.7), inset 0 0 0 4px var(--brass);
+  pointer-events: none;
+}
+.stamp .postmark b { font-size: 0.95rem; letter-spacing: 0; }
+/* Leave room so the headline does not run under the postmark. */
+.stamp h2 { padding-right: 84px; }
+
+/* ---- One moment of motion: the result lands ----------------------------------- */
+
+@keyframes land {
+  from { opacity: 0; transform: translateY(-10px) rotate(-1.2deg) scale(1.02); }
+  to   { opacity: 1; transform: none; }
+}
+.result .stamp { animation: land 480ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .result .stamp { animation: none; }
+}
+
+/* ---- Small screens ------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1.4rem; }
+  [data-testid="stMarkdownContainer"] .result h2 { font-size: 1.4rem !important; }
+  .stamp h2 { padding-right: 70px; }
+  .stamp .postmark { width: 62px; height: 62px; font-size: 0.56rem; }
+}

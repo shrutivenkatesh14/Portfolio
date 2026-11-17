@@ -41,6 +41,22 @@ def load_bundle(path=config.MODEL_FILE):
     return joblib.load(path)
 
 
+def error_range_for(bundle, log_prediction, usual_notes_given):
+    """
+    The 10th and 90th percentile of the model's mistakes (log scale) for a prediction this size.
+
+    The tables come from how wrong the model was on blogs it had not seen (see
+    train.py). There is one for when the creator gave their usual notes and one for
+    when they did not. If the bundle has no tables, we fall back to one fixed range.
+    """
+    tables = bundle.get("error_tables")
+    if not tables:
+        return bundle.get("error_range", (0.0, 0.0))
+    table = tables["with_usual" if usual_notes_given else "without_usual"]
+    group = int(np.digitize(log_prediction, table["edges"]))
+    return table["ranges"][group]
+
+
 def predict_notes(bundle, draft, tag_count=None):
     """
     Predict the number of notes for one draft.
@@ -68,8 +84,7 @@ def predict_notes(bundle, draft, tag_count=None):
     )
     frame = pd.DataFrame([row])[bundle["feature_columns"]]
     log_prediction = float(bundle["model"].predict(frame)[0])
-    # The range comes from how wrong the model was on blogs it had not seen (see train.py).
-    error_low, error_high = bundle.get("error_range", (0.0, 0.0))
+    error_low, error_high = error_range_for(bundle, log_prediction, draft.typical_notes is not None)
     return {
         "log_prediction": log_prediction,
         "notes": float(np.expm1(log_prediction)),

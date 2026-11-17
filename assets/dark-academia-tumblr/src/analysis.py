@@ -21,6 +21,20 @@ import pandas as pd
 
 from src import config
 
+# Chart colors match the app: dark paper, cream text and brass bars.
+PAPER = "#1d1914"
+PANEL = "#26211b"
+CREAM = "#e9e0cf"
+BRASS = "#b08d57"
+DARK_BRASS = "#8a6d3b"
+
+plt.rcParams.update({
+    "figure.facecolor": PAPER, "axes.facecolor": PANEL, "savefig.facecolor": PAPER,
+    "axes.edgecolor": "#3d352b", "axes.labelcolor": CREAM, "axes.titlecolor": CREAM,
+    "text.color": CREAM, "xtick.color": CREAM, "ytick.color": CREAM,
+    "figure.titlesize": 13,
+})
+
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
@@ -100,12 +114,12 @@ def plot_distribution(df):
     # For the left chart we cut the axis at the 99th percentile, otherwise one
     # post with a million notes squashes everything else into a single bar.
     cutoff = df["note_count"].quantile(0.99)
-    left.hist(df["note_count"].clip(upper=cutoff), bins=40, color="#6b4f3a", edgecolor="white")
+    left.hist(df["note_count"].clip(upper=cutoff), bins=40, color=BRASS, edgecolor=PAPER)
     left.set_title("Notes per post (cut at the 99th percentile)")
     left.set_xlabel("Notes")
     left.set_ylabel("Posts")
 
-    right.hist(df["log_notes"], bins=40, color="#8a6d3b", edgecolor="white")
+    right.hist(df["log_notes"], bins=40, color=DARK_BRASS, edgecolor=PAPER)
     right.set_title("Same data after log(notes + 1)")
     right.set_xlabel("log(notes + 1)")
 
@@ -125,14 +139,14 @@ def plot_source_and_year(df):
     fig, (left, right) = plt.subplots(1, 2, figsize=(12, 4.5))
 
     by_source = summarise(df, "source").sort_values("median_notes", ascending=False)
-    bars = left.bar(by_source.index, by_source["median_notes"], color="#6b4f3a")
+    bars = left.bar(by_source.index, by_source["median_notes"], color=BRASS)
     label_bars(left, bars, by_source["posts"])
     left.set_title("Median notes by source")
     left.set_ylabel("Median notes")
     left.tick_params(axis="x", rotation=20)
 
     by_year = summarise(df, "year")
-    bars = right.bar(by_year.index.astype(str), by_year["median_notes"], color="#8a6d3b")
+    bars = right.bar(by_year.index.astype(str), by_year["median_notes"], color=DARK_BRASS)
     label_bars(right, bars, by_year["posts"])
     right.set_title("Median notes by year the post was made")
 
@@ -145,7 +159,7 @@ def plot_group_medians(tables):
     """Chart 3: median notes for each of the things a creator can choose."""
     fig, axes = plt.subplots(2, 3, figsize=(15, 8))
     for ax, (title, table) in zip(axes.flatten(), tables.items()):
-        bars = ax.bar(table.index, table["median_notes"], color="#6b4f3a")
+        bars = ax.bar(table.index, table["median_notes"], color=BRASS)
         label_bars(ax, bars, table["posts"])
         ax.set_title(title)
         ax.set_ylabel("Median notes")
